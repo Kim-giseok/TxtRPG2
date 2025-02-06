@@ -32,7 +32,7 @@ namespace TxtRPG2
             // 적들의 정보 출력
             for (int i = 0; i < spawn.Length; i++)
             {
-                if(select)
+                if (select)
                 {
                     Console.Write($"{i + 1} ");
                 }
@@ -43,7 +43,8 @@ namespace TxtRPG2
             Console.WriteLine();
             Console.WriteLine("[내정보]");
             Console.WriteLine($"Lv.{player.Level}\t{player.Name} ({player.Job})");
-          Console.WriteLine($"HP {player.Hp:D3}/100");
+            Console.WriteLine($"HP {player.Hp:D3}/100");
+            Console.WriteLine();
         }
 
         public void Battle()
@@ -83,7 +84,7 @@ namespace TxtRPG2
 
                 Console.WriteLine("0. 취소");
 
-                if(GameManager.Select(out byte choice) && choice == 0)
+                if (GameManager.Select(out byte choice) && choice == 0)
                 {
                     break;
                 }
