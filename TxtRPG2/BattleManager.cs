@@ -88,7 +88,24 @@ namespace TxtRPG2
                 {
                     break;
                 }
+                try
+                {
+                    if (spawn[choice - 1].IsDead)
+                    {
+                        throw new Exception("");
+                    }
+                    spawn[choice - 1].GetDamage(player.Damage * new Random().Next(90, 110) / 100);
+                    MonsterAttack();
+                    return;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("잘못된 입력입니다.");
+                }
             }
         }
+
+        void MonsterAttack()
+        { }
     }
 }
