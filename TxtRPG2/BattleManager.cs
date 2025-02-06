@@ -26,6 +26,13 @@ namespace TxtRPG2
         public void Battle()
         {
             // 1~4마리의 랜덤한 수의 적 출현
+            Enemy[] spawn = new Enemy[new Random().Next(4)];
+
+            foreach (var enemy in spawn)
+            {
+                int idx = new Random().Next(Enemys.Length);
+                enemy = new Enemy(Enemys[idx].Level, Enemys[idx].Name, Enemys[idx].Hp, Enemys[idx].Atk);
+            }
 
             // 적들의 정보 출력
 
