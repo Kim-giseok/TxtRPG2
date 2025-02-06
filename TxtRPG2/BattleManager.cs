@@ -10,6 +10,7 @@ namespace TxtRPG2
     {
         Player player;
         Enemy[] Enemys;
+        Enemy[] spawn;
         public bool Victory { get => player.Hp != 0; }
 
         public BattleManager(Player player)
@@ -23,17 +24,11 @@ namespace TxtRPG2
             ]
         }
 
-        public void Battle()
+        void ShowInfos(bool select = false)
         {
-            // 1~4마리의 랜덤한 수의 적 출현
-            Enemy[] spawn = new Enemy[new Random().Next(4)];
-
-            foreach (var enemy in spawn)
-            {
-                int idx = new Random().Next(Enemys.Length);
-                enemy = new Enemy(Enemys[idx].Level, Enemys[idx].Name, Enemys[idx].Hp, Enemys[idx].Atk);
-            }
-
+            Console.Clear();
+            Console.WriteLine("Battle!!");
+            Console.WriteLine();
             // 적들의 정보 출력
             foreach (var enemy in spawn)
             {
@@ -44,19 +39,41 @@ namespace TxtRPG2
             Console.WriteLine();
             Console.WriteLine("[내정보]");
             Console.WriteLine($"Lv.{player.Level}\t{player.Name} ({player.Job})");
-            Console.WriteLine($"HP {player.Hp:D3}/100");
+          Console.WriteLine($"HP {player.Hp:D3}/100");
+        }
 
-            // 선택지 표시/선택
-            Console.WriteLine("1. 공격");
-            GameManager.select(out byte choice);
-            switch(choice)
+        public void Battle()
+        {
+            // 1~4마리의 랜덤한 수의 적 출현
+            spawn = new Enemy[new Random().Next(4)];
+
+            foreach (var enemy in spawn)
             {
-                case 1:
-                    break;
-                default:
-                    Console.WriteLine("잘못된 입력입니다.");
-                    break;
+                int idx = new Random().Next(Enemys.Length);
+                enemy = new Enemy(Enemys[idx].Level, Enemys[idx].Name, Enemys[idx].Hp, Enemys[idx].Atk);
             }
+
+            while (true)
+            {
+                ShowInfos();
+                // 선택지 표시/선택
+                Console.WriteLine("1. 공격");
+                GameManager.select(out byte choice);
+                switch (choice)
+                {
+                    case 1:
+                        PlayerAttack();
+                        break;
+                    default:
+                        Console.WriteLine("잘못된 입력입니다.");
+                        break;
+                }
+            }
+        }
+
+        void PlayerAttack()
+        {
+            
         }
     }
 }
