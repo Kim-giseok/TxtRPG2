@@ -18,7 +18,7 @@ namespace TxtRPG2
         static void Select()
         {
             while (true)
-            {
+            {   //로딩 중 표시
                 ConsoleUtility.Loading();
 
                 Console.Clear();
