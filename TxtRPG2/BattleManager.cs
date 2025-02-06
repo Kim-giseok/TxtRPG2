@@ -40,7 +40,11 @@ namespace TxtRPG2
                 Console.WriteLine(enemy);
             }
 
-            // 플레이어의 레벨 이름(클래스) \n 체력/최대체력 표시
+            // 플레이어의 레벨 이름(직업) \n 체력/최대체력 표시
+            Console.WriteLine();
+            Console.WriteLine("[내정보]");
+            Console.WriteLine($"Lv.{player.Level}\t{player.Name} ({player.Job})");
+            Console.WriteLine($"HP {player.Hp:D3}/100");
 
             // 선택지 표시/선택
             Console.WriteLine("1. 공격");
