@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TxtRPG2
 {
-    interface IEnemy
+    interface IEnemy // 인터페이스 선언 
     {
         string Name { get; set; }
         int Hp { get; set; }
@@ -14,9 +14,9 @@ namespace TxtRPG2
         int Level { get; set; }
         bool IsDead { get; set; }
 
-        void GetDamage(int Damage);
+        void GetDamage(int Damage);// 받는 피해
     }
-    public class Enemy : IEnemy
+    public class Enemy : IEnemy // 인터페이스 상속
     {
         public string Name { get; set; }
         public int Hp { get; set; }
@@ -24,16 +24,16 @@ namespace TxtRPG2
         public int Level { get; set; }
         public bool IsDead { get; set; }
 
-        public Enemy(string name, int health, int attackPower, int level)
+        public Enemy(int level, string name, int hp, int atk ) // 레벨, 이름, 체력, 공격력을 받는 생성자
         {
-            this.Name = name;
-            this.Hp = health;
-            this.Atk = attackPower;
             this.Level = level;
+            this.Name = name;
+            this.Hp = hp;
+            this.Atk = atk;
             this.IsDead = false;
         }
 
-        public void GetDamage(int Damage)
+        public void GetDamage(int Damage) // 피해를 받는 메소드
         {
             Console.WriteLine($"적이 {Damage}만큼의 피해를 받았습니다.");
             Hp -= Damage;
