@@ -71,6 +71,7 @@ namespace TxtRPG2
                         break;
                     default:
                         Console.WriteLine("잘못된 입력입니다.");
+                        Thread.Sleep(500);
                         break;
                 }
             }
@@ -94,14 +95,52 @@ namespace TxtRPG2
                     {
                         throw new Exception("");
                     }
-                    spawn[choice - 1].GetDamage(player.Damage * new Random().Next(90, 110) / 100);
-                    MonsterTurn();
+
+                    PlayerAttack(choice -1);
                     return;
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine("잘못된 입력입니다.");
+                    Thread.Sleep(500);
                 }
+            }
+        }
+
+        void PlayerAttack(int idx)
+        {
+            int damage = player.Atk * new Random().Next(90, 110) / 100;
+            int Hp = spawn[idx].Hp;
+            spawn[idx].GetDamage(damage);
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("Battle!!");
+                Console.WriteLine();
+
+                Console.WriteLine($"{player.Name}의 공격!");
+                Console.WriteLine($"Lv.{spawn[idx].Level} {spawn[idx].Name}을(를) 맞췄습니다. [데미지 : {damage}]");
+
+                Console.WriteLine();
+                Console.WriteLine($"Lv.{spawn[idx].Level} {spawn[idx].Name}");
+                if (spawn[idx].IsDead)
+                {
+                    Console.WriteLine($"HP {Hp} -> dead");
+                }
+                else
+                {
+                    Console.WriteLine($"HP {Hp} -> {spawn[idx].Hp}");
+                }
+
+                Console.WriteLine();
+                Console.WriteLine("0. 다음");
+                if (GameManager.Select(out byte choice) && choice == 0)
+                {
+                    MonsterTurn();
+                    break;
+                }
+                Console.WriteLine("잘못된 입력입니다.");
+                Thread.Sleep(500);
             }
         }
 
