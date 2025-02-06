@@ -96,7 +96,7 @@ namespace TxtRPG2
                         throw new Exception("");
                     }
 
-                    PlayerAttack(choice -1);
+                    PlayerAttack(choice - 1);
                     return;
                 }
                 catch (Exception e)
@@ -136,7 +136,7 @@ namespace TxtRPG2
                 Console.WriteLine("0. 다음");
                 if (GameManager.Select(out byte choice) && choice == 0)
                 {
-                    MonsterTurn();
+                    EnemyTurn();
                     break;
                 }
                 Console.WriteLine("잘못된 입력입니다.");
@@ -144,18 +144,20 @@ namespace TxtRPG2
             }
         }
 
-        void MonsterTurn()
+        void EnemyTurn()
         {
             foreach (var monster in spawn)
             {
                 if (!monster.IsDead)
                 {
-                    MonsterAttack();
+                    EnemyAttack();
                 }
             }
         }
 
-        void MonsterAttack()
-        { }
+        void EnemyAttack()
+        {
+
+        }
     }
 }
