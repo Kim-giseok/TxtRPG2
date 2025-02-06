@@ -164,14 +164,14 @@ namespace TxtRPG2
             {
                 if (!monster.IsDead)
                 {
-                    EnemyAttack(int idx);
+                    EnemyAttack(monster);
                 }
             }
         }
 
-        void EnemyAttack(int idx)
+        void EnemyAttack(Enemy enemy)
         {
-            player.GetDamage(spawn[idx].Atk);
+            player.GetDamage(enemy.Atk);
         }
     }
 }
