@@ -67,7 +67,7 @@ namespace TxtRPG2
                 switch (choice)
                 {
                     case 1:
-                        PlayerAttack();
+                        PlayerTurn();
                         break;
                     default:
                         Console.WriteLine("잘못된 입력입니다.");
@@ -76,7 +76,7 @@ namespace TxtRPG2
             }
         }
 
-        void PlayerAttack()
+        void PlayerTurn()
         {
             while (true)
             {
@@ -95,7 +95,7 @@ namespace TxtRPG2
                         throw new Exception("");
                     }
                     spawn[choice - 1].GetDamage(player.Damage * new Random().Next(90, 110) / 100);
-                    MonsterAttack();
+                    MonsterTurn();
                     return;
                 }
                 catch (Exception e)
@@ -105,7 +105,7 @@ namespace TxtRPG2
             }
         }
 
-        void MonsterAttack()
+        void MonsterTurn()
         { }
     }
 }
