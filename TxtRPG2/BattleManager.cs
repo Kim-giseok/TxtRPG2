@@ -35,6 +35,10 @@ namespace TxtRPG2
             }
 
             // 적들의 정보 출력
+            foreach (var enemy in spawn)
+            {
+                Console.WriteLine(enemy);
+            }
 
             // 플레이어의 레벨 이름(클래스) \n 체력/최대체력 표시
 
