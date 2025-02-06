@@ -145,6 +145,17 @@ namespace TxtRPG2
         }
 
         void MonsterTurn()
+        {
+            foreach (var monster in spawn)
+            {
+                if (!monster.IsDead)
+                {
+                    MonsterAttack();
+                }
+            }
+        }
+
+        void MonsterAttack()
         { }
     }
 }
