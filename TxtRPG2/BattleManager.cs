@@ -30,9 +30,13 @@ namespace TxtRPG2
             Console.WriteLine("Battle!!");
             Console.WriteLine();
             // 적들의 정보 출력
-            foreach (var enemy in spawn)
+            for (int i = 0; i < spawn.Length; i++)
             {
-                Console.WriteLine(enemy);
+                if(select)
+                {
+                    Console.Write($"{i + 1} ");
+                }
+                Console.WriteLine(spawn[i]);
             }
 
             // 플레이어의 레벨 이름(직업) \n 체력/최대체력 표시
@@ -58,7 +62,7 @@ namespace TxtRPG2
                 ShowInfos();
                 // 선택지 표시/선택
                 Console.WriteLine("1. 공격");
-                GameManager.select(out byte choice);
+                GameManager.Select(out byte choice);
                 switch (choice)
                 {
                     case 1:
@@ -73,7 +77,17 @@ namespace TxtRPG2
 
         void PlayerAttack()
         {
-            
+            while (true)
+            {
+                ShowInfos(true);
+
+                Console.WriteLine("0. 취소");
+
+                if(GameManager.Select(out byte choice) && choice == 0)
+                {
+                    break;
+                }
+            }
         }
     }
 }
