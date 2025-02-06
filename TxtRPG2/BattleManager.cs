@@ -60,6 +60,20 @@ namespace TxtRPG2
 
             while (true)
             {
+                //전투종료 판정
+                int i = 0;
+                for (; i < spawn.Length; i++)
+                {
+                    if (!spawn[i].IsDead)
+                    {
+                        break;
+                    }
+                }
+                if (!Victory || i == spawn.Length)
+                {
+                    break;
+                }
+
                 ShowInfos();
                 // 선택지 표시/선택
                 Console.WriteLine("1. 공격");
