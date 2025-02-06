@@ -150,14 +150,14 @@ namespace TxtRPG2
             {
                 if (!monster.IsDead)
                 {
-                    EnemyAttack();
+                    EnemyAttack(int idx);
                 }
             }
         }
 
-        void EnemyAttack()
+        void EnemyAttack(int idx)
         {
-
+            player.GetDamage(spawn[idx].Atk);
         }
     }
 }
