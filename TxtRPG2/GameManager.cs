@@ -11,7 +11,7 @@ namespace TxtRPG2
         static void Main(string[] args)
         {
             // 게임 시작 인사
-            Console.WriteLine("스파르타 마을에 오신 여러분 환영합니다. \n이곳에서 던전으로 들어가기전 활동을 할 수 있습니다.");
+            Console.WriteLine("스파르타 마을에 오신 여러분 환영합니다. \n이제 전투를 시작할 수 있습니다.");
             Select();
         }
 
@@ -25,7 +25,7 @@ namespace TxtRPG2
                 // 메뉴 출력
                 Console.WriteLine("\n무엇을 하시겠습니까?");
                 Console.WriteLine("1. 상태 보기");
-                Console.WriteLine("2. 인벤토리");
+                Console.WriteLine("2. 전투 시작");
                 Console.WriteLine("0. 종료");
                 Console.Write("선택 (1, 2, 0): ");
 
