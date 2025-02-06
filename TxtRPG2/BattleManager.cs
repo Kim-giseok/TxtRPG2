@@ -51,10 +51,10 @@ namespace TxtRPG2
             // 1~4마리의 랜덤한 수의 적 출현
             spawn = new Enemy[new Random().Next(4)];
 
-            foreach (var enemy in spawn)
+            for (int i = 0; i < spawn.Length; i++)
             {
                 int idx = new Random().Next(Enemys.Length);
-                enemy = new Enemy(Enemys[idx].Level, Enemys[idx].Name, Enemys[idx].Hp, Enemys[idx].Atk);
+                spawn[i] = new Enemy(Enemys[idx].Level, Enemys[idx].Name, Enemys[idx].Hp, Enemys[idx].Atk);
             }
 
             while (true)
