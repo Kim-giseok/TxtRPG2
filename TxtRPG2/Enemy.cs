@@ -14,7 +14,7 @@ namespace TxtRPG2
         int Level { get; set; }
         bool IsDead { get; set; }
 
-        void GetDamage(int a);
+        void GetDamage(int Damage);
     }
     public class Enemy : IEnemy
     {
@@ -33,10 +33,10 @@ namespace TxtRPG2
             this.IsDead = false;
         }
 
-        public void GetDamage(int a)
+        public void GetDamage(int Damage)
         {
-            Console.WriteLine("적이 공격을 받았습니다.");
-            Hp -= a;
+            Console.WriteLine($"적이 {Damage}만큼의 피해를 받았습니다.");
+            Hp -= Damage;
             if (Hp <= 0)
             {
                 IsDead = true;
