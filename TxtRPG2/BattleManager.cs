@@ -25,7 +25,23 @@ namespace TxtRPG2
 
         public void Battle()
         {
+            // 1~4마리의 랜덤한 수의 적 출현
 
+            // 적들의 정보 출력
+
+            // 플레이어의 레벨 이름(클래스) \n 체력/최대체력 표시
+
+            // 선택지 표시/선택
+            Console.WriteLine("1. 공격");
+            GameManager.select(out byte choice);
+            switch(choice)
+            {
+                case 1:
+                    break;
+                default:
+                    Console.WriteLine("잘못된 입력입니다.");
+                    break;
+            }
         }
     }
 }
