@@ -18,11 +18,11 @@ namespace TxtRPG2
     }
     public class Enemy : IEnemy // 인터페이스 상속
     {
-        public string Name { get; set; }
-        public int Hp { get; set; }
-        public int Atk { get; set; }
-        public int Level { get; set; }
-        public bool IsDead { get; set; }
+        public string Name { get; set; }//이름
+        public int Hp { get; set; }// 체력
+        public int Atk { get; set; }// 공격력
+        public int Level { get; set; }// 레벨
+        public bool IsDead { get; set; }// 사망여부
 
         public Enemy(int level, string name, int hp, int atk ) // 레벨, 이름, 체력, 공격력을 받는 생성자
         {
