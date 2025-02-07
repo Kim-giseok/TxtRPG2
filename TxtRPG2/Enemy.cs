@@ -13,8 +13,8 @@ namespace TxtRPG2
     {
         public bool IsDead { get => Hp <= 0; }// 사망여부
 
-        public Enemy(int level, string name, int hp, int atk) // 레벨, 이름, 체력, 공격력을 받는 생성자
-            : base(level, name, hp, atk) // 부모 생성자 호출
+        public Enemy(int level, string name, int hp,int mp, int atk) // 레벨, 이름, 체력, 공격력을 받는 생성자
+            : base(level, name, hp,mp, atk) // 부모 생성자 호출
         { }
 
         public void TakeDamage(int Damage)

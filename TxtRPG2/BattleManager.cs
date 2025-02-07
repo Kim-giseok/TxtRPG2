@@ -22,9 +22,9 @@ namespace TxtRPG2
             this.player = player;
             Enemys =
             [
-                new Enemy(2, "미니언", 15, 5),
-                new Enemy(3, "공허충", 10, 9),
-                new Enemy(5, "대포미니언", 25, 8)
+                new Enemy(2, "미니언", 15,10, 5),//레벨, 이름, 체력,마나, 공격력
+                new Enemy(3, "공허충", 10,10, 9),
+                new Enemy(5, "대포미니언", 25,10, 8)
             ];
             EnterHp = player.Hp;
         }

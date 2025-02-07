@@ -12,6 +12,7 @@ namespace TxtRPG2
         string Name { get; set; }
         int Hp { get; set; }
         int Atk { get; set; }
+        int Mp { get; set; }
         int Level { get; set; }
         void TakeDamage(int Damage);
 
@@ -23,8 +24,9 @@ namespace TxtRPG2
         public int Hp { get; set; }
         public int Atk { get; set; }
         public int Level { get; set; }
+        public int Mp { get; set; }
 
-        public Character(int level, string name, int hp, int atk)
+        public Character(int level, string name, int hp,int mp, int atk)
         {
             Level = level;
             Name = name;
