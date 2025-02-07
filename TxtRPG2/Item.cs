@@ -15,6 +15,16 @@ namespace TxtRPG2
         public int Price { get; }
         public bool IsSold { get; }
 
+        public Item (string name, int atk, int def, string description, int price)
+        {
+            Name = name;
+            Atk = atk;
+            Def = def;
+            Description = description;
+            Price = price;
+            IsSold = false;
+        }
+
         public virtual void ApearInfo() { }
     }
 }
