@@ -101,7 +101,7 @@ namespace TxtRPG2
         {
             int damage = (int)(actor.Atk * new Random().Next(90, 110) / 100f + 0.5f);
             int Hp = target.Hp;
-            target.GetDamage(damage);
+            target.TakeDamage(damage);
             while (true)
             {
                 Console.Clear();
