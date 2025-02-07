@@ -15,7 +15,7 @@ namespace TxtRPG2
     {
         public int Hp { get; }
 
-        public HpPotion(string name, int hp, string description, int price, int isSoid) : base(name, description, price)
+        public HpPotion(string name, int hp, string description, int price) : base(name, description, price)
         {
             Hp = hp;
         }

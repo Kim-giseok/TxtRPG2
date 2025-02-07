@@ -16,7 +16,7 @@ namespace TxtRPG2
     internal class Amor : Item, IArmor
     {
         public int Def { get; }
-        public Amor(string name, int def, string description, int price, int isSoid) : base(name, description, price)
+        public Amor(string name, int def, string description, int price) : base(name, description, price)
         { }
 
         public override void ApearInfo(bool inShop = false)

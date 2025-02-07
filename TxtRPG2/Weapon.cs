@@ -14,7 +14,7 @@ namespace TxtRPG2
     internal class Weapon : Item, IWeapon
     {
         public int Atk { get; }
-        public Weapon(string name, int atk, string description, int price, int isSoid) : base(name, description, price)
+        public Weapon(string name, int atk, string description, int price) : base(name, description, price)
         { }
 
         public override void ApearInfo(bool inShop = false)
