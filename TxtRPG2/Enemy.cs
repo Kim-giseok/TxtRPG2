@@ -25,6 +25,12 @@ namespace TxtRPG2
                 Hp = 0;
             }
         }
+        public void UseSkill()
+        {
+            Skill skill = Skills[0];
+            int damage = Atk * skill.DamageMultiplier;
+            TakeDamage(damage);
+        }
 
         public void AppearInfo()// 적의 정보 출력
         {

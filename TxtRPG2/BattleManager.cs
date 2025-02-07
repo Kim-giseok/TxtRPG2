@@ -84,10 +84,14 @@ namespace TxtRPG2
                 ShowInfos();
                 // 선택지 표시/선택
                 Console.WriteLine("1. 공격");
+                Console.WriteLine("2. 스킬");
                 switch (ConsoleUtility.GetInput(1, 1))
                 {
                     case 1:
                         PlayerTurn();
+                        break;
+                    case 2:
+                        // 스킬 사용
                         break;
                 }
             }

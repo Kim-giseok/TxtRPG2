@@ -1,34 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace TxtRPG2
 {
-    public class Skill : Character
+    public class Skill
 
     {
-        public int manacost { get; set; }
-        public Skill(int level, string name, int hp,int mp, int atk)
-            : base(level, name, hp, mp, atk)
+        public string Name { get; }
+        public int ManaCost { get; }
+        public int DamageMultiplier { get; }
+        public int Range { get; set; }
+
+        public Skill(string name, int manaCost, int damageMultiplier, int range)
         {
-            
+            Name = name;
+            ManaCost = manaCost;
+            DamageMultiplier = damageMultiplier;
+            Range = range;
         }
-        public void Skill1(Enemy enemy)
+
+        public void Use(Player player, Enemy enemy)
         {
-            Console.WriteLine("스킬1 사용");
-            enemy.TakeDamage(Atk * 2);
-        }
-        public void Skill2(Enemy enemy)
-        {
-            Console.WriteLine("스킬2 사용");
-            enemy.TakeDamage(Atk * 3);
-        }
-        public void Skill3(Enemy enemy)
-        {
-            Console.WriteLine("스킬3 사용");
-            enemy.TakeDamage(Atk * 4);
+            if (player.Mp >= ManaCost)
+            {
+                player.Mp -= ManaCost;
+                int damage = player.Atk * DamageMultiplier;
+                enemy.TakeDamage(damage);
+                Console.WriteLine($"{player.Name}이(가) {Name} 사용! {enemy.Name}에게 {damage} 피해!");
+            }
+            else
+            {
+                Console.WriteLine($"{player.Name}의 마나가 부족합니다!");
+            }
         }
     }
 }
