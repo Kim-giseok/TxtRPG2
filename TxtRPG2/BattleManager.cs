@@ -17,7 +17,7 @@ namespace TxtRPG2
 
         public BattleManager(Player player)
         {
-            player = player;
+            this.player = player;
             Enemys =
             [
                 new Enemy(2, "미니언", 15, 5),
