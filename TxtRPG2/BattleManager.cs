@@ -13,6 +13,8 @@ namespace TxtRPG2
         Player player;
         Enemy[] Enemys;
         Enemy[] spawn;
+
+        public int EnterHp { get; private set; }
         public bool Victory { get => player.Hp != 0; }
 
         public BattleManager(Player player)
@@ -24,6 +26,7 @@ namespace TxtRPG2
                 new Enemy(3, "공허충", 10, 9),
                 new Enemy(5, "대포미니언", 25, 8)
             ];
+            EnterHp = player.Hp;
         }
 
         void ShowInfos(bool select = false)
@@ -51,6 +54,8 @@ namespace TxtRPG2
 
         public void Battle()
         {
+            // 입장시 플레이어의 Hp저장
+            EnterHp = player.Hp;
             // 1~4마리의 랜덤한 수의 적 출현
             spawn = new Enemy[new Random().Next(4)];
 
@@ -165,6 +170,39 @@ namespace TxtRPG2
                 if (!monster.IsDead)
                 {
                     Attack(monster, player);
+                }
+            }
+        }
+
+        void Result()
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("Battle!! - Result");
+                Console.WriteLine();
+                if (Victory)
+                {
+                    Console.WriteLine("Victory");
+                    Console.WriteLine();
+                    Console.WriteLine($"던전에서 몬스터 {spawn.Length}마리를 잡았습니다.");
+                }
+                else
+                {
+                    Console.WriteLine("You Lose");
+                }
+                Console.WriteLine();
+                Console.WriteLine($"Lv.{player.Level} {player.Name}");
+                Console.WriteLine($"HP {EnterHp} -> {player.Hp}");
+
+                Console.WriteLine();
+                Console.WriteLine("0. 다음");
+                if (ConsoleUtility.GetInput(out int choice, 0, 0))
+                {
+                    switch (choice)
+                    {
+                        case 0: return;
+                    }
                 }
             }
         }
