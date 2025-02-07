@@ -45,5 +45,17 @@ namespace TxtRPG2
                 }
             }
         }
+        public void Player()
+        {
+            ConsoleUtility.Loading();
+
+            Console.Clear();
+        }
+        public void Battle()
+        {
+            ConsoleUtility.Loading();
+
+            Console.Clear();
+        }
     }
 }
