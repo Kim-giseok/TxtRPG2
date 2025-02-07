@@ -8,6 +8,7 @@
             //깃 연동 확인(권수민)
             //깃 연동 확인(양원준)
             //222
+            //실행 확인 메인메서드
             Console.Write("플레이어의 이름을 입력해주세요 : ");
             string playerName = Console.ReadLine();
 
