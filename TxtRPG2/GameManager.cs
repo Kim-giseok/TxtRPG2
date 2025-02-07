@@ -29,20 +29,14 @@ namespace TxtRPG2
                 Console.WriteLine("2. 전투 시작");
                 Console.Write("선택 (1, 2): ");
 
-                int input = ConsoleUtility.GetInput(1, 2);
+                if(ConsoleUtility.GetInput(out int input, 1, 2))
+                {
+                    break;
+                }
 
                 // 입력한 값에 대한 출력
 
-                switch (input)
-                {
-                    case 1:
-                        ShowStat();
-                        break;
-                    case 2:
-                        EnterBattle();
-                        break;
-
-                }
+                
             }
         }
         public void ShowStat()
