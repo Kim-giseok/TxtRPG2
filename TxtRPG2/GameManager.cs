@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TxtRPG2
 {
-    class Program
+    class GameManager
     {
         static void Main(string[] args)
         {
