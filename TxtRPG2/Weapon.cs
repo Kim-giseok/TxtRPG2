@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace TxtRPG2
 {
-    internal class Weapon : Item
+    internal class Weapon : Item, IWeapon
     {
-        public Weapon(string name, int atk, string description, int price, int isSoid) : base(name, atk, 0, description, price)
+        public int Atk { get; }
+        public Weapon(string name, int atk, string description, int price, int isSoid) : base(name, description, price)
         { }
 
         public override void ApearInfo(bool inShop = false)

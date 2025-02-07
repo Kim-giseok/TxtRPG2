@@ -8,9 +8,10 @@ using System.Xml.Linq;
 
 namespace TxtRPG2
 {
-    internal class Amor : Item
+    internal class Amor : Item, IArmor
     {
-        public Amor(string name, int def, string description, int price, int isSoid) : base(name, 0, def, description, price)
+        public int Def { get; }
+        public Amor(string name, int def, string description, int price, int isSoid) : base(name, description, price)
         { }
 
         public override void ApearInfo(bool inShop = false)
