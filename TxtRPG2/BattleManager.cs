@@ -41,7 +41,7 @@ namespace TxtRPG2
                 {
                     Console.Write($"{i + 1} ");
                 }
-                spawn[i].ApearInfo();
+                spawn[i].AppearInfo();
             }
 
             // 플레이어의 레벨 이름(직업) \n 체력/최대체력 표시
