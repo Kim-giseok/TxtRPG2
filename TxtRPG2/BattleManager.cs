@@ -57,7 +57,7 @@ namespace TxtRPG2
             // 입장시 플레이어의 Hp저장
             EnterHp = player.Hp;
             // 1~4마리의 랜덤한 수의 적 출현
-            spawn = new Enemy[new Random().Next(4)];
+            spawn = new Enemy[new Random().Next(1, 4)];
 
             for (int i = 0; i < spawn.Length; i++)
             {
@@ -83,11 +83,11 @@ namespace TxtRPG2
 
                 ShowInfos();
                 // 선택지 표시/선택
+                Console.WriteLine("1. 공격");
                 switch (ConsoleUtility.GetInput(1, 1))
                 {
                     case 1:
                         PlayerTurn();
-                        EnemyTurn();
                         break;
                 }
             }
@@ -146,11 +146,12 @@ namespace TxtRPG2
                         {
                             Console.WriteLine("잘못된 입력입니다.");
                             Thread.Sleep(500);
-                            break;
+                            continue;
                         }
                         else
                         {
                             Attack(player, spawn[choice - 1]);
+                            EnemyTurn();
                             return;
                         }
                 }
