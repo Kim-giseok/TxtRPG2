@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace TxtRPG2
@@ -13,6 +14,7 @@ namespace TxtRPG2
         Player player;
         Enemy[] Enemys;
         Enemy[] spawn;
+        Skill[] Skills;
 
         public int EnterHp { get; private set; }
         public bool Victory { get => player.Hp != 0; }
@@ -62,7 +64,7 @@ namespace TxtRPG2
             for (int i = 0; i < spawn.Length; i++)
             {
                 int idx = new Random().Next(Enemys.Length);
-                spawn[i] = new Enemy(Enemys[idx].Level, Enemys[idx].Name, Enemys[idx].Hp,Enemys[idx].Mp, Enemys[idx].Atk);
+                spawn[i] = new Enemy(Enemys[idx].Level, Enemys[idx].Name, Enemys[idx].Hp, Enemys[idx].Mp, Enemys[idx].Atk);
             }
 
             while (true)
@@ -85,13 +87,15 @@ namespace TxtRPG2
                 // 선택지 표시/선택
                 Console.WriteLine("1. 공격");
                 Console.WriteLine("2. 스킬");
-                switch (ConsoleUtility.GetInput(1, 1))
+                switch (ConsoleUtility.GetInput(1, 2))
                 {
                     case 1:
                         PlayerTurn();
                         break;
                     case 2:
                         // 스킬 사용
+                        int choice = 2; // 예시로 2를 선택한 경우
+                        SkillUse(player, spawn[choice - 1]);
                         break;
                 }
             }
@@ -132,7 +136,7 @@ namespace TxtRPG2
                 }
             }
         }
-
+        
         void PlayerTurn()
         {
             while (true)
@@ -145,6 +149,10 @@ namespace TxtRPG2
                 switch (choice)
                 {
                     case 0: return;
+
+                    case 2:
+                        SkillUse(player, spawn[choice-1]);
+                        return;
                     default:
                         if (spawn[choice - 1].IsDead)
                         {
@@ -202,5 +210,42 @@ namespace TxtRPG2
                 }
             }
         }
+        void SkillUse(Character actor, Character target)
+        {
+            while (true)
+            {
+                ShowInfos(true);
+                Console.WriteLine("[스킬 목록]");
+                Console.WriteLine("==========================");
+                for (int i = 0; i < player.Skills.Count; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {player.Skills[i].Name}");
+                }
+                Console.WriteLine("==========================");
+                Console.WriteLine("0. 취소");
+
+                int skillChoice = ConsoleUtility.GetInput(0, player.Skills.Count);
+                switch (skillChoice)
+                {
+                    case 0: return;
+                    default:
+                        int choice = ConsoleUtility.GetInput(0, spawn.Length);
+                        if (spawn[choice - 1].IsDead)
+                        {
+                            Console.WriteLine("잘못된 입력입니다.");
+                            Thread.Sleep(500);
+                            continue;
+                        }
+                        else
+                        {
+                            player.Skills[skillChoice - 1].Use(player, spawn[choice - 1]);
+                            // 스킬 사용
+                            return;
+                        }
+                }
+            }
+        }
+
+
     }
 }

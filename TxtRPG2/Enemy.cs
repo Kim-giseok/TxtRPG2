@@ -12,10 +12,16 @@ namespace TxtRPG2
     public class Enemy : Character // 인터페이스 상속
     {
         public bool IsDead { get => Hp <= 0; }// 사망여부
-
-        public Enemy(int level, string name, int hp,int mp, int atk) // 레벨, 이름, 체력, 공격력을 받는 생성자
-            : base(level, name, hp,mp, atk) // 부모 생성자 호출
-        { }
+        public List<Skill> Skills { get; set; }
+        public Enemy(int level, string name, int hp, int mp, int atk) // 레벨, 이름, 체력, 공격력을 받는 생성자
+            : base(level, name, hp, mp, atk) // 부모 생성자 호출
+        {
+            Skills = new List<Skill>
+            {
+                new Skill("평타", 0, 1, 1),
+                new Skill("강타", 10, 5, 2)
+            };
+        }
 
         public void TakeDamage(int Damage)
         {
@@ -25,12 +31,7 @@ namespace TxtRPG2
                 Hp = 0;
             }
         }
-        public void UseSkill()
-        {
-            Skill skill = Skills[0];
-            int damage = Atk * skill.DamageMultiplier;
-            TakeDamage(damage);
-        }
+        
 
         public void AppearInfo()// 적의 정보 출력
         {
