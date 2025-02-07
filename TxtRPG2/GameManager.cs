@@ -70,7 +70,6 @@ namespace TxtRPG2
 
             battleManager.Battle();
 
-            ConsoleUtility.GetInput(0, 0);
             StartScene();
         }
     }
