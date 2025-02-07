@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace TxtRPG2
 {
+    internal interface IWeapon
+    {
+        public int Atk { get; }
+    }
+
     internal class Weapon : Item, IWeapon
     {
         public int Atk { get; }

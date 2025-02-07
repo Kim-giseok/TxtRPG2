@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace TxtRPG2
 {
+    internal interface IHpPotion
+    {
+        public int Hp { get; }
+    }
+
     internal class HpPotion:Item, IHpPotion
     {
         public int Hp { get; }

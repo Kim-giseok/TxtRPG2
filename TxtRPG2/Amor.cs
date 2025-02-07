@@ -8,6 +8,11 @@ using System.Xml.Linq;
 
 namespace TxtRPG2
 {
+    internal interface IArmor
+    {
+        public int Def { get; }
+    }
+
     internal class Amor : Item, IArmor
     {
         public int Def { get; }
