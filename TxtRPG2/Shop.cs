@@ -103,7 +103,26 @@ namespace TxtRPG2
 
         void SellItem()
         {
+            while (true)
+            {
+                Console.Clear();
 
+                Console.WriteLine("상점 - 아이템 판매");
+                //보유골드와 자신의 아이템들을 보여줍니다.
+
+                Console.WriteLine("0. 나가기");
+                int choice = ConsoleUtility.GetInput(0, Items.Length);
+                switch (choice)
+                {
+                    case 0:
+                        return;
+                    default:
+                        //플레이어의 아이템을 판매합니다.
+                        Console.WriteLine("판매가 완료되었습니다.");
+                        Thread.Sleep(500);
+                        break;
+                }
+            }
         }
     }
 }
