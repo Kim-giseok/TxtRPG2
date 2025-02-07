@@ -24,6 +24,21 @@ namespace TxtRPG2
 
         void ShowItems(bool buyMode = false)
         {
+            Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
+            Console.WriteLine();
+            Console.WriteLine("[보유 골드]");
+            Console.WriteLine($"{player.Gold} G");
+            Console.WriteLine();
+
+            //판매일 경우 플래이어가 소유중인 아이템을 보여줍니다.
+
+            Console.WriteLine("[아이템 목록]");
+            Console.WriteLine();
+            for (int i = 0; i < Items.Length; i++)
+            {
+                Console.Write("- ");
+                Items[i].ApearInfo(true);
+            }
         }
 
         public void ShopEnter()
