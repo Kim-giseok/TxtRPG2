@@ -43,6 +43,29 @@ namespace TxtRPG2
 
         public void ShopEnter()
         {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("상점");
+                //보유골드와 상점의 아이템들을 보여줍니다.
+                ShowItems();
+
+                Console.WriteLine();
+                Console.WriteLine("1. 아이템 구매");
+                Console.WriteLine("2. 아이템 판매");
+                Console.WriteLine("0. 나가기");
+                switch (ConsoleUtility.GetInput(0, 2))
+                {
+                    case 0:
+                        return;
+                    case 1:
+                        BuyItem();
+                        break;
+                    case 2:
+                        SellItem();
+                        break;
+                }
+            }
         }
 
         void BuyItem()
