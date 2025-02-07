@@ -8,10 +8,12 @@ namespace TxtRPG2
 {
     internal class Item
     {
-        public string Name {  get; }
+        public string Name { get; }
         public int Atk { get; }
         public int Def { get; }
         public string Description { get; }
+        public int Price { get; }
+        public bool IsSold { get; }
 
         public virtual void ApearInfo() { }
     }
