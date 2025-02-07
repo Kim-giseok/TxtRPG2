@@ -95,6 +95,8 @@ namespace TxtRPG2
                     }
                 }
             }
+            // 전투 종료 후 결과화면 출력
+            Result();
         }
 
         void Attack(Character actor, Character target)
