@@ -31,15 +31,19 @@
             Console.WriteLine($"Gold : {Gold} G");
             Console.Write("\n0.나가기\n>> ");
 
-            string input = Console.ReadLine();
-            if (input == "0")
-            {
-                Console.WriteLine("상태보기 창을 닫습니다.");
-            }
-            else
-            {
-                Console.WriteLine("잘못된 입력입니다.");
-            }
+            Console.WriteLine(ConsoleUtility.GetInput); //입력값을 받아오는 메서드
+
+
+
+            /*  메인에서
+                플레이어 객체 생성
+                Player player = new Player(playerName, 1, "전사", 10, 5, 100, 1500);
+
+                상태 보기 메서드 호출
+                player.Status();
+            */
+
         }
+
     }
 }
