@@ -25,9 +25,8 @@
             Console.WriteLine($"방어력 : {Def}");
             Console.WriteLine($"체력 : {Hp}");
             Console.WriteLine($"Gold : {Gold} G");
-            Console.Write("\n0.나가기\n>> ");
+            Console.WriteLine("\n0.나가기\n");
 
-            Console.WriteLine(ConsoleUtility.GetInput); //입력값을 받아오는 메서드
 
 
 
