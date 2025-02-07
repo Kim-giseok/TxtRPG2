@@ -70,7 +70,35 @@ namespace TxtRPG2
 
         void BuyItem()
         {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("상점 - 아이템 구매");
+                //보유골드와 상점의 아이템들을 보여줍니다.
+                ShowItems(true);
+                Console.WriteLine("0. 나가기");
 
+                int choice = ConsoleUtility.GetInput(0, Items.Length);
+                switch (choice)
+                {
+                    case 0:
+                        return;
+                    default:
+                        //고른 아이템을 구매합니다.
+                        if (Items[choice - 1].IsSold) //이미 구매했을 경우
+                        { Console.WriteLine("이미 구매한 아이템입니다."); }
+                        else if (Items[choice - 1].Price <= player.Gold) //금액이 충분한 경우
+                        {
+                            //플레이어가 아이템을 구매하는 매서드
+                            Items[choice - 1].IsSold = true;
+                            Console.WriteLine("구매를 완료했습니다.");
+                        }
+                        else //금액이 부족한 경우
+                        { Console.WriteLine("Gold 가 부족합니다."); }
+                        Thread.Sleep(500);
+                        break;
+                }
+            }
         }
 
         void SellItem()
