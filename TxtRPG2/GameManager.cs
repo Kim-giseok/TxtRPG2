@@ -12,9 +12,9 @@ namespace TxtRPG2
         private Player player;
         private BattleManager battleManager;
 
-        public GameManager
+        public GameManager()
         {
-            player = new player("전사,100,10,5")
+            player = new player("전사",100,10,5);
             battleManager = new battleManager(player);
         }
 
@@ -56,6 +56,8 @@ namespace TxtRPG2
 
             Console.Clear();
 
+            player.Status();
+
             ConsoleUtility.GetInput(0, 0);
             StartScene();
 
@@ -67,6 +69,8 @@ namespace TxtRPG2
             ConsoleUtility.Loading();
 
             Console.Clear();
+
+            battleManager.Battle();
 
             ConsoleUtility.GetInput(0, 0);
             StartScene();
