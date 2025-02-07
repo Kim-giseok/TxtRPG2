@@ -27,26 +27,21 @@ namespace TxtRPG2
                 Console.WriteLine("1. 상태 보기");
                 Console.WriteLine("2. 전투 시작");
                 Console.WriteLine("0. 종료");
-                Console.Write("선택 (1, 2, 0): ");
+                Console.Write("선택 (1, 2): ");
 
-                string userPlay = Console.ReadLine();
+                int input = ConsoleUtility.GetInput(1, 2);
 
                 // 입력한 값에 대한 출력
 
-                switch (userPlay)
+                switch (input)
                 {
-                    case "1":
+                    case 1:
                         Player();
                         break;
-                    case "2":
+                    case 2:
                         Battle();
                         break;
-                    case "0":
-                        Console.WriteLine("게임을 종료합니다. 안녕히 가세요!");
-                        return;
-                    default:
-                        Console.WriteLine("잘못된 입력입니다. 다시 시도해주세요.");
-                        break;
+                        
                 }
             }
         }
