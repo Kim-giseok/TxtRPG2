@@ -42,7 +42,7 @@ namespace TxtRPG2
                     case 2:
                         Battle();
                         break;
-                        
+
                 }
             }
         }
