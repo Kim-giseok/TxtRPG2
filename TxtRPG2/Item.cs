@@ -13,7 +13,7 @@ namespace TxtRPG2
         public int Def { get; }
         public string Description { get; }
         public int Price { get; }
-        public bool IsSold { get; }
+        public bool IsSold { get; set; }
 
         public Item (string name, int atk, int def, string description, int price)
         {
@@ -25,6 +25,6 @@ namespace TxtRPG2
             IsSold = false;
         }
 
-        public virtual void ApearInfo() { }
+        public virtual void ApearInfo(bool inShop = false) { }
     }
 }
