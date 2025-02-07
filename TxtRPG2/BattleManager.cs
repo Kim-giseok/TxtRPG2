@@ -83,16 +83,12 @@ namespace TxtRPG2
 
                 ShowInfos();
                 // 선택지 표시/선택
-                Console.WriteLine("1. 공격");
-                if (ConsoleUtility.GetInput(out int choice, 0, 1))
+                switch (ConsoleUtility.GetInput(1, 1))
                 {
-                    switch (choice)
-                    {
-                        case 1:
-                            PlayerTurn();
-                            EnemyTurn();
-                            break;
-                    }
+                    case 1:
+                        PlayerTurn();
+                        EnemyTurn();
+                        break;
                 }
             }
             // 전투 종료 후 결과화면 출력
@@ -126,12 +122,9 @@ namespace TxtRPG2
 
                 Console.WriteLine();
                 Console.WriteLine("0. 다음");
-                if (ConsoleUtility.GetInput(out int choice, 0, 0))
+                switch (ConsoleUtility.GetInput(0, 0))
                 {
-                    switch (choice)
-                    {
-                        case 0: return;
-                    }
+                    case 0: return;
                 }
             }
         }
@@ -143,24 +136,23 @@ namespace TxtRPG2
                 ShowInfos(true);
 
                 Console.WriteLine("0. 취소");
-                if (ConsoleUtility.GetInput(out int choice, 0, spawn.Length))
+
+                int choice = ConsoleUtility.GetInput(0, spawn.Length);
+                switch (choice)
                 {
-                    switch (choice)
-                    {
-                        case 0: return;
-                        default:
-                            if (spawn[choice - 1].IsDead)
-                            {
-                                Console.WriteLine("잘못된 입력입니다.");
-                                Thread.Sleep(500);
-                                break;
-                            }
-                            else
-                            {
-                                Attack(player, spawn[choice - 1]);
-                                return;
-                            }
-                    }
+                    case 0: return;
+                    default:
+                        if (spawn[choice - 1].IsDead)
+                        {
+                            Console.WriteLine("잘못된 입력입니다.");
+                            Thread.Sleep(500);
+                            break;
+                        }
+                        else
+                        {
+                            Attack(player, spawn[choice - 1]);
+                            return;
+                        }
                 }
             }
         }
@@ -199,12 +191,9 @@ namespace TxtRPG2
 
                 Console.WriteLine();
                 Console.WriteLine("0. 다음");
-                if (ConsoleUtility.GetInput(out int choice, 0, 0))
+                switch (ConsoleUtility.GetInput(0, 0))
                 {
-                    switch (choice)
-                    {
-                        case 0: return;
-                    }
+                    case 0: return;
                 }
             }
         }
