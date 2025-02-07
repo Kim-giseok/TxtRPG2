@@ -27,7 +27,7 @@
                 }
                 else if (input == "2")
                 {
-                    player.GetDamage(10); // 데미지 받기
+                    player.TakeDamage(10); // 데미지 받기
                 }
                 else
                 {
