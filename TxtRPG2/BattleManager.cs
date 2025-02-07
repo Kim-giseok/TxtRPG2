@@ -79,16 +79,15 @@ namespace TxtRPG2
                 ShowInfos();
                 // 선택지 표시/선택
                 Console.WriteLine("1. 공격");
-                GameManager.Select(out byte choice);
-                switch (choice)
+                if (ConsoleUtility.GetInput(out int choice, 0, 1))
                 {
-                    case 1:
-                        PlayerTurn();
-                        break;
-                    default:
-                        Console.WriteLine("잘못된 입력입니다.");
-                        Thread.Sleep(500);
-                        break;
+                    switch (choice)
+                    {
+                        case 1:
+                            PlayerTurn();
+                            EnemyTurn();
+                            break;
+                    }
                 }
             }
         }
@@ -120,13 +119,13 @@ namespace TxtRPG2
 
                 Console.WriteLine();
                 Console.WriteLine("0. 다음");
-                if (GameManager.Select(out byte choice) && choice == 0)
+                if (ConsoleUtility.GetInput(out int choice, 0, 0))
                 {
-                    EnemyTurn();
-                    break;
+                    switch (choice)
+                    {
+                        case 0: return;
+                    }
                 }
-                Console.WriteLine("잘못된 입력입니다.");
-                Thread.Sleep(500);
             }
         }
 
@@ -137,25 +136,24 @@ namespace TxtRPG2
                 ShowInfos(true);
 
                 Console.WriteLine("0. 취소");
-
-                if (GameManager.Select(out byte choice) && choice == 0)
+                if (ConsoleUtility.GetInput(out int choice, 0, spawn.Length))
                 {
-                    break;
-                }
-                try
-                {
-                    if (spawn[choice - 1].IsDead)
+                    switch (choice)
                     {
-                        throw new Exception("");
+                        case 0: return;
+                        default:
+                            if (spawn[choice - 1].IsDead)
+                            {
+                                Console.WriteLine("잘못된 입력입니다.");
+                                Thread.Sleep(500);
+                                break;
+                            }
+                            else
+                            {
+                                Attack(player, spawn[choice - 1]);
+                                return;
+                            }
                     }
-
-                    Attack(player, spawn[choice - 1]);
-                    return;
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("잘못된 입력입니다.");
-                    Thread.Sleep(500);
                 }
             }
         }
