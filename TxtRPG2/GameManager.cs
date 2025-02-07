@@ -13,10 +13,10 @@ namespace TxtRPG2
         {
             // 게임 시작 인사
             Console.WriteLine("스파르타 마을에 오신 여러분 환영합니다. \n이제 전투를 시작할 수 있습니다.");
-            MainScreen();
+            StartScene();
         }
 
-        static void MainScreen()
+        static void StartScene()
         {
             while (true)
             {   //로딩 중 표시
@@ -27,7 +27,6 @@ namespace TxtRPG2
                 Console.WriteLine("\n무엇을 하시겠습니까?");
                 Console.WriteLine("1. 상태 보기");
                 Console.WriteLine("2. 전투 시작");
-                Console.WriteLine("0. 종료");
                 Console.Write("선택 (1, 2): ");
 
                 int input = ConsoleUtility.GetInput(1, 2);
@@ -37,16 +36,16 @@ namespace TxtRPG2
                 switch (input)
                 {
                     case 1:
-                        Player();
+                        ShowStat();
                         break;
                     case 2:
-                        Battle();
+                        EnterBattle();
                         break;
 
                 }
             }
         }
-        public void Player()
+        public void ShowStat()
         {
             ConsoleUtility.Loading();
 
@@ -54,9 +53,9 @@ namespace TxtRPG2
             player.Status();
 
             ConsoleUtility.GetInput(0, 0);
-            Select();
+            StartScene();
         }
-        public void Battle()
+        public void EnterBattle()
         {
             ConsoleUtility.Loading();
 
