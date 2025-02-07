@@ -46,12 +46,12 @@ namespace TxtRPG2
             }
         }
 
-        public void ApearInfo()
+        public void ApearInfo()// 적의 정보 출력
         {
             if (IsDead)
             {
                 Console.ForegroundColor = ConsoleColor.DarkGray;
-                Console.WriteLine($"{Name} Dead");
+                Console.WriteLine($"Lv.{Level} {Name} Dead");
 
             }
             else
