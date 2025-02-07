@@ -14,6 +14,7 @@ namespace TxtRPG2
         int Atk { get; set; }
         int Mp { get; set; }
         int Level { get; set; }
+        List<Skill> Skills { get; set; }
         void TakeDamage(int Damage);
 
     }
@@ -25,12 +26,14 @@ namespace TxtRPG2
         public int Atk { get; set; }
         public int Level { get; set; }
         public int Mp { get; set; }
+        public List<Skill> Skills { get; set; } = new List<Skill>();
 
         public Character(int level, string name, int hp,int mp, int atk)
         {
             Level = level;
             Name = name;
             Hp = hp;
+            Mp = mp;
             Atk = atk;
         }
 
@@ -40,6 +43,13 @@ namespace TxtRPG2
             if (Hp <= 0)
             {
                 Hp=0;
+            }
+        }
+        public void UseSkill(int idx, Skill skill)
+        {
+            if(idx >= 0&& idx < Skills.Count)
+            {
+                
             }
         }
     }
