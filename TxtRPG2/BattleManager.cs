@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace TxtRPG2
 {
@@ -123,7 +124,7 @@ namespace TxtRPG2
 
         void PlayerAttack(int idx)
         {
-            int damage = player.Atk * new Random().Next(90, 110) / 100;
+            int damage = (int)(player.Atk * new Random().Next(90, 110) / 100f + 0.5f);
             int Hp = spawn[idx].Hp;
             spawn[idx].GetDamage(damage);
             while (true)
@@ -171,7 +172,42 @@ namespace TxtRPG2
 
         void EnemyAttack(Enemy enemy)
         {
+
             player.GetDamage(enemy.Atk);
+            int damage = (int)(player.Atk * new Random().Next(90, 110) / 100f + 0.5f);
+            int Hp = player.HP;
+
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("Battle!!");
+                Console.WriteLine();
+
+                Console.WriteLine($"Lv.{enemy.Level} {enemy.Name}의 공격!");
+                Console.WriteLine($"{player.Name}을(를) 맞췄습니다. [데미지 : {damage}]");
+
+                Console.WriteLine();
+                Console.WriteLine($"Lv.{player.Level} {player.Name}");
+
+                if (!Victory)
+                {
+                    Console.WriteLine($"HP {Hp} -> dead");
+                }
+                else
+                {
+                    Console.WriteLine($"HP {Hp} -> {player.Hp}");
+                }
+
+                Console.WriteLine();
+                Console.WriteLine("0. 다음");
+                if (GameManager.Select(out byte choice) && choice == 0)
+                {
+                    EnemyTurn();
+                    break;
+                }
+                Console.WriteLine("잘못된 입력입니다.");
+                Thread.Sleep(500);
+            }
         }
     }
 }
