@@ -14,7 +14,7 @@ namespace TxtRPG2
 
         public GameManager()
         {
-            player = new Player("전사",100,10,5);
+            player = new Player("Chad", 1, "전사", 10, 5, 100, 1500);
             battleManager = new BattleManager(player);
         }
 
@@ -50,6 +50,7 @@ namespace TxtRPG2
                 }
             }
         }
+
         public void ShowStat()
         {
             ConsoleUtility.Loading();
