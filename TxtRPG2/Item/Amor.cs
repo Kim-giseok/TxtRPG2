@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace TxtRPG2
 {
@@ -16,8 +14,11 @@ namespace TxtRPG2
     internal class Amor : Item, IArmor
     {
         public int Def { get; }
+
         public Amor(string name, int def, string description, int price) : base(name, description, price)
-        { }
+        {
+            Def = def;
+        }
 
         public override void ApearInfo(bool inShop = false)
         {
@@ -34,6 +35,5 @@ namespace TxtRPG2
                 }
             }
         }
-
     }
 }

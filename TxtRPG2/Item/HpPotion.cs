@@ -11,7 +11,7 @@ namespace TxtRPG2
         public int Hp { get; }
     }
 
-    internal class HpPotion:Item, IHpPotion
+    internal class HpPotion : Item, IHpPotion
     {
         public int Hp { get; }
 

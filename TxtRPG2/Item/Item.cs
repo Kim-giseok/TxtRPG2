@@ -13,7 +13,7 @@ namespace TxtRPG2
         public int Price { get; }
         public bool IsSold { get; set; }
 
-        public Item (string name, string description, int price)
+        public Item(string name, string description, int price)
         {
             Name = name;
             Description = description;
@@ -35,7 +35,6 @@ namespace TxtRPG2
                     Console.WriteLine($"\t| {Price} G");
                 }
             }
-
         }
     }
 }
