@@ -1,30 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TxtRPG2;
 
 namespace TxtRPG2
 {
-    interface IEnemy // 인터페이스 선언 
+    
+    public class Enemy : Character // 인터페이스 상속
     {
-        string Name { get; set; }
-        int Hp { get; set; }
-        int Atk { get; set; }
-        int Level { get; set; }
-        bool IsDead { get; set; }
-
-        void GetDamage(int Damage);// 받는 피해
-    }
-    public class Enemy : IEnemy // 인터페이스 상속
-    {
-        public string Name { get; set; }//이름
-        public int Hp { get; set; }// 체력
-        public int Atk { get; set; }// 공격력
-        public int Level { get; set; }// 레벨
         public bool IsDead { get; set; }// 사망여부
 
-        public Enemy(int level, string name, int hp, int atk ) // 레벨, 이름, 체력, 공격력을 받는 생성자
+        public Enemy(int level, string name, int hp, int atk) // 레벨, 이름, 체력, 공격력을 받는 생성자
         {
             this.Level = level;
             this.Name = name;
@@ -33,15 +22,44 @@ namespace TxtRPG2
             this.IsDead = false;
         }
 
-        public void GetDamage(int Damage) // 피해를 받는 메소드
+        public void TakeDamage(int Damage)
         {
-            Console.WriteLine($"적이 {Damage}만큼의 피해를 받았습니다.");
+            if (IsDead)
+            {
+                Console.WriteLine($"{Name}은 이미 죽었습니다.");
+                return;
+            }
+            // 공격력의 ±10% 변동을 적용한 최종 공격력 계산
+            Damage = (int)Math.Ceiling(Damage * (1 + (new Random().NextDouble() * 0.2 - 0.1)));
+            Console.WriteLine($"{Name}이 {Damage}만큼의 피해를 받았습니다.(기준 공격력: {Atk})");
+            
             Hp -= Damage;
             if (Hp <= 0)
             {
+                Hp = 0;
                 IsDead = true;
-                Console.WriteLine("적이 죽었습니다.");
+                Console.WriteLine($"{Name}이 죽었습니다.");
             }
+            else
+            {
+                Console.WriteLine($"남은 체력: {Hp - Damage}");
+            }
+        }
+
+        public void ApearInfo()
+        {
+            if (IsDead)
+            {
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.WriteLine($"{Name} Dead");
+
+            }
+            else
+            {
+                Console.WriteLine($"Lv.{Level} 이름: {Name} 체력: {Hp} 공격력: {Atk}");
+            }
+
+            Console.ResetColor();
         }
     }
 }
