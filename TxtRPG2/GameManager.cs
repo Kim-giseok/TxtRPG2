@@ -13,10 +13,10 @@ namespace TxtRPG2
         {
             // 게임 시작 인사
             Console.WriteLine("스파르타 마을에 오신 여러분 환영합니다. \n이제 전투를 시작할 수 있습니다.");
-            Select();
+            MainScreen();
         }
 
-        static void Select()
+        static void MainScreen()
         {
             while (true)
             {   //로딩 중 표시
