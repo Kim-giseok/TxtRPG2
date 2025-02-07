@@ -23,6 +23,14 @@ namespace TxtRPG2
         public int Hp { get; set; }
         public int Atk { get; set; }
         public int Level { get; set; }
+        public Character(string name, int hp, int atk, int level)
+        {
+            Name = name;
+            Hp = hp;
+            Atk = atk;
+            Level = level;
+        }
+
         public void TakeDamage(int Damage)
         {
             // 공격력의 ±10% 변동을 적용한 최종 공격력 계산
@@ -38,7 +46,7 @@ namespace TxtRPG2
             }
             else
             {
-                Console.WriteLine($"남은 체력: {Hp}");
+                Console.WriteLine($"{Name}남은 체력: {Hp}");
             }
         }
 

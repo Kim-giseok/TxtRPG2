@@ -14,11 +14,9 @@ namespace TxtRPG2
         public bool IsDead { get; set; }// 사망여부
 
         public Enemy(int level, string name, int hp, int atk) // 레벨, 이름, 체력, 공격력을 받는 생성자
+            : base(name, hp, atk, level) // 부모 생성자 호출
         {
-            this.Level = level;
-            this.Name = name;
-            this.Hp = hp;
-            this.Atk = atk;
+            
             this.IsDead = false;
         }
 
@@ -46,7 +44,7 @@ namespace TxtRPG2
             }
         }
 
-        public void ApearInfo()// 적의 정보 출력
+        public void AppearInfo()// 적의 정보 출력
         {
             if (IsDead)
             {
