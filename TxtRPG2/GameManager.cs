@@ -9,7 +9,14 @@ namespace TxtRPG2
 {
     class GameManager
     {
+        private Player player;
+        private BattleManager battleManager;
 
+        public GameManager
+        {
+            player = new player("전사,100,10,5")
+            battleManager = new battleManager(player);
+        }
 
         public void StartScene()
         {
