@@ -43,10 +43,7 @@ namespace TxtRPG2
                     case 2:
                         EnterBattle();
                         break;
-
                         // 입력한 값에 대한 출력
-
-
                 }
             }
         }
