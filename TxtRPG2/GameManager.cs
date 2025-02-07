@@ -36,10 +36,10 @@ namespace TxtRPG2
                 switch (userPlay)
                 {
                     case "1":
-                        ShowStat();
+                        Player();
                         break;
                     case "2":
-                        EnterBattle();
+                        Battle();
                         break;
                     case "0":
                         Console.WriteLine("게임을 종료합니다. 안녕히 가세요!");
