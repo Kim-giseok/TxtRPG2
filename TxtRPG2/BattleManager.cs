@@ -50,7 +50,7 @@ namespace TxtRPG2
             Console.WriteLine();
             Console.WriteLine("[내정보]");
             Console.WriteLine($"Lv.{player.Level}\t{player.Name} ({player.Job})");
-            Console.WriteLine($"HP {player.Hp:D3}/100");
+            Console.WriteLine($"HP {player.Hp:D3}/100 Mp {player.Mp:D3}/20");
             Console.WriteLine();
         }
 
@@ -136,7 +136,7 @@ namespace TxtRPG2
                 }
             }
         }
-        
+
         void PlayerTurn()
         {
             while (true)
@@ -151,7 +151,7 @@ namespace TxtRPG2
                     case 0: return;
 
                     case 2:
-                        SkillUse(player, spawn[choice-1]);
+                        SkillUse(player, spawn[choice - 1]);
                         return;
                     default:
                         if (spawn[choice - 1].IsDead)
@@ -238,10 +238,20 @@ namespace TxtRPG2
                         }
                         else
                         {
+                            if (player.Mp < player.Skills[skillChoice - 1].ManaCost)
+                            {
+                                Console.WriteLine("마나가 부족합니다.");
+                                Thread.Sleep(500);
+                                continue;
+                            }
                             player.Skills[skillChoice - 1].Use(player, spawn[choice - 1]);
+                            EnemyTurn();
+                            
                             // 스킬 사용
+                            
                             return;
                         }
+
                 }
             }
         }

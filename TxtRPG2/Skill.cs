@@ -30,12 +30,9 @@ namespace TxtRPG2
                 player.Mp -= ManaCost;
                 int damage = player.Atk * DamageMultiplier;
                 enemy.TakeDamage(damage);
-                Console.WriteLine($"{player.Name}이(가) {Name} 사용! {enemy.Name}에게 {damage} 피해!");
+                
             }
-            else
-            {
-                Console.WriteLine($"{player.Name}의 마나가 부족합니다!");
-            }
+            
         }
     }
 }
