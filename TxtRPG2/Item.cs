@@ -21,6 +21,21 @@ namespace TxtRPG2
             IsSold = false;
         }
 
-        public virtual void ApearInfo(bool inShop = false) { }
+        public virtual void ApearInfo(bool inShop = false)
+        {
+            Console.Write($"{Name}\t| \t\t | {Description}");
+            if (inShop)
+            {
+                if (IsSold)
+                {
+                    Console.WriteLine($"\t| 판매완료");
+                }
+                else
+                {
+                    Console.WriteLine($"\t| {Price} G");
+                }
+            }
+
+        }
     }
 }
