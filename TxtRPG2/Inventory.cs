@@ -22,18 +22,30 @@ namespace TxtRPG2
         public enum Showmode { Idle, Equip, Sell }
         public void ShowItems(Showmode mode = Showmode.Idle)
         {
+            if (mode != Showmode.Sell)
+            {
+                Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.");
+                Console.WriteLine();
+            }
             Console.WriteLine("[아이템 목록]");
             Console.WriteLine();
 
-
-            if (mode == Showmode.Idle)
+            if (mode == Showmode.Idle && Potions.Count > 0)
             {
-                foreach (var potion in Potions)
+                Console.WriteLine("포션");
+                Console.WriteLine();
                 {
-                    Console.WriteLine($"{potion.Key} : {potion.Value.count}");
+                    foreach (var potion in Potions)
+                    {
+                        Console.Write("- ");
+                        potion.Value.ApearInfo();
+                    }
                 }
+                Console.WriteLine();
             }
 
+            Console.WriteLine("장비");
+            Console.WriteLine();
             for (int i = 0; i < Equips.Count; i++)
             {
                 Console.Write("- ");
@@ -129,12 +141,14 @@ namespace TxtRPG2
             {
                 Equips.Add(new Amor((Amor)item));
             }
-            else if (item.GetType() == typeof(HpPotion))
+            else
             {
                 if (Potions.ContainsKey(item.Name))
                     Potions[item.Name].count += ((Potion)item).count;
-                else
+                else if (item.GetType() == typeof(HpPotion))
                     Potions.Add(item.Name, new HpPotion((HpPotion)item));
+                else if (item.GetType() == typeof(MpPotion))
+                    Potions.Add(item.Name, new MpPotion((MpPotion)item));
             }
         }
 

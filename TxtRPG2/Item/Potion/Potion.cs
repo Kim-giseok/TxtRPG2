@@ -31,5 +31,16 @@ namespace TxtRPG2
             Console.WriteLine($"{player.Name}은 {Name}을 사용했습니다.");
             count--;
         }
+
+        public override void ApearInfo(bool sell = false)
+        {
+            int sl = Console.CursorLeft;
+            base.ApearInfo(sell);
+            if (!sell)
+            {
+                Console.SetCursorPosition(sl + 80, Console.CursorTop - 1);
+                Console.WriteLine($"\t| {count}");
+            }
+        }
     }
 }
