@@ -18,8 +18,8 @@ namespace TxtRPG2
         {
             Skills = new List<Skill>
             {
-                new Skill("평타", 0, 1, 1),
-                new Skill("강타", 10, 5, 2)
+                new Skill("깨물기", 0, 1, 1),
+                new Skill("연속 찌르기", 10, 5, 1)
             };
         }
 
@@ -43,7 +43,7 @@ namespace TxtRPG2
             }
             else
             {
-                Console.WriteLine($"Lv.{Level} 이름: {Name} 체력: {Hp} 공격력: {Atk}");
+                Console.WriteLine($"Lv.{Level} {Name} | 체력: {Hp} | 공격력: {Atk} |");
             }
 
             Console.ResetColor();
