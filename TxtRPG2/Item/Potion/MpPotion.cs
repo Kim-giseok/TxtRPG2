@@ -25,10 +25,10 @@ namespace TxtRPG2
             Mp = potion.Mp;
         }
 
-        public override void ApearInfo(bool select = false)
+        public override void ApearInfo(bool sell = false)
         {
             int sl = Console.CursorLeft;
-            base.ApearInfo(select);
+            base.ApearInfo(sell);
             Console.SetCursorPosition(sl + 18, Console.CursorTop - 1);
             Console.Write($"마력회복\t+ {Mp}");
             Console.SetCursorPosition(0, Console.CursorTop + 1);
@@ -41,13 +41,13 @@ namespace TxtRPG2
 
             if (cnt != 0)
             {
-                int baseMp = player.Mp;
-                player.Mp += Mp;
-                if (player.Mp > 50)
+                int baseMp = player.Hp;
+                player.Hp += Mp;
+                if (player.Hp > 50)
                 {
-                    player.Mp = 50;
+                    player.Hp = 50;
                 }
-                Console.WriteLine($"{player.Name}은 체력을 {player.Mp - baseMp}만큼 회복했습니다.");
+                Console.WriteLine($"{player.Name}은 체력을 {player.Hp - baseMp}만큼 회복했습니다.");
             }
         }
     }
