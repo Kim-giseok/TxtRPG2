@@ -9,18 +9,18 @@ namespace TxtRPG2
 {
     class GameManager
     {
-        private Character player; // 캐릭터를 상속받도록 변경
+        private Player player; // 캐릭터를 상속받도록 변경
         private BattleManager battleManager;
 
         public GameManager()
         {
-            player = ChooseJob();  // 직업 선택후 player에 저장
-            if (player is Player)
+            player = ChooseJob();  // 직업 선택 후 player에 저장
+            if (player != null)
             {
-                battleManager = new BattleManager((Player)player);
+                battleManager = new BattleManager(player);
             }
         }
-        public Character ChooseJob()
+        public Player ChooseJob()
         {
             // 플레이어 이름 입력
             Console.Write("플레이어 이름을 입력하세요: ");
@@ -40,7 +40,7 @@ namespace TxtRPG2
             }
 
             // Player 객체 생성
-            Character player = null;
+            Player player = null;
 
             if (jobChoice == 1)
             {
