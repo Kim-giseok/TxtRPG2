@@ -12,6 +12,9 @@ namespace TxtRPG2
         private Player player; // 캐릭터를 상속받도록 변경
         private BattleManager battleManager;
 
+        Inventory inven;
+        Shop shop;
+
         public GameManager()
         {
             player = ChooseJob();  // 직업 선택 후 player에 저장
@@ -19,6 +22,8 @@ namespace TxtRPG2
             {
                 battleManager = new BattleManager(player);
             }
+            inven = new Inventory();
+            shop = new Shop(player, inven);
         }
         public Player ChooseJob()
         {
@@ -75,22 +80,31 @@ namespace TxtRPG2
                 // 메뉴 출력
                 Console.WriteLine("1. 상태 보기");
                 Console.WriteLine("2. 전투 시작");
+                Console.WriteLine("3. 인벤토리");
+                Console.WriteLine("4. 상점");
                 Console.WriteLine("0. 종료");
-                Console.Write("선택 (1, 2): ");
 
-                int input = ConsoleUtility.GetInput(1, 2);
+                int input = ConsoleUtility.GetInput(0, 2);
 
                 // 입력한 값에 대한 출력
 
                 switch (input)
                 {
+                    case 0:
+                        return;
                     case 1:
                         ShowStat();
                         break;
                     case 2:
                         EnterBattle();
                         break;
-                        // 입력한 값에 대한 출력
+                    // 입력한 값에 대한 출력
+                    case 3:
+                        inven.ShowInven();
+                        break;
+                    case 4:
+                        shop.ShopEnter();
+                        break;
                 }
             }
         }
