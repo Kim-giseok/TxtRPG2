@@ -21,8 +21,6 @@ namespace TxtRPG2
         }
 
         public string Job { get; set; }
-        public int Def { get; set; }
-        public int Gold { get; set; }
 
         public void Status()
         {
@@ -51,8 +49,6 @@ namespace TxtRPG2
         }
 
         public string Job { get; set; }
-        public int Def { get; set; }
-        public int Gold { get; set; }
 
         public void Status()
         {
