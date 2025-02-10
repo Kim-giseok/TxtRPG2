@@ -152,5 +152,43 @@ namespace TxtRPG2
             EAmor = EAmor == Equips[idx] ? null : EAmor;
             Equips.RemoveAt(idx);
         }
+
+        public void UsePotion(Player player)
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("회복");
+                Console.WriteLine("포션을 사용하면 체력/마력을 회복 할 수 있습니다.");
+
+                Console.WriteLine();
+                Console.WriteLine("[남은 포션]");
+                Console.WriteLine();
+                var list = new List<KeyValuePair<string, Potion>>(Potions);
+                for (int i = 0; i < Potions.Count; i++)
+                {
+                    Console.Write($"- {i + 1}. ");
+                    list[i].Value.ApearInfo();
+                }
+
+                Console.WriteLine("0. 나가기");
+                Console.WriteLine();
+                int input = ConsoleUtility.GetInput(0, list.Count);
+                switch (input)
+                {
+                    case 0:
+                        return;
+                    default:
+                        list[input - 1].Value.Use(player);
+                        if (list[input - 1].Value.count == 0)
+                        {
+                            Potions.Remove(list[input - 1].Key);
+                        }
+                        Console.WriteLine("계속하려면 아무 키나 입력");
+                        Console.ReadKey();
+                        break;
+                }
+            }
+        }
     }
 }
