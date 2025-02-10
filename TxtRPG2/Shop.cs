@@ -37,6 +37,10 @@ namespace TxtRPG2
             for (int i = 0; i < Items.Length; i++)
             {
                 Console.Write("- ");
+                if (buyMode)
+                {
+                    Console.Write($"{i + 1} ");
+                }
                 Items[i].ApearInfo(true);
             }
         }
