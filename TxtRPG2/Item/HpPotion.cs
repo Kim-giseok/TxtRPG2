@@ -13,6 +13,7 @@ namespace TxtRPG2
 
     internal class HpPotion : Item, IHpPotion
     {
+        public override bool IsSold { get => false; }
         public int Hp { get; }
 
         public HpPotion(string name, int hp, string description, int price) : base(name, description, price)

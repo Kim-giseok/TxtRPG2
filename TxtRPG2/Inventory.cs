@@ -8,6 +8,7 @@ namespace TxtRPG2
 {
     internal class Inventory
     {
+        public Dictionary<string, int> Potions { get; set; }
         public List<Item> Equips { get; set; }
         public Weapon EWeapon { get; set; }
         public Amor EAmor { get; set; }
@@ -15,6 +16,7 @@ namespace TxtRPG2
         public Inventory()
         {
             Equips = new List<Item>();
+            Potions = new Dictionary<string, int>();
         }
 
         public enum Showmode { Idle, Equip, Sell }
@@ -22,6 +24,16 @@ namespace TxtRPG2
         {
             Console.WriteLine("[아이템 목록]");
             Console.WriteLine();
+
+
+            if (mode == Showmode.Idle)
+            {
+                foreach (var potion in Potions)
+                {
+                    Console.WriteLine($"{potion.Key} : {potion.Value}");
+                }
+            }
+
             for (int i = 0; i < Equips.Count; i++)
             {
                 Console.Write("- ");
@@ -116,6 +128,13 @@ namespace TxtRPG2
             else if (item.GetType() == typeof(Amor))
             {
                 Equips.Add(new Amor((Amor)item));
+            }
+            else if (item.GetType() == typeof(HpPotion))
+            {
+                if (Potions.ContainsKey(item.Name))
+                    Potions[item.Name]++;
+                else
+                    Potions.Add(item.Name, 1);
             }
         }
 

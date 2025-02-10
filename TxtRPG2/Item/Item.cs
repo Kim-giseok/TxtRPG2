@@ -11,7 +11,7 @@ namespace TxtRPG2
         public string Name { get; }
         public string Description { get; }
         public int Price { get; }
-        public bool IsSold { get; set; }
+        public virtual bool IsSold { get; set; }
 
         public Item(string name, string description, int price)
         {
