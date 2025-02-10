@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace TxtRPG2
-{
+{   
     public class Skill
     {
+        private static Random rand = new();
         public string Name { get; }
         public int ManaCost { get; }
         public int DamageMultiplier { get; }
@@ -23,34 +24,50 @@ namespace TxtRPG2
             Range = range;
         }
 
-        public void Use(Character actor, Character target, Enemy[] spawn)
+        public void Use(Character actor, Character target, Enemy[] spawn) //플레이어용 스킬 사용
         {
-            if (actor.Mp >= ManaCost)
+            if (!CanUseSkill(actor)) return;
+
+            actor.Mp -= ManaCost;
+            Console.WriteLine($"{actor.Name}가 {Name}을(를) 사용했다!");
+
+            List<Enemy> finalTargets = SelectTargets(target, spawn);
+            ApplyDamage(actor, finalTargets);
+        }
+
+        private bool CanUseSkill(Character actor) // 스킬 사용 가능 여부
+        {
+            if (actor.Mp < ManaCost)
             {
-                actor.Mp -= ManaCost;
-                int damage = actor.Atk * DamageMultiplier;
-                Console.WriteLine($"{actor.Name}가 {Name}을(를) 사용했다!");
+                Console.WriteLine($"{actor.Name}의 마나가 부족하여 {Name}을 사용할 수 없습니다.");
+                return false;
+            }
+            return true;
+        }
 
-                // 추가 타격 대상 찾기 (선택된 적 + 랜덤한 추가 적)
-                List<Enemy> possibleTargets = spawn.Where(e => !e.IsDead && e != target).ToList();
-                List<Enemy> finalTargets = new() { (Enemy)target };
-                Random rand = new Random();
-                for (int i = 0; i < Range - 1 && possibleTargets.Count > 0; i++)
-                {
-                    int randomIndex = rand.Next(possibleTargets.Count);
-                    finalTargets.Add(possibleTargets[randomIndex]);
-                    possibleTargets.RemoveAt(randomIndex);
-                }
-                // 선택된 모든 적에게 피해 적용
-                foreach (var eTarget in finalTargets)
-                {
-                    
+        private List<Enemy> SelectTargets(Character target, Enemy[] spawn) // 스킬 타겟 선택
+        {
+            List<Enemy> possibleTargets = spawn.Where(e => !e.IsDead && e != target).ToList();
+            List<Enemy> finalTargets = new() { (Enemy)target };
 
-                    eTarget.TakeDamage(damage);
-                    Console.WriteLine($"{eTarget.Name}에게 {damage} 피해!");
-                }
+            for (int i = 0; i < Range - 1 && possibleTargets.Count > 0; i++)
+            {
+                int randomIndex = rand.Next(possibleTargets.Count);
+                finalTargets.Add(possibleTargets[randomIndex]);
+                possibleTargets.RemoveAt(randomIndex);
+            }
+            return finalTargets;
+        }
+
+        private void ApplyDamage(Character actor, List<Enemy> targets) // 스킬 데미지 연산
+        {
+            int damage = (int)(actor.Atk * DamageMultiplier);
+            foreach (var eTarget in targets)
+            {
+                eTarget.TakeDamage(damage);
+                
             }
         }
-        
+
     }
 }
