@@ -133,27 +133,31 @@ namespace TxtRPG2
 
         public void AddItem(Item item)
         {
-            if (item.GetType() == typeof(Weapon))
+            switch (item)
             {
-                Equips.Add(new Weapon((Weapon)item));
+                case Weapon:
+                    Equips.Add(new Weapon((Weapon)item));
+                    return;
+                case Amor:
+                    Equips.Add(new Amor((Amor)item));
+                    return;
             }
-            else if (item.GetType() == typeof(Amor))
+
+            if (Potions.ContainsKey(item.Name))
             {
-                Equips.Add(new Amor((Amor)item));
+                Potions[item.Name].count += ((Potion)item).count;
+                return;
             }
             else
             {
-                if (Potions.ContainsKey(item.Name))
+                switch (item)
                 {
-                    Potions[item.Name].count += ((Potion)item).count;
-                }
-                else if (item.GetType() == typeof(HpPotion))
-                {
-                    Potions.Add(item.Name, new HpPotion((HpPotion)item));
-                }
-                else if (item.GetType() == typeof(MpPotion))
-                {
-                    Potions.Add(item.Name, new MpPotion((MpPotion)item));
+                    case HpPotion:
+                        Potions.Add(item.Name, new HpPotion((HpPotion)item));
+                        break;
+                    case MpPotion:
+                        Potions.Add(item.Name, new MpPotion((MpPotion)item));
+                        break;
                 }
             }
         }
