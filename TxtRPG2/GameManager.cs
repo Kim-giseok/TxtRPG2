@@ -22,48 +22,48 @@ namespace TxtRPG2
         }
         public Player ChooseJob()
         {
-            // 플레이어 이름 입력
+            Player player = null;
+
             Console.Write("플레이어 이름을 입력하세요: ");
             string playerName = Console.ReadLine();
 
-            // 직업 선택
-            Console.WriteLine("직업을 선택하세요: 1. 전사, 2. 궁수");
-
-            // 사용자가 입력한 값이 숫자인지 확인
-            int jobChoice;
-            bool isValidInput = int.TryParse(Console.ReadLine(), out jobChoice);
-
-            if (!isValidInput)
+            while (player == null)
             {
-                Console.WriteLine("잘못된 입력입니다. 숫자를 입력해주세요.");
-                return null;
+
+                // 직업 선택
+                Console.WriteLine("직업을 선택하세요: 1. 전사, 2. 궁수");
+
+                int jobChoice;
+                bool isValidInput = int.TryParse(Console.ReadLine(), out jobChoice);
+
+                // 잘못된 입력시
+                if (!isValidInput || (jobChoice != 1 && jobChoice != 2))
+                {
+                    Console.WriteLine("잘못된 입력입니다. 1 또는 2를 입력해주세요.");
+                    continue; // 잘못된 입력일 경우 다시 입력받음
+                }
+
+                // Player 객체 생성
+                if (jobChoice == 1)
+                {
+                    // 전사 선택 시
+                    Console.WriteLine("전사를 선택하셨습니다.");
+                    player = new Warrior(playerName, 1, 100, 0);  // 전사 생성
+                }
+                else if (jobChoice == 2)
+                {
+                    // 궁수 선택 시
+                    Console.WriteLine("궁수를 선택하셨습니다.");
+                    player = new Archer(playerName, 1, 80, 0);  // 궁수 생성
+                }
             }
 
-            // Player 객체 생성
-            Player player = null;
-
-            if (jobChoice == 1)
-            {
-                // 전사 선택 시
-                Console.WriteLine("전사를 선택하셨습니다.");
-                player = new Warrior(playerName, 1, 100, 0);  // 전사 생성
-            }
-            else if (jobChoice == 2)
-            {
-                // 궁수 선택 시
-                Console.WriteLine("궁수를 선택하셨습니다.");
-                player = new Archer(playerName, 1, 80, 0);  // 궁수 생성
-            }
-            else
-            {
-                Console.WriteLine("잘못된 선택입니다.");
-                return null;
-            }
             Console.WriteLine("직업 선택 완료! 아무 키나 눌러서 진행하세요.");
             Console.ReadKey();
 
             return player;
         }
+
 
         public void StartScene()
         {
