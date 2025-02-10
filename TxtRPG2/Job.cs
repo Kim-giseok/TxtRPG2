@@ -7,9 +7,9 @@ using TxtRPG2;
 
 namespace TxtRPG2
 {
-    public class Warrior : Character
+    public class Warrior : Player
     {
-        public Warrior(string name, int level, int hp, int gold)
+        public Warrior(string name, int level, int hp, int gold) : base(name, level, "전사", 10, 15, 100, gold)
         {
             Name = name;
             Level = level;
@@ -37,9 +37,9 @@ namespace TxtRPG2
         }
     }
 
-    public class Archer : Character
+    public class Archer : Player
     {
-        public Archer(string name, int level, int hp, int gold)
+        public Archer(string name, int level, int hp, int gold) : base(name, level, "궁수", 20, 10, 80, gold)
         {
             Name = name;
             Level = level;
