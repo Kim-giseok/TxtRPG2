@@ -2,18 +2,34 @@
 
 static class ConsoleUtility
 {
-    public static bool GetInput(out int input, int min, int max)
+    public static void ClearCurrentConsoleLine()
     {
+        int currentLineCursor = Console.CursorTop;
+        Console.SetCursorPosition(0, Console.CursorTop);
+        Console.Write(new string(' ', Console.WindowWidth));
+        Console.SetCursorPosition(0, currentLineCursor);
+    }
+    public static int GetInput(int min, int max)
+    {
+        Console.WriteLine("원하시는 행동을 입력해주세요.");
+
+        bool alert = false;
+
         while (true) //return이 되기 전까지 반복
         {
-            Console.Write("원하시는 행동을 입력해주세요.");
 
             //int.TryParse는 int로 변환이 가능한지 bool값을 반환, 가능(true)할 경우 out int input으로 숫자도 반환
-            if (int.TryParse(Console.ReadLine(), out input) && (input >= min) && (input <= max))
-                return true;
+            if (int.TryParse(Console.ReadLine(), out int input) && (input >= min) && (input <= max))
+                return input;
 
-            Console.WriteLine("잘못된 입력입니다. 다시 입력해주세요");
-            return false;
+            Console.SetCursorPosition(0, Console.CursorTop - 1);
+            ClearCurrentConsoleLine();
+
+            if (alert == false)
+            {
+                Console.WriteLine("잘못된 입력입니다. 다시 입력해주세요");
+                alert = true;
+            }
         }
     }
 

@@ -7,14 +7,10 @@
         public int Def { get; set; }
         public int Gold { get; set; }
 
-        public Player(string name, int level, string job, int atk, int def, int hp, int gold)
+        public Player(string name, int level, string job, int atk, int def, int hp, int gold) : base(level, name, hp, atk)
         {
-            Name = name;
-            Level = level;
             Job = job;
-            Atk = atk;
             Def = def;
-            Hp = hp;
             Gold = gold;
         }
 
@@ -29,12 +25,7 @@
             Console.WriteLine($"방어력 : {Def}");
             Console.WriteLine($"체력 : {Hp}");
             Console.WriteLine($"Gold : {Gold} G");
-            Console.Write("\n0.나가기\n>> ");
-
-            Console.WriteLine(ConsoleUtility.GetInput); //입력값을 받아오는 메서드
-
-
-
+            Console.WriteLine("\n0.나가기\n");
             /*  메인에서
                 플레이어 객체 생성
                 Player player = new Player(playerName, 1, "전사", 10, 5, 100, 1500);
@@ -42,7 +33,6 @@
                 상태 보기 메서드 호출
                 player.Status();
             */
-
         }
 
     }

@@ -23,24 +23,22 @@ namespace TxtRPG2
         public int Hp { get; set; }
         public int Atk { get; set; }
         public int Level { get; set; }
+
+        public Character(int level, string name, int hp, int atk)
+        {
+            Level = level;
+            Name = name;
+            Hp = hp;
+            Atk = atk;
+        }
+
         public void TakeDamage(int Damage)
         {
-            // 공격력의 ±10% 변동을 적용한 최종 공격력 계산
-            Damage = (int)Math.Ceiling(Damage * (1 + (new Random().NextDouble() * 0.2 - 0.1)));
-            //finalAtk = (int)Damage; // 데미지를 int로 변환
-            Console.WriteLine($"{Name}이 {Damage}만큼의 피해를 받았습니다.(기준 공격력: {Atk})");
-            
             Hp -= Damage;
             if (Hp <= 0)
             {
                 Hp=0;
-                Console.WriteLine($"{Name}이 죽었습니다.");
-            }
-            else
-            {
-                Console.WriteLine($"남은 체력: {Hp}");
             }
         }
-
     }
 }
