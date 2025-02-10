@@ -48,13 +48,6 @@ namespace TxtRPG2
 
         
 
-        public void UseSkill(int idx, Skill skill)
-        {
-            if (idx >= 0 && idx < Skills.Count)
-            {
-
-            }
-            
-        }
+        
     }
 }

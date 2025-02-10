@@ -87,16 +87,14 @@ namespace TxtRPG2
                 // 선택지 표시/선택
                 Console.WriteLine("1. 공격");
                 Console.WriteLine("2. 스킬");
-                switch (ConsoleUtility.GetInput(1, 2))
+                int choice = ConsoleUtility.GetInput(1, 2);
+                if (choice == 1)
                 {
-                    case 1:
-                        PlayerTurn();
-                        break;
-                    case 2:
-                        // 스킬 사용
-                        int choice = 2; // 예시로 2를 선택한 경우
-                        SkillUse(player, spawn[choice - 1]);
-                        break;
+                    PlayerTurn();
+                }
+                else if (choice == 2)
+                {
+                    SkillUse(player,null);  // 스킬 사용 모드로 PlayerTurn 호출
                 }
             }
             // 전투 종료 후 결과화면 출력
@@ -137,7 +135,7 @@ namespace TxtRPG2
             }
         }
 
-        void PlayerTurn()
+        void PlayerTurn(bool isSkill = false)
         {
             while (true)
             {
@@ -150,15 +148,13 @@ namespace TxtRPG2
                 {
                     case 0: return;
 
-                    case 2:
-                        SkillUse(player, spawn[choice - 1]);
-                        return;
-                    default:
-                        if (spawn[choice - 1].IsDead)
+                    case 2:  // 처음 선택에서 "2. 스킬"을 누르면 SkillUse로 이동
+                        if (player.Skills.Count > 0)
                         {
-                            Console.WriteLine("잘못된 입력입니다.");
-                            Thread.Sleep(500);
-                            continue;
+                            
+                            SkillUse(player, null);
+                            EnemyTurn();
+                            return;
                         }
                         else
                         {
@@ -166,6 +162,22 @@ namespace TxtRPG2
                             EnemyTurn();
                             return;
                         }
+                    
+                    default:
+                        if (spawn[choice - 1].IsDead)
+                        {
+                            Console.WriteLine("잘못된 입력입니다.");
+                            Thread.Sleep(500);
+                            continue;
+                        }
+                        
+                        else
+                        {
+                            Attack(player, spawn[choice - 1]);
+                            EnemyTurn();
+                            return;
+                        }
+                        
                 }
             }
         }
@@ -212,6 +224,7 @@ namespace TxtRPG2
         }
         void SkillUse(Character actor, Character target)
         {
+
             while (true)
             {
                 ShowInfos(true);
@@ -232,7 +245,7 @@ namespace TxtRPG2
                         int choice = ConsoleUtility.GetInput(0, spawn.Length);
                         if (spawn[choice - 1].IsDead)
                         {
-                            Console.WriteLine("잘못된 입력입니다.");
+                            Console.WriteLine("이미 죽은 대상입니다.");
                             Thread.Sleep(500);
                             continue;
                         }
@@ -246,9 +259,9 @@ namespace TxtRPG2
                             }
                             player.Skills[skillChoice - 1].Use(player, spawn[choice - 1]);
                             EnemyTurn();
-                            
+
                             // 스킬 사용
-                            
+
                             return;
                         }
 
