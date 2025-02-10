@@ -107,7 +107,7 @@ namespace TxtRPG2
 
         public void Equip(int idx)
         {
-            switch(Equips[idx])
+            switch (Equips[idx])
             {
                 case Weapon:
                     EWeapon = EWeapon == Equips[idx] ? null : (Weapon)Equips[idx];
@@ -135,17 +135,14 @@ namespace TxtRPG2
                 Potions[item.Name].count += ((Potion)item).count;
                 return;
             }
-            else
+            switch (item)
             {
-                switch (item)
-                {
-                    case HpPotion:
-                        Potions.Add(item.Name, new HpPotion((HpPotion)item));
-                        break;
-                    case MpPotion:
-                        Potions.Add(item.Name, new MpPotion((MpPotion)item));
-                        break;
-                }
+                case HpPotion:
+                    Potions.Add(item.Name, new HpPotion((HpPotion)item));
+                    break;
+                case MpPotion:
+                    Potions.Add(item.Name, new MpPotion((MpPotion)item));
+                    break;
             }
         }
 
