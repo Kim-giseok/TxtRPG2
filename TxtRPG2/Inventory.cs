@@ -17,18 +17,34 @@ namespace TxtRPG2
             Equips = new List<Item>();
         }
 
-        public void ShowInfo (bool equip = false)
+        public void ShowInfo(bool equip = false)
         {
             Console.WriteLine("[아이템 목록]");
             Console.WriteLine();
             for (int i = 0; i < Equips.Count; i++)
             {
                 Console.Write("- ");
+                if (equip)
+                {
+                    Console.Write($"{i + 1}. ");
+                }
                 if (EWeapon == Equips[i] || EAmor == Equips[i])
                 {
-                    Console.Write(" [E]");
+                    Console.Write("[E] ");
                 }
                 Equips[i].ApearInfo(true);
+            }
+        }
+
+        public void Equip(int idx)
+        {
+            if (Equips[idx].GetType() == typeof(Weapon))
+            {
+                EWeapon = (Weapon)Equips[idx];
+            }
+            else if (Equips[idx].GetType() == typeof(Amor))
+            {
+                EAmor = (Amor)Equips[idx];
             }
         }
     }
