@@ -21,6 +21,14 @@ namespace TxtRPG2
             IsSold = false;
         }
 
+        public Item(Item item)
+        {
+            Name = item.Name;
+            Description = item.Description;
+            Price = item.Price;
+            IsSold = false;
+        }
+
         public virtual void ApearInfo(bool inShop = false)
         {
             Console.Write($"{Name}\t| \t\t | {Description}");

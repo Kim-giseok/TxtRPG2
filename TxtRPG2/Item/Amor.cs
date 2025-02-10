@@ -20,6 +20,11 @@ namespace TxtRPG2
             Def = def;
         }
 
+        public Amor(Amor amor) : base(amor)
+        {
+            Def = amor.Def;
+        }
+
         public override void ApearInfo(bool inShop = false)
         {
             Console.Write($"{Name}\t| 방어력 + {Def} | {Description}");

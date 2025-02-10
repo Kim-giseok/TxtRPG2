@@ -20,6 +20,11 @@ namespace TxtRPG2
             Atk = atk;
         }
 
+        public Weapon(Weapon weapon) : base(weapon)
+        {
+            Atk = weapon.Atk;
+        }
+
         public override void ApearInfo(bool inShop = false)
         {
             Console.Write($"{Name}\t| 공격력 + {Atk} | {Description}");

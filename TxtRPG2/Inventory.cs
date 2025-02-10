@@ -61,5 +61,30 @@ namespace TxtRPG2
                 }
             }
         }
+
+        public void AddItem(Item item)
+        {
+            if (item.GetType() == typeof(Weapon))
+            {
+                Equips.Add(new Weapon((Weapon)item));
+            }
+            else if (item.GetType() == typeof(Amor))
+            {
+                Equips.Add(new Amor((Amor)item));
+            }
+        }
+
+        public void DelItem(int idx)
+        {
+            if (EWeapon == Equips[idx])
+            {
+                EWeapon = null;
+            }
+            if (EAmor == Equips[idx])
+            {
+                EAmor = null;
+            }
+            Equips.RemoveAt(idx);
+        }
     }
 }

@@ -20,6 +20,11 @@ namespace TxtRPG2
             Hp = hp;
         }
 
+        public HpPotion(HpPotion potion) : base(potion)
+        {
+            Hp = potion.Hp;
+        }
+
         public override void ApearInfo(bool inShop = false)
         {
             Console.Write($"{Name}\t| 체력회복 + {Hp} | {Description}");
