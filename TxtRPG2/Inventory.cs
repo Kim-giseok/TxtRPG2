@@ -164,14 +164,8 @@ namespace TxtRPG2
 
         public void DelItem(int idx)
         {
-            if (EWeapon == Equips[idx])
-            {
-                EWeapon = null;
-            }
-            if (EAmor == Equips[idx])
-            {
-                EAmor = null;
-            }
+            EWeapon = EWeapon == Equips[idx] ? null : EWeapon;
+            EAmor = EAmor == Equips[idx] ? null : EAmor;
             Equips.RemoveAt(idx);
         }
     }
