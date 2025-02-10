@@ -84,7 +84,7 @@ namespace TxtRPG2
                 Console.WriteLine("4. 상점");
                 Console.WriteLine("0. 종료");
 
-                int input = ConsoleUtility.GetInput(0, 2);
+                int input = ConsoleUtility.GetInput(0, 4);
 
                 // 입력한 값에 대한 출력
 
@@ -100,9 +100,11 @@ namespace TxtRPG2
                         break;
                     // 입력한 값에 대한 출력
                     case 3:
+                        ConsoleUtility.Loading();
                         inven.ShowInven();
                         break;
                     case 4:
+                        ConsoleUtility.Loading();
                         shop.ShopEnter();
                         break;
                 }
