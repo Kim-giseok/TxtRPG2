@@ -41,13 +41,13 @@ namespace TxtRPG2
 
             if (cnt != 0)
             {
-                int baseMp = player.Hp;
-                player.Hp += Mp;
-                if (player.Hp > 50)
+                int baseMp = player.Mp;
+                player.Mp += Mp;
+                if (player.Mp > 50)
                 {
-                    player.Hp = 50;
+                    player.Mp = 50;
                 }
-                Console.WriteLine($"{player.Name}은 체력을 {player.Hp - baseMp}만큼 회복했습니다.");
+                Console.WriteLine($"{player.Name}은 체력을 {player.Mp - baseMp}만큼 회복했습니다.");
             }
         }
     }
