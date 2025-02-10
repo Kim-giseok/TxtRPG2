@@ -29,10 +29,16 @@ namespace TxtRPG2
             IsSold = false;
         }
 
-        public virtual void ApearInfo(bool inShop = false)
+        public virtual void ApearInfo(bool select = false)
         {
-            Console.Write($"{Name}\t| \t\t | {Description}");
-            if (inShop)
+            int sl = Console.CursorLeft;
+            Console.Write($"{Name}");
+            Console.SetCursorPosition(sl + 15, Console.CursorTop);
+            Console.Write($" |\t\t+\t|");
+            sl = Console.CursorLeft;
+            Console.Write($" {Description}");
+            Console.SetCursorPosition(sl + 50, Console.CursorTop);
+            if (select)
             {
                 if (IsSold)
                 {

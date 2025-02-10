@@ -25,24 +25,13 @@ namespace TxtRPG2
             Atk = weapon.Atk;
         }
 
-        public override void ApearInfo(bool inShop = false)
+        public override void ApearInfo(bool select = false)
         {
-            Console.Write($"{Name}\t| 공격력 + {Atk} | {Description}");
-            if (inShop)
-            {
-                if (IsSold)
-                {
-                    Console.WriteLine($"\t| 판매완료");
-                }
-                else
-                {
-                    Console.WriteLine($"\t| {Price} G");
-                }
-            }
-            else
-            {
-                Console.WriteLine();
-            }
+            int sl = Console.CursorLeft;
+            base.ApearInfo(select);
+            Console.SetCursorPosition(sl + 18, Console.CursorTop - 1);
+            Console.Write($"공격력\t+ {Atk}");
+            Console.SetCursorPosition(0, Console.CursorTop + 1);
         }
     }
 }

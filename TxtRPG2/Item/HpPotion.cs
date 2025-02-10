@@ -25,24 +25,13 @@ namespace TxtRPG2
             Hp = potion.Hp;
         }
 
-        public override void ApearInfo(bool inShop = false)
+        public override void ApearInfo(bool select = false)
         {
-            Console.Write($"{Name}\t| 체력회복 + {Hp} | {Description}");
-            if (inShop)
-            {
-                if (IsSold)
-                {
-                    Console.WriteLine($"\t| 판매완료");
-                }
-                else
-                {
-                    Console.WriteLine($"\t| {Price} G");
-                }
-            }
-            else
-            {
-                Console.WriteLine();
-            }
+            int sl = Console.CursorLeft;
+            base.ApearInfo(select);
+            Console.SetCursorPosition(sl + 18, Console.CursorTop - 1);
+            Console.Write($"체력회복\t+ {Hp}");
+            Console.SetCursorPosition(0, Console.CursorTop + 1);
         }
     }
 }

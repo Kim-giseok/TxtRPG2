@@ -25,24 +25,13 @@ namespace TxtRPG2
             Def = amor.Def;
         }
 
-        public override void ApearInfo(bool inShop = false)
+        public override void ApearInfo(bool select = false)
         {
-            Console.Write($"{Name}\t| 방어력 + {Def} | {Description}");
-            if (inShop)
-            {
-                if (IsSold)
-                {
-                    Console.WriteLine($"\t| 판매완료");
-                }
-                else
-                {
-                    Console.WriteLine($"\t| {Price} G");
-                }
-            }
-            else
-            {
-                Console.WriteLine();
-            }
+            int sl = Console.CursorLeft;
+            base.ApearInfo(select);
+            Console.SetCursorPosition(sl + 18, Console.CursorTop - 1);
+            Console.Write($"방어력\t+ {Def}");
+            Console.SetCursorPosition(0, Console.CursorTop + 1);
         }
     }
 }
