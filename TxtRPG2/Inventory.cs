@@ -17,8 +17,8 @@ namespace TxtRPG2
             Equips = new List<Item>();
         }
 
-        public enum Showmode { Idle, Equip, Sell}
-        public void ShowInfo(Showmode mode = Showmode.Idle)
+        public enum Showmode { Idle, Equip, Sell }
+        public void ShowItems(Showmode mode = Showmode.Idle)
         {
             Console.WriteLine("[아이템 목록]");
             Console.WriteLine();
@@ -34,6 +34,50 @@ namespace TxtRPG2
                     Console.Write("[E] ");
                 }
                 Equips[i].ApearInfo(mode == Showmode.Sell);
+            }
+        }
+
+        public void ShowInven()
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("인벤토리");
+                ShowItems();
+
+                Console.WriteLine();
+                Console.WriteLine("1. 장착 관리");
+                Console.WriteLine("0. 나가기");
+                switch (ConsoleUtility.GetInput(0, 1))
+                {
+                    case 0:
+                        return;
+                    case 1:
+                        ShowEquip();
+                        break;
+                }
+            }
+        }
+
+        public void ShowEquip()
+        {
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("인벤토리 - 장착관리");
+                ShowItems(Showmode.Equip);
+
+                Console.WriteLine();
+                Console.WriteLine("0. 나가기");
+                int choice = ConsoleUtility.GetInput(0, 1);
+                switch (choice)
+                {
+                    case 0:
+                        return;
+                    default:
+                        Equip(choice - 1);
+                        break;
+                }
             }
         }
 

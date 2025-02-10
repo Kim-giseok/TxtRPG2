@@ -36,7 +36,7 @@ namespace TxtRPG2
             //판매일 경우 플래이어가 소유중인 아이템을 보여줍니다.
             if (mode == ShopMode.Sell)
             {
-                inven.ShowInfo(Inventory.Showmode.Sell);
+                inven.ShowItems(Inventory.Showmode.Sell);
                 return;
             }
 
