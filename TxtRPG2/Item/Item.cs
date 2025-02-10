@@ -43,6 +43,10 @@ namespace TxtRPG2
                     Console.WriteLine($"\t| {Price} G");
                 }
             }
+            else
+            {
+                Console.WriteLine();
+            }
         }
     }
 }
