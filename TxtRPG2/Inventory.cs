@@ -144,11 +144,17 @@ namespace TxtRPG2
             else
             {
                 if (Potions.ContainsKey(item.Name))
+                {
                     Potions[item.Name].count += ((Potion)item).count;
+                }
                 else if (item.GetType() == typeof(HpPotion))
+                {
                     Potions.Add(item.Name, new HpPotion((HpPotion)item));
+                }
                 else if (item.GetType() == typeof(MpPotion))
+                {
                     Potions.Add(item.Name, new MpPotion((MpPotion)item));
+                }
             }
         }
 
