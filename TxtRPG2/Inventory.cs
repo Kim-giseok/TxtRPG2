@@ -40,11 +40,25 @@ namespace TxtRPG2
         {
             if (Equips[idx].GetType() == typeof(Weapon))
             {
-                EWeapon = (Weapon)Equips[idx];
+                if (EWeapon == Equips[idx])
+                {
+                    EWeapon = null;
+                }
+                else
+                {
+                    EWeapon = (Weapon)Equips[idx];
+                }
             }
             else if (Equips[idx].GetType() == typeof(Amor))
             {
-                EAmor = (Amor)Equips[idx];
+                if (EAmor == Equips[idx])
+                {
+                    EAmor = null;
+                }
+                else
+                {
+                    EAmor = (Amor)Equips[idx];
+                }
             }
         }
     }
