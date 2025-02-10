@@ -25,10 +25,10 @@ namespace TxtRPG2
             Hp = potion.Hp;
         }
 
-        public override void ApearInfo(bool select = false)
+        public override void ApearInfo(bool sell = false)
         {
             int sl = Console.CursorLeft;
-            base.ApearInfo(select);
+            base.ApearInfo(sell);
             Console.SetCursorPosition(sl + 18, Console.CursorTop - 1);
             Console.Write($"체력회복\t+ {Hp}");
             Console.SetCursorPosition(0, Console.CursorTop + 1);

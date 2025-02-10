@@ -29,7 +29,7 @@ namespace TxtRPG2
             IsSold = false;
         }
 
-        public virtual void ApearInfo(bool select = false)
+        public virtual void ApearInfo(bool sell = false)
         {
             int sl = Console.CursorLeft;
             Console.Write($"{Name}");
@@ -38,7 +38,7 @@ namespace TxtRPG2
             sl = Console.CursorLeft;
             Console.Write($" {Description}");
             Console.SetCursorPosition(sl + 50, Console.CursorTop);
-            if (select)
+            if (sell)
             {
                 if (IsSold)
                 {

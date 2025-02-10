@@ -25,10 +25,10 @@ namespace TxtRPG2
             Def = amor.Def;
         }
 
-        public override void ApearInfo(bool select = false)
+        public override void ApearInfo(bool sell = false)
         {
             int sl = Console.CursorLeft;
-            base.ApearInfo(select);
+            base.ApearInfo(sell);
             Console.SetCursorPosition(sl + 18, Console.CursorTop - 1);
             Console.Write($"방어력\t+ {Def}");
             Console.SetCursorPosition(0, Console.CursorTop + 1);
