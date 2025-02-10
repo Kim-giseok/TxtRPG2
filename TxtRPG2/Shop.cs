@@ -10,8 +10,9 @@ namespace TxtRPG2
     {
         Player player;
         public Item[] Items { get; private set; }
+        Inventory inven;
 
-        public Shop(Player player)
+        public Shop(Player player, Inventory inven)
         {
             this.player = player;
             Items =
@@ -20,9 +21,11 @@ namespace TxtRPG2
                 new Weapon("낡은 검", 2, "쉽게 볼 수 있는 낡은 검 입니다.", 600),
                 new HpPotion("체력 포션", 30, "잃은 체력을 회복하는 포션입니다.", 100)
             ];
+            this.inven = inven;
         }
 
-        void ShowItems(bool buyMode = false)
+        enum ShopMode { Idle, Buy, Sell };
+        void ShowItems(ShopMode mode = ShopMode.Idle)
         {
             Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
             Console.WriteLine();
@@ -31,13 +34,18 @@ namespace TxtRPG2
             Console.WriteLine();
 
             //판매일 경우 플래이어가 소유중인 아이템을 보여줍니다.
+            if (mode == ShopMode.Sell)
+            {
+                inven.ShowInfo(Inventory.Showmode.Sell);
+                return;
+            }
 
             Console.WriteLine("[아이템 목록]");
             Console.WriteLine();
             for (int i = 0; i < Items.Length; i++)
             {
                 Console.Write("- ");
-                if (buyMode)
+                if (mode == ShopMode.Buy)
                 {
                     Console.Write($"{i + 1} ");
                 }
@@ -79,9 +87,10 @@ namespace TxtRPG2
                 Console.Clear();
                 Console.WriteLine("상점 - 아이템 구매");
                 //보유골드와 상점의 아이템들을 보여줍니다.
-                ShowItems(true);
-                Console.WriteLine("0. 나가기");
+                ShowItems(ShopMode.Buy);
 
+                Console.WriteLine();
+                Console.WriteLine("0. 나가기");
                 int choice = ConsoleUtility.GetInput(0, Items.Length);
                 switch (choice)
                 {
@@ -113,7 +122,9 @@ namespace TxtRPG2
 
                 Console.WriteLine("상점 - 아이템 판매");
                 //보유골드와 자신의 아이템들을 보여줍니다.
+                ShowItems(ShopMode.Sell);
 
+                Console.WriteLine();
                 Console.WriteLine("0. 나가기");
                 int choice = ConsoleUtility.GetInput(0, Items.Length);
                 switch (choice)

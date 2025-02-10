@@ -17,14 +17,15 @@ namespace TxtRPG2
             Equips = new List<Item>();
         }
 
-        public void ShowInfo(bool equip = false)
+        public enum Showmode { Idle, Equip, Sell}
+        public void ShowInfo(Showmode mode = Showmode.Idle)
         {
             Console.WriteLine("[아이템 목록]");
             Console.WriteLine();
             for (int i = 0; i < Equips.Count; i++)
             {
                 Console.Write("- ");
-                if (equip)
+                if (mode != Showmode.Idle)
                 {
                     Console.Write($"{i + 1}. ");
                 }
@@ -32,7 +33,7 @@ namespace TxtRPG2
                 {
                     Console.Write("[E] ");
                 }
-                Equips[i].ApearInfo(true);
+                Equips[i].ApearInfo(mode == Showmode.Sell);
             }
         }
 
