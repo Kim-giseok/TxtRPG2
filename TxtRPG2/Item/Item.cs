@@ -25,7 +25,7 @@ namespace TxtRPG2
         {
             Name = item.Name;
             Description = item.Description;
-            Price = item.Price;
+            Price = item.Price * 80 / 100;
             IsSold = false;
         }
 

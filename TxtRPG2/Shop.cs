@@ -102,7 +102,8 @@ namespace TxtRPG2
                         { Console.WriteLine("이미 구매한 아이템입니다."); }
                         else if (Items[choice - 1].Price <= player.Gold) //금액이 충분한 경우
                         {
-                            //플레이어가 아이템을 구매하는 매서드
+                            player.Gold -= Items[choice - 1].Price;
+                            inven.AddItem(Items[choice - 1]);
                             Items[choice - 1].IsSold = true;
                             Console.WriteLine("구매를 완료했습니다.");
                         }
@@ -126,13 +127,15 @@ namespace TxtRPG2
 
                 Console.WriteLine();
                 Console.WriteLine("0. 나가기");
-                int choice = ConsoleUtility.GetInput(0, Items.Length);
+                int choice = ConsoleUtility.GetInput(0, inven.Equips.Count);
                 switch (choice)
                 {
                     case 0:
                         return;
                     default:
                         //플레이어의 아이템을 판매합니다.
+                        player.Gold += inven.Equips[choice - 1].Price;
+                        inven.DelItem(choice - 1);
                         Console.WriteLine("판매가 완료되었습니다.");
                         Thread.Sleep(500);
                         break;
