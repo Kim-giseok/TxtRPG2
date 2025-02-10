@@ -9,13 +9,60 @@ namespace TxtRPG2
 {
     class GameManager
     {
-        private Player player;
+        private Character player; // 캐릭터를 상속받도록 변경
         private BattleManager battleManager;
 
         public GameManager()
         {
-            player = new Player("Chad", 1, "전사", 10, 5, 100, 1500);
-            battleManager = new BattleManager(player);
+            player = ChooseJob();  // 직업 선택후 player에 저장
+            if (player is Player)
+            {
+                battleManager = new BattleManager((Player)player);
+            }
+        }
+        public Character ChooseJob()
+        {
+            // 플레이어 이름 입력
+            Console.Write("플레이어 이름을 입력하세요: ");
+            string playerName = Console.ReadLine();
+
+            // 직업 선택
+            Console.WriteLine("직업을 선택하세요: 1. 전사, 2. 궁수");
+
+            // 사용자가 입력한 값이 숫자인지 확인
+            int jobChoice;
+            bool isValidInput = int.TryParse(Console.ReadLine(), out jobChoice);
+
+            if (!isValidInput)
+            {
+                Console.WriteLine("잘못된 입력입니다. 숫자를 입력해주세요.");
+                return null;
+            }
+
+            // Player 객체 생성
+            Character player = null;
+
+            if (jobChoice == 1)
+            {
+                // 전사 선택 시
+                Console.WriteLine("전사를 선택하셨습니다.");
+                player = new Warrior(playerName, 1, 100, 0);  // 전사 생성
+            }
+            else if (jobChoice == 2)
+            {
+                // 궁수 선택 시
+                Console.WriteLine("궁수를 선택하셨습니다.");
+                player = new Archer(playerName, 1, 80, 0);  // 궁수 생성
+            }
+            else
+            {
+                Console.WriteLine("잘못된 선택입니다.");
+                return null;
+            }
+            Console.WriteLine("직업 선택 완료! 아무 키나 눌러서 진행하세요.");
+            Console.ReadKey();
+
+            return player;
         }
 
         public void StartScene()
@@ -54,11 +101,19 @@ namespace TxtRPG2
 
             Console.Clear();
 
-            player.Status();
+            if (player is Player)
+            {
+                (player as Player).Status(); // Status 호출
+            }
+            else
+            {
+                Console.WriteLine("잘못된 타입입니다.");
+            }
 
             ConsoleUtility.GetInput(0, 0);
             StartScene();
         }
+
         public void EnterBattle()
         {
             ConsoleUtility.Loading();
