@@ -107,27 +107,14 @@ namespace TxtRPG2
 
         public void Equip(int idx)
         {
-            if (Equips[idx].GetType() == typeof(Weapon))
+            switch(Equips[idx])
             {
-                if (EWeapon == Equips[idx])
-                {
-                    EWeapon = null;
-                }
-                else
-                {
-                    EWeapon = (Weapon)Equips[idx];
-                }
-            }
-            else if (Equips[idx].GetType() == typeof(Amor))
-            {
-                if (EAmor == Equips[idx])
-                {
-                    EAmor = null;
-                }
-                else
-                {
-                    EAmor = (Amor)Equips[idx];
-                }
+                case Weapon:
+                    EWeapon = EWeapon == Equips[idx] ? null : (Weapon)Equips[idx];
+                    break;
+                case Amor:
+                    EAmor = EAmor == Equips[idx] ? null : (Amor)Equips[idx];
+                    break;
             }
         }
 
