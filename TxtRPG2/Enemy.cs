@@ -48,5 +48,10 @@ namespace TxtRPG2
 
             Console.ResetColor();
         }
+
+        
+
+
     }
 }
+
