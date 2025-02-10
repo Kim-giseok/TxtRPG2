@@ -17,7 +17,16 @@ namespace TxtRPG2
 
         public GameManager()
         {
-            player = ChooseJob();  // 직업 선택 후 player에 저장
+            try
+            {
+                SaveData.Load(out player);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                Console.ReadKey();
+                player = ChooseJob();  // 직업 선택 후 player에 저장
+            }
             if (player != null)
             {
                 battleManager = new BattleManager(player);
@@ -82,12 +91,10 @@ namespace TxtRPG2
                 Console.WriteLine("2. 전투 시작");
                 Console.WriteLine("3. 인벤토리");
                 Console.WriteLine("4. 상점");
+                Console.WriteLine("5. 저장");
                 Console.WriteLine("0. 종료");
 
-                int input = ConsoleUtility.GetInput(0, 4);
-
-                // 입력한 값에 대한 출력
-
+                int input = ConsoleUtility.GetInput(0, 5);
                 switch (input)
                 {
                     case 0:
@@ -106,6 +113,9 @@ namespace TxtRPG2
                     case 4:
                         ConsoleUtility.Loading();
                         shop.ShopEnter();
+                        break;
+                    case 5:
+                        SaveData.Save(player);
                         break;
                 }
             }

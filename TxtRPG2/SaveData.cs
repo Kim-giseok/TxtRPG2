@@ -12,18 +12,14 @@ namespace TxtRPG2
     [Serializable]
     internal class SaveData
     {
-        public struct Playerinfo
-        {
-            public string name;
-            public int level;
-            public int Hp;
-            public int Mp;
-            public int Atk;
-            public int Def;
-            public string Job;
-            public int Gold;
-        }
-        public Playerinfo PlayerData;
+        public string Name { get; set; }
+        public int Level { get; set; }
+        public int Hp { get; set; }
+        public int Mp { get; set; }
+        public int Atk { get; set; }
+        public int Def { get; set; }
+        public string Job { get; set; }
+        public int Gold { get; set; }
 
         //public bool[] ShopItems;
 
@@ -37,21 +33,25 @@ namespace TxtRPG2
         //}
         //public Iteminfo[] Items;
 
-        public SaveData(Player player)
+        public static void Save(Player player, string path = "save.json")
         {
-            PlayerData.name = player.Name;
-            PlayerData.level = player.Level;
-            PlayerData.Hp = player.Hp;
-            PlayerData.Mp = player.Mp;
-            PlayerData.Atk = player.Atk;
-            PlayerData.Def = player.Def;
-            PlayerData.Job = player.Job;
-            PlayerData.Gold = player.Gold;
-        }
+            SaveData save = new SaveData()
+            {
+                Name = player.Name,
+                Level = player.Level,
+                Hp = player.Hp,
+                Mp = player.Mp,
+                Atk = player.Atk,
+                Def = player.Def,
+                Job = player.Job,
+                Gold = player.Gold
+            };
 
-        public static void Save(SaveData save, string path)
-        {
-            var options = new JsonSerializerOptions { Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
+            var options = new JsonSerializerOptions
+            {
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                IncludeFields = true,
+            };
             string jString = JsonSerializer.Serialize(save, options);
 
             File.WriteAllText(path, jString);
@@ -59,21 +59,26 @@ namespace TxtRPG2
             Thread.Sleep(500);
         }
 
-        public static void Load(string path, out Player player)
+        public static void Load(out Player player, string path = "save.json")
         {
             string jString = File.ReadAllText(path);
 
-            SaveData load = JsonSerializer.Deserialize<SaveData>(jString);
-            switch(load.PlayerData.Job)
+            var options = new JsonSerializerOptions
+            {
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                IncludeFields = true
+            };
+            SaveData load = JsonSerializer.Deserialize<SaveData>(jString, options);
+            switch (load.Job)
             {
                 case "전사":
-                    player = new Warrior(load.PlayerData.name, load.PlayerData.level, load.PlayerData.Hp, load.PlayerData.Gold);
+                    player = new Warrior(load.Name, load.Level, load.Hp, load.Gold);
                     break;
                 case "궁수":
-                    player = new Archer(load.PlayerData.name, load.PlayerData.level, load.PlayerData.Hp, load.PlayerData.Gold);
+                    player = new Archer(load.Name, load.Level, load.Hp, load.Gold);
                     break;
                 default:
-                    player = new Warrior(load.PlayerData.name, load.PlayerData.level, load.PlayerData.Hp, load.PlayerData.Gold);
+                    player = new Warrior(load.Name, load.Level, load.Hp, load.Gold);
                     break;
             }
             Console.WriteLine("저장데이터를 불러왔습니다.");

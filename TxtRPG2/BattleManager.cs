@@ -62,7 +62,7 @@ namespace TxtRPG2
             for (int i = 0; i < spawn.Length; i++)
             {
                 int idx = new Random().Next(Enemys.Length);
-                spawn[i] = new Enemy(Enemys[idx].Level, Enemys[idx].Name, Enemys[idx].Hp, Enemys[idx].Atk);
+                spawn[i] = new Enemy(Enemys[idx].Level, Enemys[idx].Name, Enemys[idx].Hp, Enemys[idx].Mp, Enemys[idx].Atk);
             }
 
             while (true)
