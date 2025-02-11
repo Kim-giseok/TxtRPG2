@@ -67,6 +67,7 @@ namespace TxtRPG2
 
         public void UseSkill(int idx, Character target)
         {
+            Mp -= Skills[idx].ManaCost;
             int damage = (int)(Atk * Skills[idx].DamageMultiplier);
             int Hp = target.Hp;
 
