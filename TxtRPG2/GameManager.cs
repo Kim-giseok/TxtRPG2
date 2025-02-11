@@ -150,7 +150,7 @@ namespace TxtRPG2
 
                 Console.WriteLine();
                 Console.WriteLine("1. 상태 보기");
-                Console.WriteLine("2. 전투 시작");
+                Console.WriteLine($"2. 전투 시작 (현재 진행 : {battleManager.Floor}층)");
                 Console.WriteLine("3. 회복 아이템");
                 Console.WriteLine("0. 나가기");
                 switch (ConsoleUtility.GetInput(0, 3))

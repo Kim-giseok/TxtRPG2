@@ -18,6 +18,8 @@ namespace TxtRPG2
         public int EnterHp { get; private set; }
         public bool Victory { get => player.Hp != 0; }
 
+        public int Floor {  get; private set; }
+
         public BattleManager(Player player)
         {
             this.player = player;
@@ -29,6 +31,7 @@ namespace TxtRPG2
                 new Enemy(100, "챔피언", 300,13, 10)
             ];
             EnterHp = player.Hp;
+            Floor = 1;
         }
 
         void ShowInfos(bool select = false)
@@ -234,7 +237,7 @@ namespace TxtRPG2
                 Console.WriteLine();
                 if (Victory)
                 {
-                    Console.WriteLine("Victory");
+                    Console.WriteLine($"Victory - {Floor++}층 돌파!!");
                     Console.WriteLine();
                     Console.WriteLine($"던전에서 몬스터 {spawn.Length}마리를 잡았습니다.");
                 }
