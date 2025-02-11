@@ -125,10 +125,5 @@ namespace TxtRPG2
         {
             return Atk + attackBuff;
         }
-
-        
-
-
-
     }
 }

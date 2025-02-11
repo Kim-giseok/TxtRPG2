@@ -23,10 +23,10 @@ namespace TxtRPG2
             this.player = player;
             Enemys =
             [
-                new Enemy(2, "미니언", 15,10, 5),//레벨, 이름, 체력,마나, 공격력
-                new Enemy(3, "공허충", 10,10, 9),
+                new Enemy(2, "미니언", 15,5, 5),//레벨, 이름, 체력,마나, 공격력
+                new Enemy(3, "공허충", 10,5, 9),
                 new Enemy(5, "대포미니언", 25,10, 8),
-                new Enemy(100, "챔피언", 3000,10, 10)
+                new Enemy(100, "챔피언", 300,13, 10)
             ];
             EnterHp = player.Hp;
         }
@@ -50,7 +50,7 @@ namespace TxtRPG2
             Console.WriteLine();
             Console.WriteLine("[내정보]");
             Console.WriteLine($"Lv.{player.Level}\t{player.Name} ({player.Job})");
-            Console.WriteLine($"HP {player.Hp:D3}/100 Mp {player.Mp:D3}/20");
+            Console.WriteLine($"HP {player.Hp:D3}/{player.Hp} Mp {player.Mp:D3}/{player.Mp}");
             Console.WriteLine();
         }
 
@@ -104,7 +104,7 @@ namespace TxtRPG2
             Result();
         }
 
-        void Attack(Character actor, Character target)
+        void Attack(Character actor, Character target, bool isSkill = false, string skillName = "")
         {
             int damage = (int)(actor.Atk * new Random().Next(90, 110) / 100f + 0.5f);
             int Hp = target.Hp;
@@ -115,13 +115,14 @@ namespace TxtRPG2
 
                 Console.WriteLine("Battle!!");
                 Console.WriteLine();
-                target.ProcessStatusEffects();// 상태이상 표시
+                target.ProcessStatusEffects(); // 상태이상 표시
                 Console.WriteLine($"{actor.Name}의 공격!");
                 if (actor is Enemy enemyActor)
                 {
                     enemyActor.EnemySkill(enemyActor, (Player)target, spawn);
+
                 }
-                Console.WriteLine($"Lv.{target.Level} {target.Name}을(를) 맞췄습니다. [데미지 : {damage}]");
+                Console.WriteLine($"Lv.{target.Level} {target.Name}을(를) 맞췄습니다. [데미지 : {damage}] ");
                 Console.WriteLine();
                 Console.WriteLine($"Lv.{target.Level} {target.Name}");
 
@@ -142,7 +143,7 @@ namespace TxtRPG2
                 }
             }
         }
-        
+
 
         void PlayerTurn()
         {
@@ -239,10 +240,9 @@ namespace TxtRPG2
         }
         void SkillUse(Character actor, Character target)
         {
-
             while (true)
             {
-                ShowInfos(true);//3
+                ShowInfos(true); //3
                 Console.WriteLine("[스킬 목록]");
                 Console.WriteLine("==========================");
                 for (int i = 0; i < player.Skills.Count; i++)
@@ -252,12 +252,10 @@ namespace TxtRPG2
                 Console.WriteLine("==========================");
                 Console.WriteLine("0. 취소");
 
-
                 int skillChoice = ConsoleUtility.GetInput(0, player.Skills.Count);
                 if (skillChoice == 0) return;
 
-                Skill chosenSkill = player.Skills[skillChoice - 1];//선택한 스킬 을 chosenSkill에 저장
-
+                Skill chosenSkill = player.Skills[skillChoice - 1]; //선택한 스킬 을 chosenSkill에 저장
 
                 if (player.Mp < chosenSkill.ManaCost)
                 {
@@ -265,7 +263,6 @@ namespace TxtRPG2
                     Thread.Sleep(500);
                     continue;
                 }
-
 
                 int choice = ConsoleUtility.GetInput(0, spawn.Length);
                 if (choice == 0) return;
@@ -282,7 +279,6 @@ namespace TxtRPG2
                 // 스킬 실행 (Range 적용)
                 chosenSkill.Use(player, targetEnemy, spawn);
 
-
                 while (true)
                 {
                     Console.Clear();
@@ -295,7 +291,7 @@ namespace TxtRPG2
                     List<Enemy> finalTargets = new List<Enemy>();
                     finalTargets.Add(targetEnemy);  // 기본 공격 대상
                     Random rand = new Random();
-                    List<Enemy> possibleTargets = spawn.Where(e => !e.IsDead && e != targetEnemy).ToList();// 추가공격 리스트, 죽은적 제외, 최초 공격대상 제외
+                    List<Enemy> possibleTargets = spawn.Where(e => !e.IsDead && e != targetEnemy).ToList(); // 추가공격 리스트, 죽은적 제외, 최초 공격대상 제외
 
                     for (int i = 0; i < chosenSkill.Range - 1 && possibleTargets.Count > 0; i++)
                     {
@@ -335,12 +331,10 @@ namespace TxtRPG2
                     }
                     break;
                 }
-
-
-
             }
         }
     }
 }
+
 
 

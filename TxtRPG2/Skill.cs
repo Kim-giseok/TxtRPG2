@@ -13,11 +13,11 @@ public class Skill//스킬 관리 클래스
         private static Random rand = new();
         public string Name { get; }
         public int ManaCost { get; }
-        public int DamageMultiplier { get; }
+        public double DamageMultiplier { get; }
         public int Range { get; set; }
         public List<SkillEffect> sEffect { get; set; } // Changed type to List<SkillEffect>
 
-        public Skill(string name, int manaCost, int damageMultiplier, int range, List<SkillEffect> effects)
+        public Skill(string name, int manaCost, double damageMultiplier, int range, List<SkillEffect> effects)
         {
             Name = name;
             ManaCost = manaCost;
@@ -67,6 +67,7 @@ public class Skill//스킬 관리 클래스
             foreach (var eTarget in targets)
             {
                 eTarget.TakeDamage(damage);
+                Console.WriteLine($"{damage}의 스킬피해");
                 ApplyEffect(eTarget);
 
             }
@@ -89,6 +90,5 @@ public class Skill//스킬 관리 클래스
                 }
             }
         }
-
     }
 }

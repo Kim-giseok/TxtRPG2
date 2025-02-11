@@ -25,5 +25,4 @@ namespace TxtRPG2
             Duration = duration;
         }
     }
-    
 }
