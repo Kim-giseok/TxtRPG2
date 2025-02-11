@@ -16,7 +16,7 @@ namespace TxtRPG2
         int Level { get; set; }
         List<Skill> Skills { get; set; }
         void TakeDamage(int Damage);
-        
+
 
     }
 
@@ -28,11 +28,16 @@ namespace TxtRPG2
         public int Level { get; set; }
         public int Mp { get; set; }
         public List<Skill> Skills { get; set; } = new List<Skill>();
+        public List<SkillEffect> StatusEffect { get; set; } = new List<SkillEffect>();
         public bool IsDead { get => Hp <= 0; }
+        public bool IsStun { get => stunDuration > 0; }
+
         private int bleedDamage = 0; //지속피해
-        private int effectDuration = 0; // 지속시간
+        private int bleedDuration = 0; //지속시간
+        private int stunDuration = 0; // 지속시간
         private int attackBuff = 0;
-        
+        private int buffDuration = 0;
+
 
         public Character(int level, string name, int hp, int mp, int atk)
         {
@@ -41,7 +46,7 @@ namespace TxtRPG2
             Hp = hp;
             Mp = mp;
             Atk = atk;
-            
+
         }
 
         public void TakeDamage(int Damage)
@@ -57,14 +62,14 @@ namespace TxtRPG2
         public void ApplyBleed(int damagePerTurn, int duration)
         {
             bleedDamage = damagePerTurn;
-            effectDuration = duration;
+            bleedDuration = duration;
             Console.WriteLine($"{Name}가 {duration}턴 동안 {damagePerTurn}의 출혈 피해를 받습니다!");
         }
 
         // 기절 효과 적용
         public void ApplyStun(int duration)
         {
-            effectDuration = duration;
+            stunDuration = duration;
             Console.WriteLine($"{Name}가 {duration}턴 동안 기절 상태에 빠졌습니다!");
         }
 
@@ -72,32 +77,33 @@ namespace TxtRPG2
         public void ApplyBuff(int atkIncrease, int duration)
         {
             attackBuff = atkIncrease;
-            effectDuration = duration;
+            buffDuration = duration;
             Console.WriteLine($"{Name}의 공격력이 {atkIncrease}만큼 증가합니다! (지속 {duration}턴)");
         }
 
         // 매 턴 상태 이상 처리
         public void ProcessStatusEffects()
         {
-            if (effectDuration > 0)
+            if (stunDuration > 0)
             {
-                effectDuration--;
-                Console.WriteLine($"{Name}가 기절 상태로 행동할 수 없습니다! (남은 턴: {effectDuration})");
+                stunDuration--;
+                Console.WriteLine($"{Name}가 기절 상태로 행동할 수 없습니다! (남은 턴: {stunDuration})");
+                
                 return; // 기절 상태에서는 행동 불가
             }
 
-            if (effectDuration > 0)
+            if (bleedDuration > 0)
             {
                 Hp -= bleedDamage;
-                effectDuration--;
-                Console.WriteLine($"{Name}가 지속 피해를 입습니다! (-{bleedDamage} HP, 남은 턴: {effectDuration})");
-                
+                bleedDuration--;
+                Console.WriteLine($"{Name}가 지속 피해를 입습니다! (-{bleedDamage} HP, 남은 턴: {bleedDuration})");
+
             }
 
-            if (effectDuration > 0)
+            if (buffDuration > 0)
             {
-                effectDuration--;
-                if (effectDuration == 0)
+                buffDuration--;
+                if (buffDuration == 0)
                 {
                     Console.WriteLine($"{Name}의 공격력 버프가 사라졌습니다.");
                     attackBuff = 0;
@@ -105,7 +111,7 @@ namespace TxtRPG2
             }
         }
 
-        // 🛠 공격 시, 버프된 공격력 적용
+        //공격 시, 버프된 공격력 적용
         public int GetAttackPower()
         {
             return Atk + attackBuff;

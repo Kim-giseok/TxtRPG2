@@ -41,6 +41,11 @@ namespace TxtRPG2
                 Console.WriteLine($"Lv.{Level} {Name} Dead");
 
             }
+            else if(IsStun)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine($"Lv.{Level} {Name} Stun");
+            }
             else
             {
                 Console.WriteLine($"Lv.{Level} {Name} | 체력: {Hp} | 공격력: {Atk} |");

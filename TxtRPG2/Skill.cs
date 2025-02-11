@@ -37,7 +37,7 @@ public class Skill//스킬 관리 클래스
             ApplyDamage(actor, finalTargets);
         }
 
-        private bool CanUseSkill(Character actor) // 스킬 사용 가능 여부>> 관련 부분 수정해야됨
+        public bool CanUseSkill(Character actor) // 스킬 사용 가능 여부>> 관련 부분 수정해야됨
         {
             if (actor.Mp < ManaCost)
             {
@@ -50,7 +50,7 @@ public class Skill//스킬 관리 클래스
         private List<Character> SelectTargets(Character target, Character[] allCharacter) // 스킬 타겟 선택
         {
             List<Character> possibleTargets = allCharacter.Where(c => !c.IsDead && c != target).ToList();// 죽은 적과  선택 대상은 제외
-            List<Character> finalTargets = new() { (Enemy)target };
+            List<Character> finalTargets = new() { (Character)target };
 
             for (int i = 0; i < Range - 1 && possibleTargets.Count > 0; i++)
             {

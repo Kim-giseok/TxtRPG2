@@ -14,8 +14,7 @@ namespace TxtRPG2
         Player player;
         Enemy[] Enemys;
         Enemy[] spawn;
-        Skill[] Skills;
-
+        public int turnCount; // 전투 턴 수
         public int EnterHp { get; private set; }
         public bool Victory { get => player.Hp != 0; }
 
@@ -26,7 +25,8 @@ namespace TxtRPG2
             [
                 new Enemy(2, "미니언", 15,10, 5),//레벨, 이름, 체력,마나, 공격력
                 new Enemy(3, "공허충", 10,10, 9),
-                new Enemy(5, "대포미니언", 25,10, 8)
+                new Enemy(5, "대포미니언", 25,10, 8),
+                new Enemy(100, "챔피언", 3000,10, 10)
             ];
             EnterHp = player.Hp;
         }
@@ -66,9 +66,10 @@ namespace TxtRPG2
                 int idx = new Random().Next(Enemys.Length);
                 spawn[i] = new Enemy(Enemys[idx].Level, Enemys[idx].Name, Enemys[idx].Hp, Enemys[idx].Mp, Enemys[idx].Atk);
             }
-
+            turnCount = 0;
             while (true)
             {
+                turnCount++;
                 //전투종료 판정
                 int i = 0;
                 for (; i < spawn.Length; i++)
@@ -80,12 +81,14 @@ namespace TxtRPG2
                 }
                 if (!Victory || i == spawn.Length)
                 {
+                    //turnCount = 0;
                     break;
                 }
 
                 ShowInfos();//1
 
                 // 선택지 표시/선택
+                Console.WriteLine("턴 번호 : " + turnCount);
                 Console.WriteLine("1. 공격"); // 스킬
                 Console.WriteLine("2. 스킬");
                 int choice = ConsoleUtility.GetInput(1, 2);
@@ -112,18 +115,19 @@ namespace TxtRPG2
                 Console.Clear();
                 Console.WriteLine("Battle!!");
                 Console.WriteLine();
-
+                target.ProcessStatusEffects();// 상태이상 표시
+                
                 Console.WriteLine($"{actor.Name}의 공격!");
                 Console.WriteLine($"Lv.{target.Level} {target.Name}을(를) 맞췄습니다. [데미지 : {damage}]");
 
                 Console.WriteLine();
                 Console.WriteLine($"Lv.{target.Level} {target.Name}");
-                
+
                 if (target.Hp == 0)
                 {
                     Console.WriteLine($"HP {Hp} -> dead");
                 }
-                
+
                 else
                 {
                     Console.WriteLine($"HP {Hp} -> {target.Hp}");
@@ -147,9 +151,9 @@ namespace TxtRPG2
                 Console.WriteLine("0. 취소"); // 0번 누르면 탈출
 
                 int choice = ConsoleUtility.GetInput(0, spawn.Length);
-                
 
-                if (choice == 0 )
+
+                if (choice == 0)
                 {
                     break;
                 }
@@ -162,7 +166,7 @@ namespace TxtRPG2
                 }
                 else
                 {
-                    if (spawn[choice-1].IsDead == true)
+                    if (spawn[choice - 1].IsDead == true)
                     {
                         Console.WriteLine($"이미 죽은 적 입니다.");
                         Thread.Sleep(500);
@@ -175,7 +179,7 @@ namespace TxtRPG2
                         EnemyTurn();
                         break;
                     }
-                    
+
                 }
 
             }
@@ -186,12 +190,12 @@ namespace TxtRPG2
 
             foreach (var monster in spawn)
             {
-                if (!monster.IsDead)
+                if (!monster.IsDead && !monster.IsStun)
                 {
                     Attack(monster, player);
 
                 }
-                
+
             }
         }
 
@@ -243,8 +247,9 @@ namespace TxtRPG2
                 int skillChoice = ConsoleUtility.GetInput(0, player.Skills.Count);
                 if (skillChoice == 0) return;
 
-                Skill chosenSkill = player.Skills[skillChoice - 1];
-                
+                Skill chosenSkill = player.Skills[skillChoice - 1];//선택한 스킬 을 chosenSkill에 저장
+
+
                 if (player.Mp < chosenSkill.ManaCost)
                 {
                     Console.WriteLine("마나가 부족합니다.");
@@ -298,7 +303,7 @@ namespace TxtRPG2
                         eTarget.TakeDamage(damage);
 
                         Console.WriteLine($"Lv.{eTarget.Level} {eTarget.Name}에게 [{chosenSkill.Name}] [데미지 : {damage}]");
-
+                        eTarget.ProcessStatusEffects();
                         Console.WriteLine();
                         Console.WriteLine($"Lv.{eTarget.Level} {eTarget.Name}");
                         if (eTarget.Hp == 0)
@@ -321,7 +326,7 @@ namespace TxtRPG2
                     }
                     break;
                 }
-               
+
 
 
             }
