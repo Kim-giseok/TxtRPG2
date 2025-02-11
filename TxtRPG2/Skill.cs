@@ -28,17 +28,18 @@ namespace TxtRPG2
 
         public static Skill[] skills =
         {
-                new Skill("알파 스트라이크", 10, 2f, 1, SkillType.Attack),
-                new Skill("더블 스트라이크", 15, 1.5f, 2, SkillType.Attack)
-        };
+                    new Skill("알파 스트라이크", 10, 2f, 1, SkillType.Attack, 3, StatusEffect.Bleed),
+                    new Skill("더블 스트라이크", 15, 1.5f, 2, SkillType.Attack , 1, StatusEffect.Stun)
+            };
         public string Name { get; }
         public int ManaCost { get; }
         public float DamageMultiplier { get; }
         public int Range { get; set; }
         public SkillType Type { get; set; }
         public StatusEffect? Effect { get; set; }
+        public int EffectDuration { get; set; }
 
-        public Skill(string name, int manaCost, float damageMultiplier, int range, SkillType type, StatusEffect? effect = null)
+        public Skill(string name, int manaCost, float damageMultiplier, int range, SkillType type, int effectDuration, StatusEffect? effect = null)
         {
             Name = name;
             ManaCost = manaCost;
@@ -46,6 +47,7 @@ namespace TxtRPG2
             Range = range;
             Type = type;
             Effect = effect;
+            EffectDuration = effectDuration;
         }
 
         public void ShowInfo()

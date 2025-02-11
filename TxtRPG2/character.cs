@@ -7,7 +7,7 @@
         public int Mp { get; set; }
         public int Atk { get; set; }
         public int Level { get; set; }
-        public List<Skill> Skills { get; set; }
+        public List<Skill> Skills { get; set; } = new List<Skill>();
         public bool IsDead { get => Hp <= 0; }
         public StatusEffect CurrentStatus { get; set; } = StatusEffect.None;
         private int statusEffectTurn = 0;
@@ -28,6 +28,7 @@
             int damage = (int)(Atk * new Random().Next(90, 110) / 100f + 0.5f);
             int Hp = target.Hp;
 
+            
             target.TakeDamage(damage);
 
             while (true)
@@ -37,7 +38,7 @@
                 Console.WriteLine("Battle!!");
                 Console.WriteLine();
                 Console.WriteLine($"{Name}의 공격!");
-
+                ProcessStatusEffect();
                 Console.WriteLine($"Lv.{target.Level} {target.Name}에게 {damage}의 피해를 입혔습니다. ");
                 Console.WriteLine();
                 Console.WriteLine($"Lv.{target.Level} {target.Name}");
@@ -63,47 +64,58 @@
         public void UseSkill(Skill skill, Character[] targets)
         {
             Mp -= skill.ManaCost;
-            int damage = (int)(Atk * skill.DamageMultiplier);
+            Console.Clear();
 
+            Console.WriteLine("Battle!!");
+            Console.WriteLine();
+            Console.WriteLine($"{Name}은(는) {skill.Name}을 사용했다!");
+
+
+            int damage = (int)(Atk * skill.DamageMultiplier);
             int[] Hp = new int[targets.Length];
-            for (int i = 0; i < Hp.Length; i++)
+
+            for (int i = 0; i < targets.Length; i++)
             {
                 Hp[i] = targets[i].Hp;
+                ProcessStatusEffect();
                 targets[i].TakeDamage(damage);
+                Console.WriteLine($"Lv.{targets[i].Level} {targets[i].Name}에게 {damage}의 피해를 입혔다!");
+
+
             }
-            while (true)
+
+            // 상태 이상 효과가 있는 경우 적용
+            if (skill.Effect.HasValue && skill.Effect.Value != StatusEffect.None)
             {
-                Console.Clear();
+                foreach (var target in targets)
+                {
+                    target.ApplyStatusEffect(skill.Effect.Value, skill.EffectDuration);
+                }
+            }
 
-                Console.WriteLine("Battle!!");
-                Console.WriteLine();
-                Console.WriteLine($"{Name}은 {skill.Name}을 사용했다.!");
+            Console.WriteLine();
+            for (int i = 0; i < targets.Length; i++)
+            {
+                Console.WriteLine($"Lv.{targets[i].Level} {targets[i].Name}");
+                if (targets[i].Hp == 0)
+                {
+                    Console.WriteLine($"HP {Hp[i]} -> dead");
+                }
+                else
+                {
+                    Console.WriteLine($"HP {Hp[i]} -> {targets[i].Hp}");
+                }
+            }
 
-                for (int i = 0; i < targets.Length; i++)
-                {
-                    Console.WriteLine($"Lv.{targets[i].Level} {targets[i].Name}에게 {damage}의 피해를 입혔습니다. ");
-                }
-                Console.WriteLine();
-                for (int i = 0; i < targets.Length; i++)
-                {
-                    Console.WriteLine($"Lv.{targets[i].Level} {targets[i].Name}");
-                    if (targets[i].Hp == 0)
-                    {
-                        Console.WriteLine($"HP {Hp[i]} -> dead");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"HP {Hp[i]} -> {targets[i].Hp}");
-                    }
-                }
-                Console.WriteLine();
-                Console.WriteLine("0. 다음");
-                switch (ConsoleUtility.GetInput(0, 0))
-                {
-                    case 0: return;
-                }
+            Console.WriteLine();
+            Console.WriteLine("0. 다음");
+            switch (ConsoleUtility.GetInput(0, 0))
+            {
+                case 0: return;
             }
         }
+
+
 
         public void ShowSkills()
         {
@@ -129,7 +141,65 @@
 
             CurrentStatus = effect;
             statusEffectTurn = duration;
+
             Console.WriteLine($"{Name}은(는) {effect}상태가 되었다! [지속{statusEffectTurn}]");
+        }
+
+        public void ProcessStatusEffect() // 상태이상 적용
+        {
+            if (statusEffectTurn > 0)
+            {
+                ConsoleColor defaultColor = Console.ForegroundColor; // 기존 색상 저장
+
+                switch (CurrentStatus)
+                {
+                    case StatusEffect.Poison:
+                        int poisonDamage = Math.Max(3, (int)(Hp * 0.05)); // 최소 3 피해
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
+                        Console.WriteLine($"{Name}은(는) 독으로 인해 {poisonDamage}의 피해를 입었다!");
+                        TakeDamage(poisonDamage);
+                        Thread.Sleep(300);
+                        break;
+
+                    case StatusEffect.Stun:
+                        IsStunned();
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine($"{Name}은(는) 기절 상태라 행동할 수 없다!");
+                        Thread.Sleep(300);
+                        break;
+
+                    case StatusEffect.Burn:
+                        int burnDamage = Math.Max(8, (int)(Atk * 0.5)); // 최소 8 피해
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine($"{Name}은(는) 화상으로 인해 {burnDamage}의 피해를 입었다!");
+                        TakeDamage(burnDamage);
+                        Thread.Sleep(300);
+                        break;
+
+                    case StatusEffect.Bleed:
+                        int bleedDamage = Math.Max(2, (int)(Hp * 0.01)); // 최소 2 피해
+                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.WriteLine($"{Name}은(는) 출혈로 인해 {bleedDamage}의 피해를 입었다!");
+                        TakeDamage(bleedDamage);
+                        Thread.Sleep(300);
+                        break;
+                }
+
+                Console.ForegroundColor = defaultColor; // 색상 원래대로 돌리기
+                statusEffectTurn--;
+
+                // 상태 이상 해제
+                if (statusEffectTurn == 0)
+                {
+                    Console.WriteLine($"{Name}의 {CurrentStatus} 상태 이상이 해제되었다!");
+                    CurrentStatus = StatusEffect.None;
+                }
+            }
+        }
+
+        public bool IsStunned()
+        {
+            return CurrentStatus == StatusEffect.Stun && statusEffectTurn > 0;
         }
     }
 }

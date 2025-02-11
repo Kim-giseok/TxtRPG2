@@ -14,23 +14,23 @@
             this.player = player;
             Enemys =
             [
-                new Enemy(2, "미니언", 15, 10, 5, new List<Skill>
+                    /*new Enemy(2, "미니언", 15, 10, 5, new List<Skill>
                     {
-                        new Skill("알파 스트라이크", 10, 2f, 1, SkillType.Attack)
+                        new Skill("알파 스트라이크", 10, 2f, 1, SkillType.Attack, 4, StatusEffect.Poison)
 
                     }), // 레벨, 이름, 체력, 마나, 공격력, 스킬(비워두면 빈 리스트 반환)
                     new Enemy(3, "공허충", 10, 10, 9,new List<Skill>
                     {
-                        new Skill("보이드 어택", 7, 1.5f, 1, SkillType.Attack)
+                        new Skill("보이드 어택", 7, 1.5f, 1, SkillType.Attack, 3, StatusEffect.Bleed)
                     }),
 
                     new Enemy(5, "대포미니언", 25, 25, 8,new List<Skill>
                     {
-                        new Skill("포격", 15, 1.5f, 2, SkillType.Attack)
-                    }),
+                        new Skill("포격", 15, 1.5f, 2, SkillType.Attack, 2, StatusEffect.Burn)
+                    }), */
                     new Enemy(10, "챔피언", 300, 40, 10,new List<Skill>
                     {
-                        new Skill("강타", 15, 1.5f, 1, SkillType.Attack)
+                        new Skill("강타", 15, 1.5f, 1, SkillType.Attack, 1, StatusEffect.Stun)
                     })
 
             ];
@@ -51,12 +51,13 @@
                 }
                 spawn[i].AppearInfo();
             }
+            string statusText = player.CurrentStatus != StatusEffect.None ? player.CurrentStatus.ToString() : "";
 
             // 플레이어의 레벨 이름(직업) \n 체력/최대체력 표시
             Console.WriteLine();
             Console.WriteLine("[내정보]");
             Console.WriteLine($"Lv.{player.Level}\t{player.Name} ({player.Job})");
-            Console.WriteLine($"HP {player.Hp}/100 Mp {player.Mp}/50");
+            Console.WriteLine($"HP {player.Hp}/100 Mp {player.Mp}/50 {statusText}");
             Console.WriteLine();
         }
 
@@ -225,7 +226,7 @@
             foreach (var monster in spawn)
             {
                 if (monster.IsDead) continue;
-
+                monster.ProcessStatusEffect();
                 // 사용할 수 있는 스킬을 수동으로 필터링
                 List<Skill> availableSkills = new List<Skill>();
                 foreach (var skill in monster.Skills)
