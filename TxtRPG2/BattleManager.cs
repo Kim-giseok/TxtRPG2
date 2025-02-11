@@ -20,7 +20,7 @@ namespace TxtRPG2
 
         public int Floor { get; private set; }
 
-        public BattleManager(Player player)
+        public BattleManager(Player player, int floor = 1)
         {
             this.player = player;
             Enemys =
@@ -31,7 +31,7 @@ namespace TxtRPG2
                 new Enemy(100, "챔피언", 300, 13, 10)
             ];
             EnterHp = player.Hp;
-            Floor = 1;
+            Floor = floor;
         }
 
         void ShowInfos(bool select = false)

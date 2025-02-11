@@ -43,6 +43,9 @@ namespace TxtRPG2
         //상점 정보
         public bool[] DSells { get; set; }
 
+        //던전 정보
+        public int DFloor { get; set; }
+
         static DEquip[] SaveEquips(Inventory inven)
         {
             DEquip[] equips = new DEquip[inven.Equips.Count];
@@ -82,7 +85,7 @@ namespace TxtRPG2
             return sells;
         }
 
-        public static void Save(Player player, Shop shop, string path = "save.json")
+        public static void Save(Player player, Shop shop, BattleManager dungeon,  string path = "save.json")
         {
             SaveData save = new SaveData()
             {
@@ -98,7 +101,9 @@ namespace TxtRPG2
                 Equips = SaveEquips(player.inven),
                 Potions = SavePotions(player.inven),
 
-                DSells = SaveSells(shop)
+                DSells = SaveSells(shop),
+
+                DFloor = dungeon.Floor
             };
 
             var options = new JsonSerializerOptions
@@ -113,7 +118,7 @@ namespace TxtRPG2
             Thread.Sleep(500);
         }
 
-        public static void Load(out Player player, out Shop shop, string path = "save.json")
+        public static void Load(out Player player, out Shop shop, out BattleManager dungeon, string path = "save.json")
         {
             string jString = File.ReadAllText(path);
 
@@ -190,6 +195,8 @@ namespace TxtRPG2
             }
 
             shop = new Shop(player, load.DSells);
+
+            dungeon = new BattleManager(player, load.DFloor);
 
             Console.WriteLine("저장데이터를 불러왔습니다.");
             Thread.Sleep(500);

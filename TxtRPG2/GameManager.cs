@@ -9,8 +9,8 @@ namespace TxtRPG2
 {
     class GameManager
     {
-        private Player player; // 캐릭터를 상속받도록 변경
-        private BattleManager battleManager;
+        Player player; // 캐릭터를 상속받도록 변경
+        BattleManager battleManager;
 
         Shop shop;
 
@@ -18,7 +18,7 @@ namespace TxtRPG2
         {
             try
             {
-                SaveData.Load(out player, out shop);
+                SaveData.Load(out player, out shop, out battleManager);
             }
             catch (Exception)
             {
@@ -27,10 +27,6 @@ namespace TxtRPG2
                 Console.Clear();
                 player = ChooseJob();  // 직업 선택 후 player에 저장
                 shop = new Shop(player);
-            }
-
-            if (player != null)
-            {
                 battleManager = new BattleManager(player);
             }
         }
@@ -114,7 +110,7 @@ namespace TxtRPG2
                         shop.ShopEnter();
                         break;
                     case 5:
-                        SaveData.Save(player, shop);
+                        SaveData.Save(player, shop, battleManager);
                         break;
                 }
             }
