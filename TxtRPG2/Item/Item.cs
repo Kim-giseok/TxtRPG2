@@ -21,11 +21,11 @@ namespace TxtRPG2
             IsSold = false;
         }
 
-        public Item(Item item)
+        public Item(Item item, bool copy = false)
         {
             Name = item.Name;
             Description = item.Description;
-            Price = item.Price * 80 / 100;
+            Price = copy ? item.Price : item.Price * 80 / 100;
             IsSold = false;
         }
 

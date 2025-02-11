@@ -13,6 +13,11 @@ namespace TxtRPG2
 
     internal class HpPotion : Potion, IHpPotion
     {
+        public static HpPotion[] hpPotions =
+        {
+            new HpPotion("체력 포션", 30, "잃은 체력을 약간 회복하는 포션입니다.", 100)
+        };
+
         public int Hp { get; }
 
         public HpPotion(string name, int hp, string description, int price) : base(name, description, price)
@@ -20,7 +25,7 @@ namespace TxtRPG2
             Hp = hp;
         }
 
-        public HpPotion(HpPotion potion) : base(potion)
+        public HpPotion(HpPotion potion, bool copy = false) : base(potion, copy)
         {
             Hp = potion.Hp;
         }

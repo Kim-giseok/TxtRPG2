@@ -16,7 +16,7 @@ namespace TxtRPG2
             count = 1;
         }
 
-        public Potion(Potion potion) : base(potion)
+        public Potion(Potion potion, bool copy = false) : base(potion, copy)
         {
             count = potion.count;
         }
