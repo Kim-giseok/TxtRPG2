@@ -41,6 +41,11 @@ namespace TxtRPG2
 
         public override void Use(Player player)
         {
+            if (player.Mp >= 50)
+            {
+                Console.WriteLine("이미 마력이 가득 차 있습니다.");
+                return;
+            }
             int cnt = count;
             base.Use(player);
 
@@ -52,7 +57,7 @@ namespace TxtRPG2
                 {
                     player.Mp = 50;
                 }
-                Console.WriteLine($"{player.Name}은 체력을 {player.Mp - baseMp}만큼 회복했습니다.");
+                Console.WriteLine($"{player.Name}은 마력을 {player.Mp - baseMp}만큼 회복했습니다.");
             }
         }
     }

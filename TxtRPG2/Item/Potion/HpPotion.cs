@@ -41,6 +41,11 @@ namespace TxtRPG2
 
         public override void Use(Player player)
         {
+            if (player.Hp >= 100)
+            {
+                Console.WriteLine("이미 체력이 가득 차 있습니다.");
+                return;
+            }
             int cnt = count;
             base.Use(player);
 

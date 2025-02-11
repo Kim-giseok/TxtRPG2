@@ -139,18 +139,38 @@ namespace TxtRPG2
             }
 
             ConsoleUtility.GetInput(0, 0);
-            StartScene();
         }
 
         public void EnterBattle()
         {
-            ConsoleUtility.Loading();
+            while (true)
+            {
+                ConsoleUtility.Loading();
 
-            Console.Clear();
+                Console.Clear();
+                Console.WriteLine("스파르타 던전에 오신 여러분 환영합니다.");
+                Console.WriteLine("이제 전투를 시작할 수 있습니다.");
 
-            battleManager.Battle();
-
-            StartScene();
+                Console.WriteLine();
+                Console.WriteLine("1. 상태 보기");
+                Console.WriteLine("2. 전투 시작");
+                Console.WriteLine("3. 회복 아이템");
+                Console.WriteLine("0. 나가기");
+                switch (ConsoleUtility.GetInput(0, 3))
+                {
+                    case 0:
+                        return;
+                    case 1:
+                        ShowStat();
+                        break;
+                    case 2:
+                        battleManager.Battle();
+                        return;
+                    case 3:
+                        inven.UsePotion(player);
+                        break;
+                }
+            }
         }
     }
 }
