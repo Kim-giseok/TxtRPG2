@@ -59,7 +59,7 @@ namespace TxtRPG2
             // 입장시 플레이어의 Hp저장
             EnterHp = player.Hp;
             // 1~4마리의 랜덤한 수의 적 출현
-            spawn = new Enemy[new Random().Next(1, 4)];
+            spawn = new Enemy[new Random().Next(1, 5)];
 
             for (int i = 0; i < spawn.Length; i++)
             {
@@ -81,7 +81,6 @@ namespace TxtRPG2
                 }
                 if (!Victory || i == spawn.Length)
                 {
-                    //turnCount = 0;
                     break;
                 }
 
@@ -113,13 +112,16 @@ namespace TxtRPG2
             while (true)
             {
                 Console.Clear();
+
                 Console.WriteLine("Battle!!");
                 Console.WriteLine();
                 target.ProcessStatusEffects();// 상태이상 표시
-                
                 Console.WriteLine($"{actor.Name}의 공격!");
+                if (actor is Enemy enemyActor)
+                {
+                    enemyActor.EnemySkill(enemyActor, (Player)target, spawn);
+                }
                 Console.WriteLine($"Lv.{target.Level} {target.Name}을(를) 맞췄습니다. [데미지 : {damage}]");
-
                 Console.WriteLine();
                 Console.WriteLine($"Lv.{target.Level} {target.Name}");
 
@@ -127,7 +129,6 @@ namespace TxtRPG2
                 {
                     Console.WriteLine($"HP {Hp} -> dead");
                 }
-
                 else
                 {
                     Console.WriteLine($"HP {Hp} -> {target.Hp}");
@@ -141,6 +142,7 @@ namespace TxtRPG2
                 }
             }
         }
+        
 
         void PlayerTurn()
         {
@@ -171,6 +173,13 @@ namespace TxtRPG2
                         Console.WriteLine($"이미 죽은 적 입니다.");
                         Thread.Sleep(500);
 
+                        break;
+                    }
+                    else if (player.IsStun == true)
+                    {
+                        Console.WriteLine($"기절한 상태 입니다.");
+                        Thread.Sleep(500);
+                        EnemyTurn();
                         break;
                     }
                     else

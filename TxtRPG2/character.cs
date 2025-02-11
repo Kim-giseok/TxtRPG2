@@ -30,7 +30,7 @@ namespace TxtRPG2
         public List<Skill> Skills { get; set; } = new List<Skill>();
         public List<SkillEffect> StatusEffect { get; set; } = new List<SkillEffect>();
         public bool IsDead { get => Hp <= 0; }
-        public bool IsStun { get => stunDuration > 0; }
+        public bool IsStun { get => stunDuration > 0; private set { } }
 
         private int bleedDamage = 0; //지속피해
         private int bleedDuration = 0; //지속시간
@@ -63,14 +63,18 @@ namespace TxtRPG2
         {
             bleedDamage = damagePerTurn;
             bleedDuration = duration;
-            Console.WriteLine($"{Name}가 {duration}턴 동안 {damagePerTurn}의 출혈 피해를 받습니다!");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine($"{Name}이 {duration}턴 동안 {damagePerTurn}의 지속 피해를 받습니다!");
+            Console.ResetColor();
         }
 
         // 기절 효과 적용
         public void ApplyStun(int duration)
         {
             stunDuration = duration;
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine($"{Name}가 {duration}턴 동안 기절 상태에 빠졌습니다!");
+            Console.ResetColor();
         }
 
         // 버프 효과 적용 (공격력 증가)
@@ -88,7 +92,8 @@ namespace TxtRPG2
             {
                 stunDuration--;
                 Console.WriteLine($"{Name}가 기절 상태로 행동할 수 없습니다! (남은 턴: {stunDuration})");
-                
+                IsStun = true;
+
                 return; // 기절 상태에서는 행동 불가
             }
 
@@ -109,6 +114,10 @@ namespace TxtRPG2
                     attackBuff = 0;
                 }
             }
+            else
+            {
+                GetAttackPower();
+            }
         }
 
         //공격 시, 버프된 공격력 적용
@@ -116,6 +125,8 @@ namespace TxtRPG2
         {
             return Atk + attackBuff;
         }
+
+        
 
 
 

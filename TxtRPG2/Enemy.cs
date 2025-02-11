@@ -18,8 +18,9 @@ namespace TxtRPG2
         {
             Skills = new List<Skill>
             {
-                new Skill("깨물기", 0, 1, 1, new List<SkillEffect> { new SkillEffect(SkillType.Bleed, 5, 3) }),
-                new Skill("연속 찌르기", 10, 5, 1,new List<SkillEffect> { new SkillEffect(SkillType.Damage, 5, 3) })
+                new Skill("깨물기", 0, 3, 1, new List<SkillEffect> { new SkillEffect(SkillType.Bleed, 5, 3) }),
+                new Skill("연속 찌르기", 1, 5, 1,new List<SkillEffect> { new SkillEffect(SkillType.Damage, 5, 3) }),
+                new Skill("강하게 내려치기",1,1,1,new List<SkillEffect> {new SkillEffect(SkillType.Stun, 2 ,1 )})
             };
         }
 
@@ -32,6 +33,13 @@ namespace TxtRPG2
             }
         }
         
+        public void EnemySkill(Enemy enemy , Player player, Character[] allCharacter)// 적의 스킬 사용
+        {
+            Random rand = new Random();
+            int randSkill = rand.Next(0, Skills.Count);
+            Skill skill = Skills[randSkill];
+            skill.Use(enemy,player, allCharacter);
+        }
 
         public void AppearInfo()// 적의 정보 출력
         {
