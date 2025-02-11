@@ -187,11 +187,13 @@
 
                 Console.ForegroundColor = defaultColor; // 색상 원래대로 돌리기
                 statusEffectTurn--;
+                Thread.Sleep(300);
 
                 // 상태 이상 해제
                 if (statusEffectTurn == 0)
                 {
                     Console.WriteLine($"{Name}의 {CurrentStatus} 상태 이상이 해제되었다!");
+                    Thread.Sleep(300);
                     CurrentStatus = StatusEffect.None;
                 }
             }
@@ -199,6 +201,7 @@
 
         public bool IsStunned()
         {
+            Thread.Sleep(300);
             return CurrentStatus == StatusEffect.Stun && statusEffectTurn > 0;
         }
     }

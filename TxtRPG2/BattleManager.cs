@@ -226,6 +226,13 @@
             foreach (var monster in spawn)
             {
                 if (monster.IsDead) continue;
+                if (monster.IsStunned())
+                {
+                    monster.ProcessStatusEffect();
+                    //Console.WriteLine($"{monster.Name}이(가) 기절하여 행동할 수 없습니다!");
+                    Thread.Sleep(700);
+                    continue;
+                }
                 monster.ProcessStatusEffect();
                 // 사용할 수 있는 스킬을 수동으로 필터링
                 List<Skill> availableSkills = new List<Skill>();
