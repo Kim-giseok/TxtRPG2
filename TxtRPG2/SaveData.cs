@@ -40,6 +40,7 @@ namespace TxtRPG2
         public DPotion[] Potions { get; set; }
 
         //상점 정보
+        public bool[] DSells { get; set; }
 
         static DEquip[] SaveEquips(Inventory inven)
         {
@@ -52,7 +53,7 @@ namespace TxtRPG2
             return equips;
         }
 
-        static DPotion[] SavePotions (Inventory inven)
+        static DPotion[] SavePotions(Inventory inven)
         {
             DPotion[] potions = new DPotion[inven.Potions.Count];
             var list = new List<Potion>(inven.Potions.Values);
@@ -65,7 +66,17 @@ namespace TxtRPG2
             return potions;
         }
 
-        public static void Save(Player player, Inventory inven, string path = "save.json")
+        static bool[] SaveSells(Shop shop)
+        {
+            bool[] sells = new bool[shop.Items.Length];
+            for (int i = 0; i < sells.Length; i++)
+            {
+                sells[i] = shop.Items[i].IsSold;
+            }
+            return sells;
+        }
+
+        public static void Save(Player player, Inventory inven, Shop shop, string path = "save.json")
         {
             SaveData save = new SaveData()
             {
@@ -79,7 +90,9 @@ namespace TxtRPG2
                 Gold = player.Gold,
 
                 Equips = SaveEquips(inven),
-                Potions = SavePotions(inven)
+                Potions = SavePotions(inven),
+
+                DSells = SaveSells(shop)
             };
 
             var options = new JsonSerializerOptions
