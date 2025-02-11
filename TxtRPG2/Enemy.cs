@@ -18,9 +18,9 @@ namespace TxtRPG2
         {
             Skills = new List<Skill>
             {
-                new Skill("깨물기", 3, 1, 1, new List<SkillEffect> { new SkillEffect(SkillType.Bleed, 5, 3) }),
-                new Skill("연속 찌르기", 1, 1.2, 1,new List<SkillEffect> { new SkillEffect(SkillType.Damage, 2, 0) }),
-                new Skill("강하게 내려치기",5,2,1,new List<SkillEffect> {new SkillEffect(SkillType.Stun, 5 ,1 )})
+                new Skill("깨물기", 3, 0.4, 1, new List<SkillEffect> { new SkillEffect(SkillType.Bleed, 5, 3) }),
+                new Skill("연속 찌르기", 1, 0.3, 1,new List<SkillEffect> { new SkillEffect(SkillType.Damage, 2, 0) }),
+                new Skill("강하게 내려치기",5,0.7,1,new List<SkillEffect> {new SkillEffect(SkillType.Stun, 5 ,1 )})
             };
         }
 

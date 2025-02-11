@@ -91,6 +91,7 @@ namespace TxtRPG2
         {
             if (stunDuration > 0)
             {
+                
                 stunDuration--;
                 Console.WriteLine($"{Name}가 기절 상태로 행동할 수 없습니다! (남은 턴: {stunDuration})");
                 IsStun = true;

@@ -109,10 +109,7 @@ namespace TxtRPG2
             int damage = (int)(actor.Atk * new Random().Next(90, 110) / 100f + 0.5f);
             int Hp = target.Hp;
 
-            if (!isSkill)
-            {
-                target.TakeDamage(damage);
-            }
+            target.TakeDamage(damage);
 
             while (true)
             {
@@ -122,12 +119,12 @@ namespace TxtRPG2
                 Console.WriteLine();
                 target.ProcessStatusEffects(); // 상태이상 표시
                 Console.WriteLine($"{actor.Name}의 공격!");
+                
                 if (actor is Enemy enemyActor)
                 {
-                    enemyActor.EnemySkill(enemyActor, (Player)target, spawn);  
+                    enemyActor.EnemySkill(enemyActor, (Player)target, spawn);
                 }
-                
-                Console.WriteLine($"Lv.{target.Level} {target.Name}을(를) 맞췄습니다. [데미지 : {damage}] ");
+                Console.WriteLine($"Lv.{target.Level} {target.Name}에게 [데미지 : {damage}]의 추가피해를 입혔습니다. ");
                 Console.WriteLine();
                 Console.WriteLine($"Lv.{target.Level} {target.Name}");
 
