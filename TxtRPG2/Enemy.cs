@@ -9,17 +9,21 @@ using TxtRPG2;
 namespace TxtRPG2
 {
 
-    public class Enemy : Character // 인터페이스 상속
+    internal class Enemy : Character // 인터페이스 상속
     {
-        public Enemy(int level, string name, int hp, int mp, int atk, List<Skill> skills = null) // 레벨, 이름, 체력, 공격력을 받는 생성자
+        public Reward reward { get; set; }
+
+        public Enemy(int level, string name, int hp, int mp, int atk, List<Skill> skills = null, int reward = 0) // 레벨, 이름, 체력, 공격력을 받는 생성자
             : base(level, name, hp, mp, atk) // 부모 생성자 호출
-        {     
-             Skills = skills != null ? skills : new List<Skill>(); // 스킬이 없으면 빈 리스트로 초기화  
+        {
+            Skills = skills != null ? skills : new List<Skill>(); // 스킬이 없으면 빈 리스트로 초기화  
+            this.reward = Reward.rewards[reward];
         }
 
-        public Enemy(Enemy enemy):base(enemy.Level, enemy.Name, enemy.Hp,enemy.Mp, enemy.Atk)
+        public Enemy(Enemy enemy) : base(enemy.Level, enemy.Name, enemy.Hp, enemy.Mp, enemy.Atk)
         {
             Skills = enemy.Skills;
+            reward = enemy.reward;
         }
 
         public void TakeDamage(int Damage)

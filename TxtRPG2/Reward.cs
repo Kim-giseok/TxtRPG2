@@ -8,14 +8,19 @@ namespace TxtRPG2
 {
     internal class Reward
     {
+        public static Reward[] rewards =
+        {
+            new Reward(1, 100),
+            new Reward(1, 50),
+            new Reward(2, 150),
+            new Reward(5, 500)
+        };
         public int Exp { get; set; }
-        public Item[] Items { get; set; }
         public int Gold { get; set; }
 
-        public Reward(int exp = 1, Item[] items = null, int gold = 100)
+        public Reward(int exp = 1, int gold = 100)
         {
             Exp = exp;
-            Items = items;
             Gold = gold;
         }
 
@@ -23,13 +28,6 @@ namespace TxtRPG2
         {
             player.GainExp(Exp);
             player.Gold += Gold;
-            if (Items != null)
-            {
-                foreach (Item item in Items)
-                {
-                    player.inven.AddItem(item);
-                }
-            }
         }
     }
 }

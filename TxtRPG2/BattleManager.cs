@@ -19,21 +19,22 @@
                 new Enemy(2, "미니언", 15, 10, 5, new List<Skill>
                     {
                         Skill.skills[0]
-                    }), // 레벨, 이름, 체력, 마나, 공격력, 스킬(비워두면 빈 리스트 반환)
+                    }, 0), // 레벨, 이름, 체력, 마나, 공격력, 스킬(비워두면 빈 리스트 반환)
+
                 new Enemy(3, "공허충", 10, 10, 9, new List<Skill>
                     {
                         Skill.skills[2]
-                    }),
+                    }, 1),
 
                 new Enemy(5, "대포미니언", 25, 25, 8, new List<Skill>
                     {
                         Skill.skills[3]
-                    }),
+                    }, 2),
+
                 new Enemy(10, "챔피언", 300, 40, 10, new List<Skill>
                     {
                         Skill.skills[4]
-                    })
-
+                    }, 3)
             ];
             EnterHp = player.Hp;
             Floor = floor;
@@ -79,6 +80,7 @@
             {
                 spawn[new Random().Next(spawn.Length)] = new Enemy(Enemys[3]);
             }
+
             //전투시작
             turnCount = 1;
             while (true)
@@ -273,15 +275,34 @@
                     Console.WriteLine($"Victory - {Floor++}층 돌파!!");
                     Console.WriteLine();
                     Console.WriteLine($"던전에서 몬스터 {spawn.Length}마리를 잡았습니다.");
+
+                    int beforeExp = player.Exp, beforeLv = player.Level, beforeGold = player.Gold;
+                    foreach (var enemy in spawn)
+                    {
+                        enemy.reward.ApplyReWard(player);
+                    }
+                    Console.WriteLine();
+                    Console.WriteLine("[캐릭터 정보]");
+                    if (beforeLv != player.Level)
+                    {
+                        Console.Write($"Lv.{beforeLv} ->");
+                    }
+                    Console.WriteLine($"Lv.{player.Level} {player.Name}");
+                    Console.WriteLine($"HP {EnterHp} -> {player.Hp}");
+                    Console.WriteLine($"Exp {beforeExp} -> {player.Exp}");
+
+                    Console.WriteLine();
+                    Console.WriteLine("[획득 아이템]");
+                    Console.WriteLine($"{player.Gold-beforeGold} Gold");
                 }
                 else
                 {
                     Console.WriteLine("You Lose");
+                    Console.WriteLine();
+                    Console.WriteLine("[캐릭터 정보]");
+                    Console.WriteLine($"Lv.{player.Level} {player.Name}");
+                    Console.WriteLine($"HP {EnterHp} -> {player.Hp}");
                 }
-                Console.WriteLine();
-                Console.WriteLine($"Lv.{player.Level} {player.Name}");
-                Console.WriteLine($"HP {EnterHp} -> {player.Hp}");
-
                 Console.WriteLine();
                 Console.WriteLine("0. 다음");
                 switch (ConsoleUtility.GetInput(0, 0))
