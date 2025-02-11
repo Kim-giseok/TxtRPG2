@@ -244,12 +244,10 @@
                     Skill selectedSkill = availableSkills[randomIndex];
 
                     monster.UseSkill(selectedSkill, new Character[] { player }); // 플레이어를 타겟으로 스킬 사용
-                    Console.WriteLine($"{monster.Name}이(가) {selectedSkill.Name}을(를) 사용했다!"); // 디버깅 메시지
                 }
                 else
                 {
                     monster.Attack(player);
-                    Console.WriteLine($"{monster.Name}이(가) 기본 공격을 했다!"); // 디버깅 메시지
                 }
                 Thread.Sleep(700);
             }
