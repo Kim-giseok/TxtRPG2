@@ -14,11 +14,8 @@ namespace TxtRPG2
         public List<Skill> Skills { get; set; } // 스킬 리스트
         public Enemy(int level, string name, int hp, int mp, int atk, List<Skill> skills = null) // 레벨, 이름, 체력, 공격력을 받는 생성자
             : base(level, name, hp, mp, atk) // 부모 생성자 호출
-        {
-            Skills = new List<Skill>();
-            {
-                Skills = skills ?? new List<Skill>(); // 스킬이 없으면 빈 리스트로 초기화
-            }
+        {     
+             Skills = skills ?? new List<Skill>(Skill.skills); // 스킬이 없으면 빈 리스트로 초기화  
         }
 
         public void TakeDamage(int Damage)
