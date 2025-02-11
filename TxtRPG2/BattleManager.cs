@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.PortableExecutable;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
-using static System.Net.Mime.MediaTypeNames;
-
-namespace TxtRPG2
+﻿namespace TxtRPG2
 {
     internal class BattleManager
     {
@@ -23,10 +14,25 @@ namespace TxtRPG2
             this.player = player;
             Enemys =
             [
-                new Enemy(2, "미니언", 15,5, 5),//레벨, 이름, 체력,마나, 공격력
-                new Enemy(3, "공허충", 10,5, 9),
-                new Enemy(5, "대포미니언", 25,10, 8),
-                new Enemy(100, "챔피언", 300,13, 10)
+                new Enemy(2, "미니언", 15, 10, 5, new List<Skill>
+                    {
+                        new Skill("알파 스트라이크", 10, 2f, 1)
+
+                    }), // 레벨, 이름, 체력, 마나, 공격력, 스킬(비워두면 빈 리스트 반환)
+                    new Enemy(3, "공허충", 10, 10, 9,new List<Skill>
+                    {
+                        new Skill("보이드 어택", 7, 1.5f, 1)
+                    }),
+
+                    new Enemy(5, "대포미니언", 25, 25, 8,new List<Skill>
+                    {
+                        new Skill("포격", 15, 1.5f, 2)
+                    }),
+                    new Enemy(10, "챔피언", 300, 40, 10,new List<Skill>
+                    {
+                        new Skill("강타", 15, 1.5f, 1)
+                    })
+
             ];
             EnterHp = player.Hp;
         }
@@ -212,15 +218,40 @@ namespace TxtRPG2
             }
         }
 
-        void EnemyTurn()
+        private void EnemyTurn()
         {
+            Random rand = new Random();
 
             foreach (var monster in spawn)
             {
-                if (!monster.IsDead)
+                if (monster.IsDead) continue;
+
+                // 사용할 수 있는 스킬을 수동으로 필터링
+                List<Skill> availableSkills = new List<Skill>();
+                foreach (var skill in monster.Skills)
+                {
+                    if (monster.Mp >= skill.ManaCost)
+                    {
+                        availableSkills.Add(skill);
+                    }
+                }
+
+                bool useSkill = availableSkills.Count > 0 && rand.Next(100) < 40; // 40% 확률로 스킬 사용
+
+                if (useSkill)
+                {
+                    int randomIndex = rand.Next(availableSkills.Count); // 랜덤한 스킬 선택
+                    Skill selectedSkill = availableSkills[randomIndex];
+
+                    monster.UseSkill(selectedSkill, new Character[] { player }); // 플레이어를 타겟으로 스킬 사용
+                    Console.WriteLine($"{monster.Name}이(가) {selectedSkill.Name}을(를) 사용했다!"); // 디버깅 메시지
+                }
+                else
                 {
                     monster.Attack(player);
+                    Console.WriteLine($"{monster.Name}이(가) 기본 공격을 했다!"); // 디버깅 메시지
                 }
+                Thread.Sleep(700);
             }
             turnCount++;
         }
