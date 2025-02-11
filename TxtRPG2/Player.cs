@@ -7,7 +7,7 @@
         public int Def { get; set; }
         public int Gold { get; set; }
 
-        public Player(string name, int level, string job, int atk, int def, int hp, int gold) : base(level, name, hp, atk)
+        public Player(string name, int level, string job, int atk, int def, int hp = 100, int mp = 50, int gold) : base(level, name, hp, mp, atk)
         {
             Job = job;
             Def = def;
