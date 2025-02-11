@@ -10,15 +10,7 @@ namespace TxtRPG2
     public class Warrior : Player
     {
         public Warrior(string name, int level, int hp, int gold) : base(name, level, "전사", 10, 15, 100, gold)
-        {
-            Name = name;
-            Level = level;
-            Job = "전사";
-            Atk = 10;  // 전사 공격력
-            Def = 15;  // 전사 방어력
-            Hp = 100;
-            Gold = 1500;
-        }
+        { }
 
         public string Job { get; set; }
 
@@ -38,15 +30,7 @@ namespace TxtRPG2
     public class Archer : Player
     {
         public Archer(string name, int level, int hp, int gold) : base(name, level, "궁수", 20, 10, 80, gold)
-        {
-            Name = name;
-            Level = level;
-            Job = "궁수";
-            Atk = 20;  // 궁수 공격력
-            Def = 10;   // 궁수 방어력
-            Hp = 80;
-            Gold = 1500;
-        }
+        { }
 
         public string Job { get; set; }
 
