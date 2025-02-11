@@ -24,13 +24,6 @@
             Console.WriteLine($"체력 : {Hp}");
             Console.WriteLine($"Gold : {Gold} G");
             Console.WriteLine("\n0.나가기\n");
-            /*  메인에서
-                플레이어 객체 생성
-                Player player = new Player(playerName, 1, "전사", 10, 5, 100, 1500);
-
-                상태 보기 메서드 호출
-                player.Status();
-            */
         }
 
     }

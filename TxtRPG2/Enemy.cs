@@ -13,8 +13,7 @@ namespace TxtRPG2
     {
         public Enemy(int level, string name, int hp, int mp, int atk) // 레벨, 이름, 체력, 공격력을 받는 생성자
             : base(level, name, hp, mp, atk) // 부모 생성자 호출
-        {
-        }
+        { }
 
         public void TakeDamage(int Damage)
         {
@@ -24,7 +23,7 @@ namespace TxtRPG2
                 Hp = 0;
             }
         }
-        
+
         public void AppearInfo()// 적의 정보 출력
         {
             if (IsDead)
@@ -41,4 +40,3 @@ namespace TxtRPG2
         }
     }
 }
-
