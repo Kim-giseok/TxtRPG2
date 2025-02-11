@@ -18,21 +18,20 @@
             [
                 new Enemy(2, "미니언", 15, 10, 5, new List<Skill>
                     {
-                        new Skill("알파 스트라이크", 10, 2f, 1)
-
+                        Skill.skills[0]
                     }), // 레벨, 이름, 체력, 마나, 공격력, 스킬(비워두면 빈 리스트 반환)
-                    new Enemy(3, "공허충", 10, 10, 9,new List<Skill>
+                new Enemy(3, "공허충", 10, 10, 9, new List<Skill>
                     {
-                        new Skill("보이드 어택", 7, 1.5f, 1)
+                        Skill.skills[2]
                     }),
 
-                    new Enemy(5, "대포미니언", 25, 25, 8,new List<Skill>
+                new Enemy(5, "대포미니언", 25, 25, 8, new List<Skill>
                     {
-                        new Skill("포격", 15, 1.5f, 2)
+                        Skill.skills[3]
                     }),
-                    new Enemy(10, "챔피언", 300, 40, 10,new List<Skill>
+                new Enemy(10, "챔피언", 300, 40, 10, new List<Skill>
                     {
-                        new Skill("강타", 15, 1.5f, 1)
+                        Skill.skills[4]
                     })
 
             ];

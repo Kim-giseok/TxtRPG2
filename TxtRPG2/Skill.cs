@@ -13,7 +13,10 @@ namespace TxtRPG2
         public static Skill[] skills =
         {
             new Skill("알파 스트라이크", 10, 2f, 1),
-            new Skill("더블 스트라이크", 15, 1.5f, 2)
+            new Skill("더블 스트라이크", 15, 1.5f, 2),
+            new Skill("보이드 어택", 7, 1.5f, 1),
+            new Skill("포격", 15, 1.5f, 2),
+            new Skill("강타", 15, 1.5f, 1)
         };
         public string Name { get; }
         public int ManaCost { get; }
