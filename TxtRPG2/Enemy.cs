@@ -11,17 +11,9 @@ namespace TxtRPG2
 
     public class Enemy : Character // 인터페이스 상속
     {
-       // public bool IsDead { get => Hp <= 0; }// 사망여부
-        public List<Skill> Skills { get; set; }
         public Enemy(int level, string name, int hp, int mp, int atk) // 레벨, 이름, 체력, 공격력을 받는 생성자
             : base(level, name, hp, mp, atk) // 부모 생성자 호출
         {
-            Skills = new List<Skill>
-            {
-                new Skill("깨물기", 3, 0.4, 1, new List<SkillEffect> { new SkillEffect(SkillType.Bleed, 5, 3) }),
-                new Skill("연속 찌르기", 1, 0.3, 1,new List<SkillEffect> { new SkillEffect(SkillType.Damage, 2, 0) }),
-                new Skill("강하게 내려치기",5,0.5,1,new List<SkillEffect> {new SkillEffect(SkillType.Stun, 5 ,1 )})
-            };
         }
 
         public void TakeDamage(int Damage)
@@ -33,26 +25,6 @@ namespace TxtRPG2
             }
         }
         
-        public void EnemySkill(Enemy enemy , Player player, Character[] allCharacter)// 적의 스킬 사용
-        {
-            Random rand = new Random();
-            int skillchance = rand.Next(0, 100);
-            
-            if (skillchance<40) // 40%확률로 스킬 사용
-            {
-                int randSkill = rand.Next(0, Skills.Count);// 스킬목록의 스킬중 랜덤 선택
-                Skill skill = Skills[randSkill]; // 랜덤으로 선택된 스킬
-                skill.Use(enemy, player, allCharacter);
-                IsSkill = true;
-            }
-            else
-            {
-                IsSkill = false;
-                
-            }
-            
-        }
-
         public void AppearInfo()// 적의 정보 출력
         {
             if (IsDead)
@@ -61,16 +33,10 @@ namespace TxtRPG2
                 Console.WriteLine($"Lv.{Level} {Name} Dead");
 
             }
-            else if(IsStun)
-            {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine($"Lv.{Level} {Name} Stun");
-            }
             else
             {
-                Console.WriteLine($"Lv.{Level} {Name} | 체력: {Hp} | 공격력: {Atk} |");
+                Console.WriteLine($"Lv.{Level} {Name} | 체력: {Hp}");
             }
-
             Console.ResetColor();
         }
     }

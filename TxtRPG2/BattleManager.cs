@@ -66,10 +66,9 @@ namespace TxtRPG2
                 int idx = new Random().Next(Enemys.Length);
                 spawn[i] = new Enemy(Enemys[idx].Level, Enemys[idx].Name, Enemys[idx].Hp, Enemys[idx].Mp, Enemys[idx].Atk);
             }
-            turnCount = 0;
+            turnCount = 1;
             while (true)
             {
-                turnCount++;
                 //전투종료 판정
                 int i = 0;
                 for (; i < spawn.Length; i++)
@@ -88,43 +87,66 @@ namespace TxtRPG2
 
                 // 선택지 표시/선택
                 Console.WriteLine("턴 번호 : " + turnCount);
-                Console.WriteLine("1. 공격"); // 스킬
+                Console.WriteLine("1. 공격");
                 Console.WriteLine("2. 스킬");
                 int choice = ConsoleUtility.GetInput(1, 2);
-                if (choice == 1)
+                switch (choice)
                 {
-                    PlayerTurn();
-                }
-                else if (choice == 2)
-                {
-                    SkillUse(player);  // 
+                    case 1:
+                        PlayerAttack();
+                        break;
+                    case 2:
+                        PlayerSkill();
+                        break;
                 }
             }
             // 전투 종료 후 결과화면 출력
             Result();
         }
 
-        void PlayerTurn()
+        void PlayerAttack()
         {
-            while (true)//enemy 가 죽었을 경우 탈출
+            while (true)
             {
                 ShowInfos(true);//2
 
-                Console.WriteLine("0. 취소"); // 0번 누르면 탈출
-
+                Console.WriteLine("0. 취소");
                 int choice = ConsoleUtility.GetInput(0, spawn.Length);
-                switch(choice)
+                switch (choice)
                 {
                     case 0:
                         return;
                     default:
-                        if(spawn[choice - 1].IsDead)
+                        if (spawn[choice - 1].IsDead)
                         {
                             Console.WriteLine($"이미 죽은 적 입니다.");
                             Thread.Sleep(500);
                             break;
                         }
                         player.Attack(spawn[choice - 1]);
+                        EnemyTurn();
+                        return;
+                }
+            }
+        }
+
+        void PlayerSkill()
+        {
+            //스킬 선택창 출력
+            while(true)
+            {
+                ShowInfos();
+
+                player.ShowSkills();
+                Console.WriteLine("0. 취소");
+                Console.WriteLine();
+                int input = ConsoleUtility.GetInput(0, player.Skills.Count);
+                switch (input)
+                {
+                    case 0:
+                        return;
+                    default:
+                        //선택한 스킬 사용
                         return;
                 }
             }
@@ -135,12 +157,12 @@ namespace TxtRPG2
 
             foreach (var monster in spawn)
             {
-                if (!monster.IsDead && !monster.IsStun)
+                if (!monster.IsDead)
                 {
                     monster.Attack(player);
                 }
-
             }
+            turnCount++;
         }
 
         void Result()
@@ -172,103 +194,5 @@ namespace TxtRPG2
                 }
             }
         }
-        void SkillUse(Character actor)
-        {
-            while (true)
-            {
-                ShowInfos(true); //3
-                Console.WriteLine("[스킬 목록]");
-                Console.WriteLine("==========================");
-                for (int i = 0; i < player.Skills.Count; i++)
-                {
-                    Console.WriteLine($"{i + 1}. {player.Skills[i].Name} (MP {player.Skills[i].ManaCost}) [범위: {player.Skills[i].Range}]");
-                }
-                Console.WriteLine("==========================");
-                Console.WriteLine("0. 취소");
-
-                int skillChoice = ConsoleUtility.GetInput(0, player.Skills.Count);
-                if (skillChoice == 0) return;
-
-                Skill chosenSkill = player.Skills[skillChoice - 1]; //선택한 스킬 을 chosenSkill에 저장
-
-                if (player.Mp < chosenSkill.ManaCost)
-                {
-                    Console.WriteLine("마나가 부족합니다.");
-                    Thread.Sleep(500);
-                    continue;
-                }
-
-                int choice = ConsoleUtility.GetInput(0, spawn.Length);
-                if (choice == 0) return;
-
-                Enemy targetEnemy = spawn[choice - 1];
-
-                if (targetEnemy.IsDead)
-                {
-                    Console.WriteLine("잘못된 입력입니다.");
-                    Thread.Sleep(500);
-                    continue;
-                }
-
-                // 스킬 실행 (Range 적용)
-                chosenSkill.Use(player, targetEnemy, spawn);
-
-                while (true)
-                {
-                    Console.Clear();
-                    Console.WriteLine("Battle!!");
-                    Console.WriteLine();
-
-                    Console.WriteLine($"{actor.Name}의 공격!");
-
-                    // 범위 공격 대상 리스트 가져오기
-                    List<Enemy> finalTargets = new List<Enemy>();
-                    finalTargets.Add(targetEnemy);  // 기본 공격 대상
-                    Random rand = new Random();
-                    List<Enemy> possibleTargets = spawn.Where(e => !e.IsDead && e != targetEnemy).ToList(); // 추가공격 리스트, 죽은적 제외, 최초 공격대상 제외
-
-                    for (int i = 0; i < chosenSkill.Range - 1 && possibleTargets.Count > 0; i++)
-                    {
-                        int randomIndex = rand.Next(possibleTargets.Count);
-                        finalTargets.Add(possibleTargets[randomIndex]);
-                        possibleTargets.RemoveAt(randomIndex);
-                    }
-
-                    // 모든 대상에 대해 개별적인 체력 변화 출력
-                    foreach (var eTarget in finalTargets)
-                    {
-                        int HpBefore = eTarget.Hp;
-                        int damage = (int)(actor.Atk * chosenSkill.DamageMultiplier);
-                        eTarget.TakeDamage(damage);
-
-                        Console.WriteLine($"Lv.{eTarget.Level} {eTarget.Name}에게 [{chosenSkill.Name}] [데미지 : {damage}]");
-                        eTarget.ProcessStatusEffects();
-                        Console.WriteLine();
-                        Console.WriteLine($"Lv.{eTarget.Level} {eTarget.Name}");
-                        if (eTarget.Hp == 0)
-                        {
-                            Console.WriteLine($"HP {HpBefore} -> dead");
-                        }
-                        else
-                        {
-                            Console.WriteLine($"HP {HpBefore} -> {eTarget.Hp}");
-                        }
-                    }
-
-                    Console.WriteLine();
-                    Console.WriteLine("0. 다음");
-                    switch (ConsoleUtility.GetInput(0, 0))
-                    {
-                        case 0:
-                            EnemyTurn();
-                            return;
-                    }
-                    break;
-                }
-            }
-        }
     }
 }
-
-
-
