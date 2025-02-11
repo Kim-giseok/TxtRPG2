@@ -77,7 +77,7 @@ namespace TxtRPG2
             Console.ResetColor();
         }
 
-        // 버프 효과 적용 (공격력 증가)
+        // 버프 효과 적용 (공격력 증가)>> 아직 미구현
         public void ApplyBuff(int atkIncrease, int duration)
         {
             attackBuff = atkIncrease;
