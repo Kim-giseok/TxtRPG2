@@ -21,16 +21,16 @@ namespace TxtRPG2
         public string Job { get; set; }
         public int Gold { get; set; }
 
-        public struct DItem
+        public struct DEquip
         {
             public string type { get; set; }
             public string name { get; set; }
         }
-        public DItem[] items { get; set; }
+        public DEquip[] Equips { get; set; }
 
-        static DItem[] Save(Inventory inven)
+        static DEquip[] SaveEquips(Inventory inven)
         {
-            DItem[] equips = new DItem[inven.Equips.Count];
+            DEquip[] equips = new DEquip[inven.Equips.Count];
             for (int i = 0; i < equips.Length; i++)
             {
                 equips[i].type = inven.Equips[i].GetType().ToString().Split(".")[1];
@@ -52,7 +52,7 @@ namespace TxtRPG2
                 Job = player.Job,
                 Gold = player.Gold,
 
-                items = Save(inven)
+                Equips = SaveEquips(inven)
             };
 
             var options = new JsonSerializerOptions
@@ -93,7 +93,7 @@ namespace TxtRPG2
 
             inven = new Inventory();
             Item[] iteml;
-            foreach (var equips in load.items)
+            foreach (var equips in load.Equips)
             {
                 switch (equips.type)
                 {
