@@ -18,21 +18,20 @@
             [
                 new Enemy(2, "미니언", 15, 10, 5, new List<Skill>
                     {
-                        new Skill("알파 스트라이크", 10, 2f, 1)
-
+                        Skill.skills[0]
                     }), // 레벨, 이름, 체력, 마나, 공격력, 스킬(비워두면 빈 리스트 반환)
-                    new Enemy(3, "공허충", 10, 10, 9,new List<Skill>
+                new Enemy(3, "공허충", 10, 10, 9, new List<Skill>
                     {
-                        new Skill("보이드 어택", 7, 1.5f, 1)
+                        Skill.skills[2]
                     }),
 
-                    new Enemy(5, "대포미니언", 25, 25, 8,new List<Skill>
+                new Enemy(5, "대포미니언", 25, 25, 8, new List<Skill>
                     {
-                        new Skill("포격", 15, 1.5f, 2)
+                        Skill.skills[3]
                     }),
-                    new Enemy(10, "챔피언", 300, 40, 10,new List<Skill>
+                new Enemy(10, "챔피언", 300, 40, 10, new List<Skill>
                     {
-                        new Skill("강타", 15, 1.5f, 1)
+                        Skill.skills[4]
                     })
 
             ];
@@ -73,12 +72,12 @@
             for (int i = 0; i < spawn.Length; i++)
             {
                 int idx = new Random().Next(Enemys.Length - 1);
-                spawn[i] = new Enemy(Enemys[idx].Level, Enemys[idx].Name, Enemys[idx].Hp, Enemys[idx].Mp, Enemys[idx].Atk);
+                spawn[i] = new Enemy(Enemys[idx]);
             }
             //5층마다 챔피언 출현
             if (Floor % 5 == 0)
             {
-                spawn[new Random().Next(spawn.Length)] = new Enemy(Enemys[3].Level, Enemys[3].Name, Enemys[3].Hp, Enemys[3].Mp, Enemys[3].Atk);
+                spawn[new Random().Next(spawn.Length)] = new Enemy(Enemys[3]);
             }
             //전투시작
             turnCount = 1;
