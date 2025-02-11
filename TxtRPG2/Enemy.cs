@@ -17,6 +17,11 @@ namespace TxtRPG2
              Skills = skills != null ? skills : new List<Skill>(); // 스킬이 없으면 빈 리스트로 초기화  
         }
 
+        public Enemy(Enemy enemy):base(enemy.Level, enemy.Name, enemy.Hp,enemy.Mp, enemy.Atk)
+        {
+            Skills = enemy.Skills;
+        }
+
         public void TakeDamage(int Damage)
         {
             Hp -= Damage;

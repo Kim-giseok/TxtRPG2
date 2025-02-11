@@ -72,12 +72,12 @@
             for (int i = 0; i < spawn.Length; i++)
             {
                 int idx = new Random().Next(Enemys.Length - 1);
-                spawn[i] = new Enemy(Enemys[idx].Level, Enemys[idx].Name, Enemys[idx].Hp, Enemys[idx].Mp, Enemys[idx].Atk);
+                spawn[i] = new Enemy(Enemys[idx]);
             }
             //5층마다 챔피언 출현
             if (Floor % 5 == 0)
             {
-                spawn[new Random().Next(spawn.Length)] = new Enemy(Enemys[3].Level, Enemys[3].Name, Enemys[3].Hp, Enemys[3].Mp, Enemys[3].Atk);
+                spawn[new Random().Next(spawn.Length)] = new Enemy(Enemys[3]);
             }
             //전투시작
             turnCount = 1;
