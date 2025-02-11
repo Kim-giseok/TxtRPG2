@@ -13,6 +13,11 @@ namespace TxtRPG2
 
     internal class Amor : Item, IArmor
     {
+        public static Amor[] amors =
+        {
+            new Amor("수련자 갑옷", 5, "수련에 도움을 주는 갑옷입니다.", 1000)
+        };
+
         public int Def { get; }
 
         public Amor(string name, int def, string description, int price) : base(name, description, price)
@@ -20,7 +25,7 @@ namespace TxtRPG2
             Def = def;
         }
 
-        public Amor(Amor amor) : base(amor)
+        public Amor(Amor amor, bool copy = false) : base(amor, copy)
         {
             Def = amor.Def;
         }

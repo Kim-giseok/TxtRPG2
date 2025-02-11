@@ -13,6 +13,10 @@ namespace TxtRPG2
 
     internal class Weapon : Item, IWeapon
     {
+        public static Weapon[] weapons =
+        {
+            new Weapon("낡은 검", 2, "쉽게 볼 수 있는 낡은 검 입니다.", 600)
+        };
         public int Atk { get; }
 
         public Weapon(string name, int atk, string description, int price) : base(name, description, price)
@@ -20,7 +24,7 @@ namespace TxtRPG2
             Atk = atk;
         }
 
-        public Weapon(Weapon weapon) : base(weapon)
+        public Weapon(Weapon weapon, bool copy = false) : base(weapon, copy)
         {
             Atk = weapon.Atk;
         }
