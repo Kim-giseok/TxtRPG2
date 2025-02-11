@@ -13,7 +13,7 @@ namespace TxtRPG2
         public string Name { get; set; }
         public int Hp { get; set; }
         public int Mp { get; set; }
-        public int Atk { get; set; }
+        public virtual int Atk { get; set; }
         public int Level { get; set; }
         public List<Skill> Skills { get; set; }
         public bool IsDead { get => Hp <= 0; }
@@ -33,8 +33,12 @@ namespace TxtRPG2
             int damage = (int)(Atk * new Random().Next(90, 110) / 100f + 0.5f);
             int Hp = target.Hp;
 
-            target.TakeDamage(damage);
-
+            bool critical = new Random().Next(100) <= 15;
+            bool miss = new Random().Next(100) <= 10;
+            if (!miss)
+            {
+                target.TakeDamage(critical ? damage * 160 / 100 : damage);
+            }
             while (true)
             {
                 Console.Clear();
@@ -43,19 +47,32 @@ namespace TxtRPG2
                 Console.WriteLine();
                 Console.WriteLine($"{Name}의 공격!");
 
-                Console.WriteLine($"Lv.{target.Level} {target.Name}에게 {damage}의 피해를 입혔습니다. ");
-                Console.WriteLine();
-                Console.WriteLine($"Lv.{target.Level} {target.Name}");
-
-                if (target.Hp == 0)
+                if (!miss)
                 {
-                    Console.WriteLine($"HP {Hp} -> dead");
+                    if (critical)
+                    {
+                        Console.WriteLine($"Lv.{target.Level} {target.Name}에게 {damage}의 치명적인 피해를 입혔습니다!!");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Lv.{target.Level} {target.Name}에게 {damage}의 피해를 입혔습니다.");
+                    }
+                    Console.WriteLine();
+                    Console.WriteLine($"Lv.{target.Level} {target.Name}");
+
+                    if (target.Hp == 0)
+                    {
+                        Console.WriteLine($"HP {Hp} -> dead");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"HP {Hp} -> {target.Hp}");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine($"HP {Hp} -> {target.Hp}");
+                        Console.WriteLine($"Lv.{target.Level} {target.Name}은 공격을 피했습니다.");
                 }
-
                 Console.WriteLine();
                 Console.WriteLine("0. 다음");
                 switch (ConsoleUtility.GetInput(0, 0))

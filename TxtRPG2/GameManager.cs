@@ -9,17 +9,16 @@ namespace TxtRPG2
 {
     class GameManager
     {
-        private Player player; // 캐릭터를 상속받도록 변경
-        private BattleManager battleManager;
+        Player player; // 캐릭터를 상속받도록 변경
+        BattleManager battleManager;
 
-        Inventory inven;
         Shop shop;
 
         public GameManager()
         {
             try
             {
-                SaveData.Load(out player, out inven, out shop);
+                SaveData.Load(out player, out shop, out battleManager);
             }
             catch (Exception)
             {
@@ -27,12 +26,7 @@ namespace TxtRPG2
                 Console.ReadKey();
                 Console.Clear();
                 player = ChooseJob();  // 직업 선택 후 player에 저장
-                inven = new Inventory();
-                shop = new Shop(player, inven);
-            }
-
-            if (player != null)
-            {
+                shop = new Shop(player);
                 battleManager = new BattleManager(player);
             }
         }
@@ -80,7 +74,6 @@ namespace TxtRPG2
             return player;
         }
 
-
         public void StartScene()
         {
             while (true)
@@ -110,14 +103,14 @@ namespace TxtRPG2
                     // 입력한 값에 대한 출력
                     case 3:
                         ConsoleUtility.Loading();
-                        inven.ShowInven();
+                        player.inven.ShowInven();
                         break;
                     case 4:
                         ConsoleUtility.Loading();
                         shop.ShopEnter();
                         break;
                     case 5:
-                        SaveData.Save(player, inven, shop);
+                        SaveData.Save(player, shop, battleManager);
                         break;
                 }
             }
@@ -153,7 +146,7 @@ namespace TxtRPG2
 
                 Console.WriteLine();
                 Console.WriteLine("1. 상태 보기");
-                Console.WriteLine("2. 전투 시작");
+                Console.WriteLine($"2. 전투 시작 (현재 진행 : {battleManager.Floor}층)");
                 Console.WriteLine("3. 회복 아이템");
                 Console.WriteLine("0. 나가기");
                 switch (ConsoleUtility.GetInput(0, 3))
@@ -167,7 +160,7 @@ namespace TxtRPG2
                         battleManager.Battle();
                         return;
                     case 3:
-                        inven.UsePotion(player);
+                        player.inven.UsePotion(player);
                         break;
                 }
             }

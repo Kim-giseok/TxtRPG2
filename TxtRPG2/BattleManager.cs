@@ -9,7 +9,9 @@
         public int EnterHp { get; private set; }
         public bool Victory { get => player.Hp != 0; }
 
-        public BattleManager(Player player)
+        public int Floor { get; private set; }
+
+        public BattleManager(Player player, int floor = 1)
         {
             this.player = player;
             Enemys =
@@ -35,6 +37,7 @@
 
             ];
             EnterHp = player.Hp;
+            Floor = floor;
         }
 
         void ShowInfos(bool select = false)
@@ -64,14 +67,20 @@
         {
             // 입장시 플레이어의 Hp저장
             EnterHp = player.Hp;
-            // 1~4마리의 랜덤한 수의 적 출현
-            spawn = new Enemy[new Random().Next(1, 5)];
+            // 던전 레벨에 따른 랜덤한 수의 적 출현 (4층마다 최대치 1마리씩 증가, 5층마다 최소치 1마리씩 증가)
+            spawn = new Enemy[new Random().Next(1 + Floor / 5, 3 + Floor / 4)];
 
             for (int i = 0; i < spawn.Length; i++)
             {
-                int idx = new Random().Next(Enemys.Length);
+                int idx = new Random().Next(Enemys.Length - 1);
                 spawn[i] = new Enemy(Enemys[idx].Level, Enemys[idx].Name, Enemys[idx].Hp, Enemys[idx].Mp, Enemys[idx].Atk);
             }
+            //5층마다 챔피언 출현
+            if (Floor % 5 == 0)
+            {
+                spawn[new Random().Next(spawn.Length)] = new Enemy(Enemys[3].Level, Enemys[3].Name, Enemys[3].Hp, Enemys[3].Mp, Enemys[3].Atk);
+            }
+            //전투시작
             turnCount = 1;
             while (true)
             {
@@ -262,7 +271,7 @@
                 Console.WriteLine();
                 if (Victory)
                 {
-                    Console.WriteLine("Victory");
+                    Console.WriteLine($"Victory - {Floor++}층 돌파!!");
                     Console.WriteLine();
                     Console.WriteLine($"던전에서 몬스터 {spawn.Length}마리를 잡았습니다.");
                 }

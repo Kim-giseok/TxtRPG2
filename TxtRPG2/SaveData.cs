@@ -43,6 +43,9 @@ namespace TxtRPG2
         //상점 정보
         public bool[] DSells { get; set; }
 
+        //던전 정보
+        public int DFloor { get; set; }
+
         static DEquip[] SaveEquips(Inventory inven)
         {
             DEquip[] equips = new DEquip[inven.Equips.Count];
@@ -82,7 +85,7 @@ namespace TxtRPG2
             return sells;
         }
 
-        public static void Save(Player player, Inventory inven, Shop shop, string path = "save.json")
+        public static void Save(Player player, Shop shop, BattleManager dungeon,  string path = "save.json")
         {
             SaveData save = new SaveData()
             {
@@ -95,10 +98,12 @@ namespace TxtRPG2
                 Job = player.Job,
                 Gold = player.Gold,
 
-                Equips = SaveEquips(inven),
-                Potions = SavePotions(inven),
+                Equips = SaveEquips(player.inven),
+                Potions = SavePotions(player.inven),
 
-                DSells = SaveSells(shop)
+                DSells = SaveSells(shop),
+
+                DFloor = dungeon.Floor
             };
 
             var options = new JsonSerializerOptions
@@ -113,7 +118,7 @@ namespace TxtRPG2
             Thread.Sleep(500);
         }
 
-        public static void Load(out Player player, out Inventory inven, out Shop shop, string path = "save.json")
+        public static void Load(out Player player, out Shop shop, out BattleManager dungeon, string path = "save.json")
         {
             string jString = File.ReadAllText(path);
 
@@ -136,7 +141,6 @@ namespace TxtRPG2
                     throw new Exception();
             }
 
-            inven = new Inventory();
             Item[] iteml;
             for (int i = 0; i < load.Equips.Length; i++)
             {
@@ -155,10 +159,10 @@ namespace TxtRPG2
                 {
                     if (item.Name == load.Equips[i].name)
                     {
-                        inven.AddItem(item);
+                        player.inven.AddItem(item);
                         if (load.Equips[i].equip)
                         {
-                            inven.Equip(i);
+                            player.inven.Equip(i);
                         }
                     }
                     break;
@@ -183,14 +187,16 @@ namespace TxtRPG2
                     {
                         for (int i = 0; i < potion.count; i++)
                         {
-                            inven.AddItem(item);
+                            player.inven.AddItem(item);
                         }
                         break;
                     }
                 }
             }
 
-            shop = new Shop(player, inven, load.DSells);
+            shop = new Shop(player, load.DSells);
+
+            dungeon = new BattleManager(player, load.DFloor);
 
             Console.WriteLine("저장데이터를 불러왔습니다.");
             Thread.Sleep(500);

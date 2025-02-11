@@ -16,18 +16,15 @@ namespace TxtRPG2
                 new HpPotion(HpPotion.hpPotions[0]),
                 new MpPotion(MpPotion.mpPotions[0])
         };
-        Inventory inven;
 
-        public Shop(Player player, Inventory inven)
+        public Shop(Player player)
         {
             this.player = player;
-            this.inven = inven;
         }
 
-        public Shop(Player player, Inventory inven, bool[] sells)
+        public Shop(Player player, bool[] sells)
         {
             this.player = player;
-            this.inven = inven;
             for (int i = 0; i < sells.Length; i++)
             {
                 Items[i].IsSold = sells[i];
@@ -46,7 +43,7 @@ namespace TxtRPG2
             //판매일 경우 플래이어가 소유중인 아이템을 보여줍니다.
             if (mode == ShopMode.Sell)
             {
-                inven.ShowItems(Inventory.Showmode.Sell);
+                player.inven.ShowItems(Inventory.Showmode.Sell);
                 return;
             }
 
@@ -113,7 +110,7 @@ namespace TxtRPG2
                         else if (Items[choice - 1].Price <= player.Gold) //금액이 충분한 경우
                         {
                             player.Gold -= Items[choice - 1].Price;
-                            inven.AddItem(Items[choice - 1]);
+                            player.inven.AddItem(Items[choice - 1]);
                             Items[choice - 1].IsSold = true;
                             Console.WriteLine("구매를 완료했습니다.");
                         }
@@ -137,15 +134,15 @@ namespace TxtRPG2
 
                 Console.WriteLine();
                 Console.WriteLine("0. 나가기");
-                int choice = ConsoleUtility.GetInput(0, inven.Equips.Count);
+                int choice = ConsoleUtility.GetInput(0, player.inven.Equips.Count);
                 switch (choice)
                 {
                     case 0:
                         return;
                     default:
                         //플레이어의 아이템을 판매합니다.
-                        player.Gold += inven.Equips[choice - 1].Price * 80 / 100;
-                        inven.DelItem(choice - 1);
+                        player.Gold += player.inven.Equips[choice - 1].Price * 80 / 100;
+                        player.inven.DelItem(choice - 1);
                         Console.WriteLine("판매가 완료되었습니다.");
                         Thread.Sleep(500);
                         break;
