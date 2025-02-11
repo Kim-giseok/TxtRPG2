@@ -28,6 +28,7 @@ namespace TxtRPG2
         {
             public string type { get; set; }
             public string name { get; set; }
+            public bool equip { get; set; }
         }
         public DEquip[] Equips { get; set; }
 
@@ -49,6 +50,11 @@ namespace TxtRPG2
             {
                 equips[i].type = inven.Equips[i].GetType().ToString().Split(".")[1];
                 equips[i].name = inven.Equips[i].Name;
+                equips[i].equip =
+                (
+                    inven.EWeapon == inven.Equips[i] ||
+                    inven.EAmor == inven.Equips[i]
+                );
             }
             return equips;
         }
@@ -133,9 +139,9 @@ namespace TxtRPG2
 
             inven = new Inventory();
             Item[] iteml;
-            foreach (var equips in load.Equips)
+            for (int i = 0; i < load.Equips.Length; i++)
             {
-                switch (equips.type)
+                switch (load.Equips[i].type)
                 {
                     case "Weapon":
                         iteml = Weapon.weapons;
@@ -149,9 +155,13 @@ namespace TxtRPG2
                 }
                 foreach (var item in iteml)
                 {
-                    if (item.Name == equips.name)
+                    if (item.Name == load.Equips[i].name)
                     {
                         inven.AddItem(item);
+                        if (load.Equips[i].equip)
+                        {
+                            inven.Equip(i);
+                        }
                     }
                     break;
                 }
