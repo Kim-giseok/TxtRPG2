@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TxtRPG2
+﻿namespace TxtRPG2
 {
     public class Character
     {
@@ -17,6 +9,8 @@ namespace TxtRPG2
         public int Level { get; set; }
         public List<Skill> Skills { get; set; }
         public bool IsDead { get => Hp <= 0; }
+        public StatusEffect CurrentStatus { get; set; } = StatusEffect.None;
+        private int statusEffectTurn = 0;
 
         public Character(int level, string name, int hp, int mp, int atk)
         {
@@ -26,6 +20,7 @@ namespace TxtRPG2
             Mp = mp;
             Atk = atk;
             Skills = new List<Skill>();
+
         }
 
         public void Attack(Character target)
@@ -126,6 +121,15 @@ namespace TxtRPG2
             {
                 Hp = 0;
             }
+        }
+
+        public void ApplyStatusEffect(StatusEffect effect, int duration)
+        {
+            if (effect == StatusEffect.None) return;
+
+            CurrentStatus = effect;
+            statusEffectTurn = duration;
+            Console.WriteLine($"{Name}은(는) {effect}상태가 되었다! [지속{statusEffectTurn}]");
         }
     }
 }
