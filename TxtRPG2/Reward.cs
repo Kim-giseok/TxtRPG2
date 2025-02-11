@@ -21,7 +21,7 @@ namespace TxtRPG2
 
         public void ApplyReWard(Player player)
         {
-            player.Exp += Exp;
+            player.GainExp(Exp);
             player.Gold += Gold;
             if (Items != null)
             {

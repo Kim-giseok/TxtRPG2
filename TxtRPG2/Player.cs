@@ -4,7 +4,7 @@
     internal class Player : Character //플레이어 클래스 . 캐릭터 인터페이스 상속
     {
         public string Job { get; }
-        public override int Atk { get => base.Atk + (inven.EWeapon != null ? inven.EWeapon.Atk : 0); }
+        public override float Atk { get => base.Atk + (inven.EWeapon != null ? inven.EWeapon.Atk : 0); }
         public int Def { get => BaseDef + (inven.EAmor != null ? inven.EAmor.Def : 0); }
         public int Gold { get; set; }
 
@@ -32,6 +32,25 @@
             Console.WriteLine($"마력 : {Mp}/50");
             Console.WriteLine($"Gold : {Gold} G");
             Console.WriteLine("\n0.나가기\n");
+        }
+
+        static Dictionary<int, int> LevelTable = new Dictionary<int, int>
+        {
+            { 1, 10 }, { 2, 35 }, { 3, 65 }, {4,100}
+        };
+        public void GainExp(int exp)
+        {
+            Exp += exp;
+            if (!LevelTable.ContainsKey(Level))
+            {
+                Exp = LevelTable[LevelTable.Count];
+            }
+            if (Exp >= LevelTable[Level])
+            {
+                Level++;
+                base.Atk += 0.5f;
+                BaseDef++;
+            }
         }
     }
 }
