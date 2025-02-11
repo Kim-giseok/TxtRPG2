@@ -21,19 +21,25 @@ namespace TxtRPG2
         public string Job { get; set; }
         public int Gold { get; set; }
 
-        //public bool[] ShopItems;
+        public struct DItem
+        {
+            public string type { get; set; }
+            public string name { get; set; }
+        }
+        public DItem[] items { get; set; }
 
-        //public struct Iteminfo
-        //{
-        //    public string type;
-        //    public string Name;
-        //    public int[] Stat;
-        //    public string Description;
-        //    public int Price;
-        //}
-        //public Iteminfo[] Items;
+        static DItem[] Save(Inventory inven)
+        {
+            DItem[] equips = new DItem[inven.Equips.Count];
+            for (int i = 0; i < equips.Length; i++)
+            {
+                equips[i].type = inven.Equips[i].GetType().ToString().Split(".")[1];
+                equips[i].name = inven.Equips[i].Name;
+            }
+            return equips;
+        }
 
-        public static void Save(Player player, string path = "save.json")
+        public static void Save(Player player, Inventory inven, string path = "save.json")
         {
             SaveData save = new SaveData()
             {
@@ -44,7 +50,9 @@ namespace TxtRPG2
                 Atk = player.Atk,
                 Def = player.Def,
                 Job = player.Job,
-                Gold = player.Gold
+                Gold = player.Gold,
+
+                items = Save(inven)
             };
 
             var options = new JsonSerializerOptions
@@ -59,7 +67,7 @@ namespace TxtRPG2
             Thread.Sleep(500);
         }
 
-        public static void Load(out Player player, string path = "save.json")
+        public static void Load(out Player player, out Inventory inven, string path = "save.json")
         {
             string jString = File.ReadAllText(path);
 
@@ -69,6 +77,7 @@ namespace TxtRPG2
                 IncludeFields = true
             };
             SaveData load = JsonSerializer.Deserialize<SaveData>(jString, options);
+
             switch (load.Job)
             {
                 case "전사":
@@ -81,6 +90,32 @@ namespace TxtRPG2
                     player = new Warrior(load.Name, load.Level, load.Hp, load.Gold);
                     break;
             }
+
+            inven = new Inventory();
+            Item[] iteml;
+            foreach (var equips in load.items)
+            {
+                switch (equips.type)
+                {
+                    case "Weapon":
+                        iteml = Weapon.weapons;
+                        break;
+                    case "Amor":
+                        iteml = Amor.amors;
+                        break;
+                    default:
+                        iteml = Item.items;
+                        break;
+                }
+                foreach (var item in iteml)
+                {
+                    if (item.Name == equips.name)
+                    {
+                        inven.AddItem(item);
+                    }
+                }
+            }
+
             Console.WriteLine("저장데이터를 불러왔습니다.");
             Thread.Sleep(500);
         }

@@ -19,19 +19,20 @@ namespace TxtRPG2
         {
             try
             {
-                SaveData.Load(out player);
+                SaveData.Load(out player, out inven);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
                 Console.ReadKey();
                 player = ChooseJob();  // 직업 선택 후 player에 저장
+                inven = new Inventory();
             }
+
             if (player != null)
             {
                 battleManager = new BattleManager(player);
             }
-            inven = new Inventory();
             shop = new Shop(player, inven);
         }
         public Player ChooseJob()
@@ -115,7 +116,7 @@ namespace TxtRPG2
                         shop.ShopEnter();
                         break;
                     case 5:
-                        SaveData.Save(player);
+                        SaveData.Save(player, inven);
                         break;
                 }
             }

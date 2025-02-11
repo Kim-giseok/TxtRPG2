@@ -8,6 +8,8 @@ namespace TxtRPG2
 {
     internal class Item
     {
+        public static Item[] items = { };
+
         public string Name { get; }
         public string Description { get; }
         public int Price { get; }
