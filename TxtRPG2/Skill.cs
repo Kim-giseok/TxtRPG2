@@ -8,34 +8,36 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace TxtRPG2
 {   
-    public class Skill
+public class Skill//스킬 관리 클래스
     {
         private static Random rand = new();
         public string Name { get; }
         public int ManaCost { get; }
         public int DamageMultiplier { get; }
         public int Range { get; set; }
+        public List<SkillEffect> sEffect { get; set; } // Changed type to List<SkillEffect>
 
-        public Skill(string name, int manaCost, int damageMultiplier, int range)
+        public Skill(string name, int manaCost, int damageMultiplier, int range, List<SkillEffect> effects)
         {
             Name = name;
             ManaCost = manaCost;
             DamageMultiplier = damageMultiplier;
             Range = range;
+            sEffect = effects;
         }
 
-        public void Use(Character actor, Character target, Enemy[] spawn) //플레이어용 스킬 사용
+        public void Use(Character actor, Character target, Character[] allCharacter) //플레이어용 스킬 사용
         {
             if (!CanUseSkill(actor)) return;
 
             actor.Mp -= ManaCost;
             Console.WriteLine($"{actor.Name}가 {Name}을(를) 사용했다!");
 
-            List<Enemy> finalTargets = SelectTargets(target, spawn);
+            List<Character> finalTargets = SelectTargets(target, allCharacter);
             ApplyDamage(actor, finalTargets);
         }
 
-        private bool CanUseSkill(Character actor) // 스킬 사용 가능 여부
+        private bool CanUseSkill(Character actor) // 스킬 사용 가능 여부>> 관련 부분 수정해야됨
         {
             if (actor.Mp < ManaCost)
             {
@@ -45,10 +47,10 @@ namespace TxtRPG2
             return true;
         }
 
-        private List<Enemy> SelectTargets(Character target, Enemy[] spawn) // 스킬 타겟 선택
+        private List<Character> SelectTargets(Character target, Character[] allCharacter) // 스킬 타겟 선택
         {
-            List<Enemy> possibleTargets = spawn.Where(e => !e.IsDead && e != target).ToList();
-            List<Enemy> finalTargets = new() { (Enemy)target };
+            List<Character> possibleTargets = allCharacter.Where(c => !c.IsDead && c != target).ToList();// 죽은 적과  선택 대상은 제외
+            List<Character> finalTargets = new() { (Enemy)target };
 
             for (int i = 0; i < Range - 1 && possibleTargets.Count > 0; i++)
             {
@@ -59,13 +61,32 @@ namespace TxtRPG2
             return finalTargets;
         }
 
-        private void ApplyDamage(Character actor, List<Enemy> targets) // 스킬 데미지 연산
+        private void ApplyDamage(Character actor, List<Character> targets) // 스킬 데미지 연산
         {
             int damage = (int)(actor.Atk * DamageMultiplier);
             foreach (var eTarget in targets)
             {
                 eTarget.TakeDamage(damage);
-                
+                ApplyEffect(eTarget);
+
+            }
+        }
+        private void ApplyEffect(Character target)
+        {
+            foreach (var effect in sEffect)
+            {
+                switch (effect.Type)
+                {
+                    case SkillType.Bleed:
+                        target.ApplyBleed(effect.Value, effect.Duration);
+                        break;
+                    case SkillType.Stun:
+                        target.ApplyStun(effect.Duration);
+                        break;
+                    case SkillType.Buff:
+                        target.ApplyBuff(effect.Value, effect.Duration);
+                        break;
+                }
             }
         }
 
