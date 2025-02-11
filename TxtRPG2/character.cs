@@ -31,6 +31,7 @@ namespace TxtRPG2
         public List<SkillEffect> StatusEffect { get; set; } = new List<SkillEffect>();
         public bool IsDead { get => Hp <= 0; }
         public bool IsStun { get => stunDuration > 0; private set { } }
+        public bool IsSkill { get; set; } = false;
 
         private int bleedDamage = 0; //지속피해
         private int bleedDuration = 0; //지속시간

@@ -39,6 +39,7 @@ namespace TxtRPG2
             int randSkill = rand.Next(0, Skills.Count);
             Skill skill = Skills[randSkill];
             skill.Use(enemy,player, allCharacter);
+            IsSkill = true;
         }
 
         public void AppearInfo()// 적의 정보 출력
