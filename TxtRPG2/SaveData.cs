@@ -28,6 +28,14 @@ namespace TxtRPG2
         }
         public DEquip[] Equips { get; set; }
 
+        public struct DPotion
+        {
+            public string type { get; set; }
+            public string name { get; set; }
+            public int count { get; set; }
+        }
+        public DPotion[] Potions { get; set; }
+
         static DEquip[] SaveEquips(Inventory inven)
         {
             DEquip[] equips = new DEquip[inven.Equips.Count];
@@ -37,6 +45,19 @@ namespace TxtRPG2
                 equips[i].name = inven.Equips[i].Name;
             }
             return equips;
+        }
+
+        static DPotion[] SavePotions (Inventory inven)
+        {
+            DPotion[] potions = new DPotion[inven.Potions.Count];
+            var list = new List<Potion>(inven.Potions.Values);
+            for (int i = 0; i < potions.Length; i++)
+            {
+                potions[i].type = list[i].GetType().ToString().Split(".")[1];
+                potions[i].name = list[i].Name;
+                potions[i].count = list[i].count;
+            }
+            return potions;
         }
 
         public static void Save(Player player, Inventory inven, string path = "save.json")
@@ -52,7 +73,8 @@ namespace TxtRPG2
                 Job = player.Job,
                 Gold = player.Gold,
 
-                Equips = SaveEquips(inven)
+                Equips = SaveEquips(inven),
+                Potions = SavePotions(inven)
             };
 
             var options = new JsonSerializerOptions
@@ -112,6 +134,33 @@ namespace TxtRPG2
                     if (item.Name == equips.name)
                     {
                         inven.AddItem(item);
+                    }
+                    break;
+                }
+            }
+            foreach (var potion in load.Potions)
+            {
+                switch (potion.type)
+                {
+                    case "HpPotion":
+                        iteml = HpPotion.hpPotions;
+                        break;
+                    case "MpPotion":
+                        iteml = MpPotion.mpPotions;
+                        break;
+                    default:
+                        iteml = Item.items;
+                        break;
+                }
+                foreach (var item in iteml)
+                {
+                    if (item.Name == potion.name)
+                    {
+                        for (int i = 0; i < potion.count; i++)
+                        {
+                            inven.AddItem(item);
+                        }
+                        break;
                     }
                 }
             }
