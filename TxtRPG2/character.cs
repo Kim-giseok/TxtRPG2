@@ -65,34 +65,42 @@ namespace TxtRPG2
             }
         }
 
-        public void UseSkill(int idx, Character target)
+        public void UseSkill(Skill skill, Character[] targets)
         {
-            Mp -= Skills[idx].ManaCost;
-            int damage = (int)(Atk * Skills[idx].DamageMultiplier);
-            int Hp = target.Hp;
+            Mp -= skill.ManaCost;
+            int damage = (int)(Atk * skill.DamageMultiplier);
 
-            target.TakeDamage(damage);
+            int[] Hp = new int[targets.Length];
+            for (int i = 0; i < Hp.Length; i++)
+            {
+                Hp[i] = targets[i].Hp;
+                targets[i].TakeDamage(damage);
+            }
             while (true)
             {
                 Console.Clear();
 
                 Console.WriteLine("Battle!!");
                 Console.WriteLine();
-                Console.WriteLine($"{Name}은 {Skills[idx].Name}을 사용했다.!");
+                Console.WriteLine($"{Name}은 {skill.Name}을 사용했다.!");
 
-                Console.WriteLine($"Lv.{target.Level} {target.Name}에게 {damage}의 피해를 입혔습니다. ");
+                for (int i = 0; i < targets.Length; i++)
+                {
+                    Console.WriteLine($"Lv.{targets[i].Level} {targets[i].Name}에게 {damage}의 피해를 입혔습니다. ");
+                }
                 Console.WriteLine();
-                Console.WriteLine($"Lv.{target.Level} {target.Name}");
-
-                if (target.Hp == 0)
+                for (int i = 0; i < targets.Length; i++)
                 {
-                    Console.WriteLine($"HP {Hp} -> dead");
+                    Console.WriteLine($"Lv.{targets[i].Level} {targets[i].Name}");
+                    if (targets[i].Hp == 0)
+                    {
+                        Console.WriteLine($"HP {Hp[i]} -> dead");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"HP {Hp[i]} -> {targets[i].Hp}");
+                    }
                 }
-                else
-                {
-                    Console.WriteLine($"HP {Hp} -> {target.Hp}");
-                }
-
                 Console.WriteLine();
                 Console.WriteLine("0. 다음");
                 switch (ConsoleUtility.GetInput(0, 0))

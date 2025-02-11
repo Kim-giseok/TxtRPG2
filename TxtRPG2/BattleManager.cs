@@ -50,7 +50,7 @@ namespace TxtRPG2
             Console.WriteLine();
             Console.WriteLine("[내정보]");
             Console.WriteLine($"Lv.{player.Level}\t{player.Name} ({player.Job})");
-            Console.WriteLine($"HP {player.Hp:D3}/{player.Hp} Mp {player.Mp:D3}/{player.Mp}");
+            Console.WriteLine($"HP {player.Hp}/100 Mp {player.Mp}/50");
             Console.WriteLine();
         }
 
@@ -146,29 +146,60 @@ namespace TxtRPG2
                     case 0:
                         return;
                     default:
-                        while (true)
-                        {
-                            ShowInfos(true);
-
-                            Console.WriteLine("0. 취소");
-                            int choice = ConsoleUtility.GetInput(0, spawn.Length);
-                            switch (choice)
-                            {
-                                case 0:
-                                    return;
-                                default:
-                                    if (spawn[choice - 1].IsDead)
-                                    {
-                                        Console.WriteLine($"이미 죽은 적 입니다.");
-                                        Thread.Sleep(500);
-                                        break;
-                                    }
-                                    player.UseSkill(input - 1, spawn[choice - 1]);
-                                    EnemyTurn();
-                                    return;
-                            }
-                        }
+                        SelectSkillTarget(player.Skills[input - 1]);
+                        return;
                 }
+            }
+        }
+
+        void SelectSkillTarget(Skill skill)
+        {
+            if (skill.Range == 1)
+            {
+                while (true)
+                {
+                    ShowInfos(true);
+
+                    Console.WriteLine("0. 취소");
+                    int choice = ConsoleUtility.GetInput(0, spawn.Length);
+                    switch (choice)
+                    {
+                        case 0:
+                            return;
+                        default:
+                            if (spawn[choice - 1].IsDead)
+                            {
+                                Console.WriteLine($"이미 죽은 적 입니다.");
+                                Thread.Sleep(500);
+                                break;
+                            }
+                            player.UseSkill(skill, new Character[] { spawn[choice - 1] });
+                            EnemyTurn();
+                            return;
+                    }
+                }
+            }
+            else
+            {
+                List<Character> lives = new List<Character>();
+                foreach (Character c in spawn)
+                {
+                    if (!c.IsDead)
+                    {
+                        lives.Add(c);
+                    }
+                }
+
+                lives = lives.OrderBy(x => new Random().Next()).ToList();
+                int targetnum = lives.Count > skill.Range ? skill.Range : lives.Count;
+                Character[] targets = new Character[targetnum];
+                for (int i = 0; i < targets.Length; i++)
+                {
+                    targets[i] = lives[i];
+                }
+
+                player.UseSkill(skill, targets);
+                EnemyTurn();
             }
         }
 

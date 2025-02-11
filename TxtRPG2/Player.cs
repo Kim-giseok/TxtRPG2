@@ -21,7 +21,8 @@
             Console.WriteLine($"{Name} ({Job})");
             Console.WriteLine($"공격력 : {Atk}");
             Console.WriteLine($"방어력 : {Def}");
-            Console.WriteLine($"체력 : {Hp}");
+            Console.WriteLine($"체력 : {Hp}/100");
+            Console.WriteLine($"마력 : {Mp}/50");
             Console.WriteLine($"Gold : {Gold} G");
             Console.WriteLine("\n0.나가기\n");
         }

@@ -17,7 +17,7 @@ namespace TxtRPG2
 
     public class Archer : Player
     {
-        public Archer(string name, int level, int hp = 100, int mp = 50, int gold = 1500) : base(name, level, "궁수", 20, 10, 80, gold)
+        public Archer(string name, int level, int hp = 100, int mp = 50, int gold = 1500) : base(name, level, "궁수", 20, 10, hp, mp, gold)
         {
             Skills.Add(Skill.skills[1]);
         }
