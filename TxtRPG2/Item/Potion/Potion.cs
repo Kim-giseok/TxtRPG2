@@ -16,7 +16,7 @@ namespace TxtRPG2
             count = 1;
         }
 
-        public Potion(Potion potion, bool copy = false) : base(potion, copy)
+        public Potion(Potion potion) : base(potion)
         {
             count = potion.count;
         }
@@ -32,11 +32,11 @@ namespace TxtRPG2
             count--;
         }
 
-        public override void ApearInfo(bool sell = false)
+        public override void ApearInfo(ApearMode mode = ApearMode.Idle)
         {
             int sl = Console.CursorLeft;
-            base.ApearInfo(sell);
-            if (!sell)
+            base.ApearInfo(mode);
+            if (mode == ApearMode.Idle)
             {
                 Console.SetCursorPosition(sl + 80, Console.CursorTop - 1);
                 Console.WriteLine($"\t| {count}");

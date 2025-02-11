@@ -57,7 +57,7 @@ namespace TxtRPG2
                 {
                     Console.Write("[E] ");
                 }
-                Equips[i].ApearInfo(mode == Showmode.Sell);
+                Equips[i].ApearInfo(mode == Showmode.Sell ? Item.ApearMode.Sell : Item.ApearMode.Idle);
             }
         }
 

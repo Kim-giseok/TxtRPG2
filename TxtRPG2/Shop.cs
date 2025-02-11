@@ -17,10 +17,10 @@ namespace TxtRPG2
             this.player = player;
             Items =
             [
-                new Amor(Amor.amors[0], true),
-                new Weapon(Weapon.weapons[0], true),
-                new HpPotion(HpPotion.hpPotions[0], true),
-                new MpPotion(MpPotion.mpPotions[0], true)
+                new Amor(Amor.amors[0]),
+                new Weapon(Weapon.weapons[0]),
+                new HpPotion(HpPotion.hpPotions[0]),
+                new MpPotion(MpPotion.mpPotions[0])
             ];
             this.inven = inven;
         }
@@ -50,7 +50,7 @@ namespace TxtRPG2
                 {
                     Console.Write($"{i + 1} ");
                 }
-                Items[i].ApearInfo(true);
+                Items[i].ApearInfo(Item.ApearMode.Buy);
             }
         }
 
@@ -135,7 +135,7 @@ namespace TxtRPG2
                         return;
                     default:
                         //플레이어의 아이템을 판매합니다.
-                        player.Gold += inven.Equips[choice - 1].Price;
+                        player.Gold += inven.Equips[choice - 1].Price * 80 / 100;
                         inven.DelItem(choice - 1);
                         Console.WriteLine("판매가 완료되었습니다.");
                         Thread.Sleep(500);
