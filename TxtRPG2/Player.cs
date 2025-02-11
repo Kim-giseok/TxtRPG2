@@ -14,8 +14,6 @@
             Gold = gold;
         }
 
-
-
         public void Status() //플레이어의 상태를 보여주는 메서드
         {
             Console.WriteLine("상태 보기\n캐릭터의 정보가 표시됩니다.");
