@@ -12,6 +12,7 @@
         public BattleManager(Player player)
         {
             this.player = player;
+            
             Enemys =
             [
                     /*new Enemy(2, "미니언", 15, 10, 5, new List<Skill>
@@ -228,12 +229,11 @@
                 if (monster.IsDead) continue;
                 if (monster.IsStunned())
                 {
-                    monster.ProcessStatusEffect();
-                    //Console.WriteLine($"{monster.Name}이(가) 기절하여 행동할 수 없습니다!");
+                    monster.ProcessStatusEffect(); // 스턴상태일경우 호출
                     Thread.Sleep(700);
                     continue;
                 }
-                monster.ProcessStatusEffect();
+                monster.ProcessStatusEffect();// 그외의 경우 호출
                 // 사용할 수 있는 스킬을 수동으로 필터링
                 List<Skill> availableSkills = new List<Skill>();
                 foreach (var skill in monster.Skills)
