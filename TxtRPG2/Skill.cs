@@ -10,6 +10,11 @@ namespace TxtRPG2
 {
     public class Skill//스킬 관리 클래스
     {
+        public static Skill[] skills =
+        {
+            new Skill("알파 스트라이크", 10, 2f, 1),
+            new Skill("더블 스트라이크", 15, 1.5f, 2)
+        };
         public string Name { get; }
         public int ManaCost { get; }
         public float DamageMultiplier { get; }

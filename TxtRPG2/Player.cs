@@ -25,6 +25,5 @@
             Console.WriteLine($"Gold : {Gold} G");
             Console.WriteLine("\n0.나가기\n");
         }
-
     }
 }

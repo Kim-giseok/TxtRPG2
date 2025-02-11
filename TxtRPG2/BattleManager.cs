@@ -133,7 +133,7 @@ namespace TxtRPG2
         void PlayerSkill()
         {
             //스킬 선택창 출력
-            while(true)
+            while (true)
             {
                 ShowInfos();
 
@@ -146,8 +146,28 @@ namespace TxtRPG2
                     case 0:
                         return;
                     default:
-                        //선택한 스킬 사용
-                        return;
+                        while (true)
+                        {
+                            ShowInfos(true);
+
+                            Console.WriteLine("0. 취소");
+                            int choice = ConsoleUtility.GetInput(0, spawn.Length);
+                            switch (choice)
+                            {
+                                case 0:
+                                    return;
+                                default:
+                                    if (spawn[choice - 1].IsDead)
+                                    {
+                                        Console.WriteLine($"이미 죽은 적 입니다.");
+                                        Thread.Sleep(500);
+                                        break;
+                                    }
+                                    player.UseSkill(input - 1, spawn[choice - 1]);
+                                    EnemyTurn();
+                                    return;
+                            }
+                        }
                 }
             }
         }

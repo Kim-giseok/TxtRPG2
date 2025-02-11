@@ -43,7 +43,43 @@ namespace TxtRPG2
                 Console.WriteLine();
                 Console.WriteLine($"{Name}의 공격!");
 
-                Console.WriteLine($"Lv.{target.Level} {target.Name}에게 {damage}]의 피해를 입혔습니다. ");
+                Console.WriteLine($"Lv.{target.Level} {target.Name}에게 {damage}의 피해를 입혔습니다. ");
+                Console.WriteLine();
+                Console.WriteLine($"Lv.{target.Level} {target.Name}");
+
+                if (target.Hp == 0)
+                {
+                    Console.WriteLine($"HP {Hp} -> dead");
+                }
+                else
+                {
+                    Console.WriteLine($"HP {Hp} -> {target.Hp}");
+                }
+
+                Console.WriteLine();
+                Console.WriteLine("0. 다음");
+                switch (ConsoleUtility.GetInput(0, 0))
+                {
+                    case 0: return;
+                }
+            }
+        }
+
+        public void UseSkill(int idx, Character target)
+        {
+            int damage = (int)(Atk * Skills[idx].DamageMultiplier);
+            int Hp = target.Hp;
+
+            target.TakeDamage(damage);
+            while (true)
+            {
+                Console.Clear();
+
+                Console.WriteLine("Battle!!");
+                Console.WriteLine();
+                Console.WriteLine($"{Name}은 {Skills[idx].Name}을 사용했다.!");
+
+                Console.WriteLine($"Lv.{target.Level} {target.Name}에게 {damage}의 피해를 입혔습니다. ");
                 Console.WriteLine();
                 Console.WriteLine($"Lv.{target.Level} {target.Name}");
 
@@ -69,7 +105,7 @@ namespace TxtRPG2
         {
             for (int i = 0; i < Skills.Count; i++)
             {
-                Console.Write($"{i}. ");
+                Console.Write($"{i + 1}. ");
                 Skills[i].ShowInfo();
             }
         }
