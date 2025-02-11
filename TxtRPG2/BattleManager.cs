@@ -146,8 +146,17 @@ namespace TxtRPG2
                     case 0:
                         return;
                     default:
-                        SelectSkillTarget(player.Skills[input - 1]);
-                        return;
+                        if (player.Mp >= player.Skills[input - 1].ManaCost)
+                        {
+                            SelectSkillTarget(player.Skills[input - 1]);
+                            return;
+                        }
+                        else
+                        {
+                            Console.WriteLine("마력이 부족합니다.");
+                            Thread.Sleep(500);
+                            continue;
+                        }
                 }
             }
         }
