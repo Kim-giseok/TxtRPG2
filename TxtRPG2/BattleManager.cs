@@ -97,55 +97,12 @@ namespace TxtRPG2
                 }
                 else if (choice == 2)
                 {
-                    SkillUse(player, null);  // 
+                    SkillUse(player);  // 
                 }
             }
             // 전투 종료 후 결과화면 출력
             Result();
         }
-
-        void Attack(Character actor, Character target, bool isSkill = false, string skillName = "")
-        {
-            int damage = (int)(actor.Atk * new Random().Next(90, 110) / 100f + 0.5f);
-            int Hp = target.Hp;
-
-            target.TakeDamage(damage);
-
-            while (true)
-            {
-                Console.Clear();
-
-                Console.WriteLine("Battle!!");
-                Console.WriteLine();
-                target.ProcessStatusEffects(); // 상태이상 표시
-                Console.WriteLine($"{actor.Name}의 공격!");
-                
-                if (actor is Enemy enemyActor)
-                {
-                    enemyActor.EnemySkill(enemyActor, (Player)target, spawn);
-                }
-                Console.WriteLine($"Lv.{target.Level} {target.Name}에게 [데미지 : {damage}]의 추가피해를 입혔습니다. ");
-                Console.WriteLine();
-                Console.WriteLine($"Lv.{target.Level} {target.Name}");
-
-                if (target.Hp == 0)
-                {
-                    Console.WriteLine($"HP {Hp} -> dead");
-                }
-                else
-                {
-                    Console.WriteLine($"HP {Hp} -> {target.Hp}");
-                }
-
-                Console.WriteLine();
-                Console.WriteLine("0. 다음");
-                switch (ConsoleUtility.GetInput(0, 0))
-                {
-                    case 0: return;
-                }
-            }
-        }
-
 
         void PlayerTurn()
         {
@@ -156,44 +113,20 @@ namespace TxtRPG2
                 Console.WriteLine("0. 취소"); // 0번 누르면 탈출
 
                 int choice = ConsoleUtility.GetInput(0, spawn.Length);
-
-
-                if (choice == 0)
+                switch(choice)
                 {
-                    break;
+                    case 0:
+                        return;
+                    default:
+                        if(spawn[choice - 1].IsDead)
+                        {
+                            Console.WriteLine($"이미 죽은 적 입니다.");
+                            Thread.Sleep(500);
+                            break;
+                        }
+                        player.Attack(spawn[choice - 1]);
+                        return;
                 }
-                else if (choice > spawn.Length)
-                {
-                    Console.WriteLine("잘못된 입력입니다.");
-                    Thread.Sleep(500);
-
-                    continue;
-                }
-                else
-                {
-                    if (spawn[choice - 1].IsDead == true)
-                    {
-                        Console.WriteLine($"이미 죽은 적 입니다.");
-                        Thread.Sleep(500);
-
-                        break;
-                    }
-                    else if (player.IsStun == true)
-                    {
-                        Console.WriteLine($"기절한 상태 입니다.");
-                        Thread.Sleep(500);
-                        EnemyTurn();
-                        break;
-                    }
-                    else
-                    {
-                        Attack(player, spawn[choice - 1]);
-                        EnemyTurn();
-                        break;
-                    }
-
-                }
-
             }
         }
 
@@ -204,8 +137,7 @@ namespace TxtRPG2
             {
                 if (!monster.IsDead && !monster.IsStun)
                 {
-                    Attack(monster, player);
-
+                    monster.Attack(player);
                 }
 
             }
@@ -240,7 +172,7 @@ namespace TxtRPG2
                 }
             }
         }
-        void SkillUse(Character actor, Character target)
+        void SkillUse(Character actor)
         {
             while (true)
             {
