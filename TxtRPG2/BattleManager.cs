@@ -118,10 +118,12 @@ namespace TxtRPG2
 
                 Console.WriteLine();
                 Console.WriteLine($"Lv.{target.Level} {target.Name}");
+                
                 if (target.Hp == 0)
                 {
                     Console.WriteLine($"HP {Hp} -> dead");
                 }
+                
                 else
                 {
                     Console.WriteLine($"HP {Hp} -> {target.Hp}");
@@ -160,9 +162,20 @@ namespace TxtRPG2
                 }
                 else
                 {
-                    Attack(player, spawn[choice - 1]);
-                    EnemyTurn();
-                    break;
+                    if (spawn[choice-1].IsDead == true)
+                    {
+                        Console.WriteLine($"이미 죽은 적 입니다.");
+                        Thread.Sleep(500);
+
+                        break;
+                    }
+                    else
+                    {
+                        Attack(player, spawn[choice - 1]);
+                        EnemyTurn();
+                        break;
+                    }
+                    
                 }
 
             }
@@ -178,6 +191,7 @@ namespace TxtRPG2
                     Attack(monster, player);
 
                 }
+                
             }
         }
 
@@ -230,7 +244,7 @@ namespace TxtRPG2
                 if (skillChoice == 0) return;
 
                 Skill chosenSkill = player.Skills[skillChoice - 1];
-
+                
                 if (player.Mp < chosenSkill.ManaCost)
                 {
                     Console.WriteLine("마나가 부족합니다.");

@@ -11,7 +11,7 @@ namespace TxtRPG2
 
     public class Enemy : Character // 인터페이스 상속
     {
-        public bool IsDead { get => Hp <= 0; }// 사망여부
+       // public bool IsDead { get => Hp <= 0; }// 사망여부
         public List<Skill> Skills { get; set; }
         public Enemy(int level, string name, int hp, int mp, int atk) // 레벨, 이름, 체력, 공격력을 받는 생성자
             : base(level, name, hp, mp, atk) // 부모 생성자 호출
