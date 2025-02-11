@@ -13,7 +13,7 @@ namespace TxtRPG2
         public string Name { get; set; }
         public int Hp { get; set; }
         public int Mp { get; set; }
-        public int Atk { get; set; }
+        public virtual int Atk { get; set; }
         public int Level { get; set; }
         public List<Skill> Skills { get; set; }
         public bool IsDead { get => Hp <= 0; }

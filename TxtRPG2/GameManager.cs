@@ -12,14 +12,13 @@ namespace TxtRPG2
         private Player player; // 캐릭터를 상속받도록 변경
         private BattleManager battleManager;
 
-        Inventory inven;
         Shop shop;
 
         public GameManager()
         {
             try
             {
-                SaveData.Load(out player, out inven, out shop);
+                SaveData.Load(out player, out shop);
             }
             catch (Exception)
             {
@@ -27,8 +26,7 @@ namespace TxtRPG2
                 Console.ReadKey();
                 Console.Clear();
                 player = ChooseJob();  // 직업 선택 후 player에 저장
-                inven = new Inventory();
-                shop = new Shop(player, inven);
+                shop = new Shop(player);
             }
 
             if (player != null)
@@ -80,7 +78,6 @@ namespace TxtRPG2
             return player;
         }
 
-
         public void StartScene()
         {
             while (true)
@@ -110,14 +107,14 @@ namespace TxtRPG2
                     // 입력한 값에 대한 출력
                     case 3:
                         ConsoleUtility.Loading();
-                        inven.ShowInven();
+                        player.inven.ShowInven();
                         break;
                     case 4:
                         ConsoleUtility.Loading();
                         shop.ShopEnter();
                         break;
                     case 5:
-                        SaveData.Save(player, inven, shop);
+                        SaveData.Save(player, shop);
                         break;
                 }
             }
@@ -167,7 +164,7 @@ namespace TxtRPG2
                         battleManager.Battle();
                         return;
                     case 3:
-                        inven.UsePotion(player);
+                        player.inven.UsePotion(player);
                         break;
                 }
             }
