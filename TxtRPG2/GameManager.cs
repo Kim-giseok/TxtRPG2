@@ -63,13 +63,13 @@ namespace TxtRPG2
                 {
                     // 전사 선택 시
                     Console.WriteLine("전사를 선택하셨습니다.");
-                    player = new Warrior(playerName, 1, 100, 0);  // 전사 생성
+                    player = new Warrior(playerName, 1);  // 전사 생성
                 }
                 else if (jobChoice == 2)
                 {
                     // 궁수 선택 시
                     Console.WriteLine("궁수를 선택하셨습니다.");
-                    player = new Archer(playerName, 1, 80, 0);  // 궁수 생성
+                    player = new Archer(playerName, 1);  // 궁수 생성
                 }
             }
 
@@ -116,7 +116,7 @@ namespace TxtRPG2
                         shop.ShopEnter();
                         break;
                     case 5:
-                        SaveData.Save(player, inven);
+                        SaveData.Save(player, inven, shop);
                         break;
                 }
             }
