@@ -21,15 +21,16 @@ namespace TxtRPG2
             IsSold = false;
         }
 
-        public Item(Item item, bool copy = false)
+        public Item(Item item)
         {
             Name = item.Name;
             Description = item.Description;
-            Price = copy ? item.Price : item.Price * 80 / 100;
+            Price = item.Price;
             IsSold = false;
         }
 
-        public virtual void ApearInfo(bool sell = false)
+        public enum ApearMode { Idle, Buy, Sell };
+        public virtual void ApearInfo(ApearMode mode = ApearMode.Idle)
         {
             int sl = Console.CursorLeft;
             Console.Write($"{Name}");
@@ -38,20 +39,24 @@ namespace TxtRPG2
             sl = Console.CursorLeft;
             Console.Write($" {Description}");
             Console.SetCursorPosition(sl + 50, Console.CursorTop);
-            if (sell)
+            switch (mode)
             {
-                if (IsSold)
-                {
-                    Console.WriteLine($"\t| 판매완료");
-                }
-                else
-                {
-                    Console.WriteLine($"\t| {Price} G");
-                }
-            }
-            else
-            {
-                Console.WriteLine();
+                case ApearMode.Idle:
+                    Console.WriteLine();
+                    break;
+                case ApearMode.Buy:
+                    if (IsSold)
+                    {
+                        Console.WriteLine($"\t| 판매완료");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"\t| {Price} G");
+                    }
+                    break;
+                case ApearMode.Sell:
+                    Console.WriteLine($"\t| {Price * 80 / 100} G");
+                    break;
             }
         }
     }

@@ -25,15 +25,15 @@ namespace TxtRPG2
             this.Mp = Mp;
         }
 
-        public MpPotion(MpPotion potion, bool copy = false) : base(potion, copy)
+        public MpPotion(MpPotion potion) : base(potion)
         {
             Mp = potion.Mp;
         }
 
-        public override void ApearInfo(bool sell = false)
+        public override void ApearInfo(ApearMode mode = ApearMode.Idle)
         {
             int sl = Console.CursorLeft;
-            base.ApearInfo(sell);
+            base.ApearInfo(mode);
             Console.SetCursorPosition(sl + 18, Console.CursorTop - 1);
             Console.Write($"마력회복\t+ {Mp}");
             Console.SetCursorPosition(0, Console.CursorTop + 1);

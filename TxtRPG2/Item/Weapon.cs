@@ -24,15 +24,15 @@ namespace TxtRPG2
             Atk = atk;
         }
 
-        public Weapon(Weapon weapon, bool copy = false) : base(weapon, copy)
+        public Weapon(Weapon weapon) : base(weapon)
         {
             Atk = weapon.Atk;
         }
 
-        public override void ApearInfo(bool sell = false)
+        public override void ApearInfo(ApearMode mode = ApearMode.Idle)
         {
             int sl = Console.CursorLeft;
-            base.ApearInfo(sell);
+            base.ApearInfo(mode);
             Console.SetCursorPosition(sl + 18, Console.CursorTop - 1);
             Console.Write($"공격력\t+ {Atk}");
             Console.SetCursorPosition(0, Console.CursorTop + 1);
