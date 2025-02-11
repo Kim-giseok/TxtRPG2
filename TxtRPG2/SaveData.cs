@@ -12,6 +12,7 @@ namespace TxtRPG2
     [Serializable]
     internal class SaveData
     {
+        //플레이어의 정보
         public string Name { get; set; }
         public int Level { get; set; }
         public int Hp { get; set; }
@@ -21,6 +22,8 @@ namespace TxtRPG2
         public string Job { get; set; }
         public int Gold { get; set; }
 
+
+        //인벤토리 정보
         public struct DEquip
         {
             public string type { get; set; }
@@ -35,6 +38,8 @@ namespace TxtRPG2
             public int count { get; set; }
         }
         public DPotion[] Potions { get; set; }
+
+        //상점 정보
 
         static DEquip[] SaveEquips(Inventory inven)
         {
