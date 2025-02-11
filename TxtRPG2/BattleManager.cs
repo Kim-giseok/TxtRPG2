@@ -249,7 +249,6 @@
                 {
                     monster.Attack(player);
                 }
-                Thread.Sleep(700);
             }
             turnCount++;
         }
