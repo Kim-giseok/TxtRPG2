@@ -9,20 +9,29 @@ namespace TxtRPG2
     internal class Shop
     {
         Player player;
-        public Item[] Items { get; private set; }
+        public Item[] Items { get; private set; } =
+        {
+                new Amor(Amor.amors[0]),
+                new Weapon(Weapon.weapons[0]),
+                new HpPotion(HpPotion.hpPotions[0]),
+                new MpPotion(MpPotion.mpPotions[0])
+        };
         Inventory inven;
 
         public Shop(Player player, Inventory inven)
         {
             this.player = player;
-            Items =
-            [
-                new Amor(Amor.amors[0]),
-                new Weapon(Weapon.weapons[0]),
-                new HpPotion(HpPotion.hpPotions[0]),
-                new MpPotion(MpPotion.mpPotions[0])
-            ];
             this.inven = inven;
+        }
+
+        public Shop(Player player, Inventory inven, bool[] sells)
+        {
+            this.player = player;
+            this.inven = inven;
+            for (int i = 0; i < sells.Length; i++)
+            {
+                Items[i].IsSold = sells[i];
+            }
         }
 
         enum ShopMode { Idle, Buy, Sell };

@@ -19,21 +19,22 @@ namespace TxtRPG2
         {
             try
             {
-                SaveData.Load(out player, out inven);
+                SaveData.Load(out player, out inven, out shop);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Console.WriteLine(ex.ToString());
+                Console.WriteLine("저장된 데이터가 없습니다. 새로운 게임을 시작합니다.");
                 Console.ReadKey();
+                Console.Clear();
                 player = ChooseJob();  // 직업 선택 후 player에 저장
                 inven = new Inventory();
+                shop = new Shop(player, inven);
             }
 
             if (player != null)
             {
                 battleManager = new BattleManager(player);
             }
-            shop = new Shop(player, inven);
         }
         public Player ChooseJob()
         {

@@ -107,7 +107,7 @@ namespace TxtRPG2
             Thread.Sleep(500);
         }
 
-        public static void Load(out Player player, out Inventory inven, string path = "save.json")
+        public static void Load(out Player player, out Inventory inven, out Shop shop, string path = "save.json")
         {
             string jString = File.ReadAllText(path);
 
@@ -182,6 +182,8 @@ namespace TxtRPG2
                     }
                 }
             }
+
+            shop = new Shop(player, inven, load.DSells);
 
             Console.WriteLine("저장데이터를 불러왔습니다.");
             Thread.Sleep(500);
