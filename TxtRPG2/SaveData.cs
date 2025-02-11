@@ -127,14 +127,13 @@ namespace TxtRPG2
             switch (load.Job)
             {
                 case "전사":
-                    player = new Warrior(load.Name, load.Level, load.Hp, load.Gold);
+                    player = new Warrior(load.Name, load.Level, load.Hp, load.Mp, load.Gold);
                     break;
                 case "궁수":
-                    player = new Archer(load.Name, load.Level, load.Hp, load.Gold);
+                    player = new Archer(load.Name, load.Level, load.Hp, load.Mp, load.Gold);
                     break;
                 default:
-                    player = new Warrior(load.Name, load.Level, load.Hp, load.Gold);
-                    break;
+                    throw new Exception();
             }
 
             inven = new Inventory();
@@ -150,8 +149,7 @@ namespace TxtRPG2
                         iteml = Amor.amors;
                         break;
                     default:
-                        iteml = Item.items;
-                        break;
+                        throw new Exception();
                 }
                 foreach (var item in iteml)
                 {
@@ -177,8 +175,7 @@ namespace TxtRPG2
                         iteml = MpPotion.mpPotions;
                         break;
                     default:
-                        iteml = Item.items;
-                        break;
+                        throw new Exception();
                 }
                 foreach (var item in iteml)
                 {
