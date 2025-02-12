@@ -32,7 +32,7 @@ namespace TxtRPG2
 
             if (mode == Showmode.Idle && Potions.Count > 0)
             {
-                Console.WriteLine("포션");
+                ConsoleUtility.WriteLine("포션", ConsoleColor.Green);
                 Console.WriteLine();
                 {
                     foreach (var potion in Potions)
@@ -44,7 +44,7 @@ namespace TxtRPG2
                 Console.WriteLine();
             }
 
-            Console.WriteLine("장비");
+            ConsoleUtility.WriteLine("장비", ConsoleColor.Green);
             Console.WriteLine();
             for (int i = 0; i < Equips.Count; i++)
             {
@@ -55,7 +55,7 @@ namespace TxtRPG2
                 }
                 if (EWeapon == Equips[i] || EAmor == Equips[i])
                 {
-                    Console.Write("[E] ");
+                    ConsoleUtility.Write("[E] ", ConsoleColor.Blue);
                 }
                 else
                 {
@@ -70,7 +70,7 @@ namespace TxtRPG2
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("인벤토리");
+                ConsoleUtility.WriteLine("인벤토리", ConsoleColor.Yellow);
                 ShowItems();
 
                 Console.WriteLine();
@@ -92,7 +92,7 @@ namespace TxtRPG2
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("인벤토리 - 장착관리");
+                ConsoleUtility.WriteLine("인벤토리 - 장착관리", ConsoleColor.Yellow);
                 ShowItems(Showmode.Equip);
 
                 Console.WriteLine();
@@ -162,7 +162,7 @@ namespace TxtRPG2
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("회복");
+                ConsoleUtility.WriteLine("회복", ConsoleColor.Yellow);
                 Console.WriteLine("포션을 사용하면 체력/마력을 회복 할 수 있습니다.");
 
                 Console.WriteLine();

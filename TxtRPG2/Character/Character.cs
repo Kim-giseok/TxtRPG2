@@ -43,20 +43,22 @@ namespace TxtRPG2
             {
                 Console.Clear();
 
-                Console.WriteLine("Battle!!");
+                ConsoleUtility.WriteLine("Battle!!", ConsoleColor.Yellow);
                 Console.WriteLine();
                 Console.WriteLine($"{Name}의 공격!");
+                Thread.Sleep(300);
 
                 if (!miss)
                 {
                     if (critical)
                     {
-                        Console.WriteLine($"Lv.{target.Level} {target.Name}에게 {damage}의 치명적인 피해를 입혔습니다!!");
+                        ConsoleUtility.WriteLine($"Lv.{target.Level} {target.Name}에게 {damage}의 치명적인 피해를 입혔습니다!!", ConsoleColor.Yellow);
                     }
                     else
                     {
                         Console.WriteLine($"Lv.{target.Level} {target.Name}에게 {damage}의 피해를 입혔습니다.");
                     }
+                    Thread.Sleep(300);
                     Console.WriteLine();
                     Console.WriteLine($"Lv.{target.Level} {target.Name}");
 
@@ -71,7 +73,8 @@ namespace TxtRPG2
                 }
                 else
                 {
-                        Console.WriteLine($"Lv.{target.Level} {target.Name}은 공격을 피했습니다.");
+                    ConsoleUtility.WriteLine($"Lv.{target.Level} {target.Name}은 공격을 피했습니다.", ConsoleColor.DarkGray);
+                    Thread.Sleep(300);
                 }
                 Console.WriteLine();
                 Console.WriteLine("0. 다음");
@@ -97,14 +100,17 @@ namespace TxtRPG2
             {
                 Console.Clear();
 
-                Console.WriteLine("Battle!!");
+                ConsoleUtility.WriteLine("Battle!!", ConsoleColor.Yellow);
                 Console.WriteLine();
                 Console.WriteLine($"{Name}은 {skill.Name}을 사용했다.!");
+                Thread.Sleep(300);
 
                 for (int i = 0; i < targets.Length; i++)
                 {
                     Console.WriteLine($"Lv.{targets[i].Level} {targets[i].Name}에게 {damage}의 피해를 입혔습니다. ");
+                    Thread.Sleep(100);
                 }
+                Thread.Sleep(200);
                 Console.WriteLine();
                 for (int i = 0; i < targets.Length; i++)
                 {

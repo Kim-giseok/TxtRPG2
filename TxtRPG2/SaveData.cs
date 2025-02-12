@@ -199,7 +199,7 @@ namespace TxtRPG2
             dungeon = new BattleManager(player, load.DFloor);
 
             Console.WriteLine("저장데이터를 불러왔습니다.");
-            Thread.Sleep(500);
+            Console.ReadKey();
         }
     }
 }

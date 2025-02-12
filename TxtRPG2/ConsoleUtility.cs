@@ -33,7 +33,6 @@ static class ConsoleUtility
         }
     }
 
-
     //로딩 화면
     public static void Loading()
     {
@@ -46,5 +45,22 @@ static class ConsoleUtility
             Thread.Sleep(75); //시간을 지연시킴
             Console.Write(str);
         }
+    }
+
+    public static void Write(string str, ConsoleColor color = ConsoleColor.White)
+    {
+        if (color == ConsoleColor.White)
+        {
+            color = Console.ForegroundColor;
+        }
+        Console.ForegroundColor = color;
+        Console.Write(str);
+        Console.ResetColor();
+    }
+
+    public static void WriteLine(string str, ConsoleColor color = ConsoleColor.White)
+    {
+        Write(str, color);
+        Console.WriteLine();
     }
 }

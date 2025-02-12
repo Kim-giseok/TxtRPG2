@@ -39,9 +39,7 @@ namespace TxtRPG2
         {
             if (IsDead)
             {
-                Console.ForegroundColor = ConsoleColor.DarkGray;
-                Console.WriteLine($"Lv.{Level} {Name} Dead");
-
+                ConsoleUtility.WriteLine($"Lv.{Level} {Name} Dead", ConsoleColor.DarkGray);
             }
             else
             {
