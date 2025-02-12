@@ -58,13 +58,13 @@ namespace TxtRPG2
                 {
                     // 전사 선택 시
                     Console.WriteLine("전사를 선택하셨습니다.");
-                    player = new Warrior(playerName, 1);  // 전사 생성
+                    player = new Warrior(playerName);  // 전사 생성
                 }
                 else if (jobChoice == 2)
                 {
                     // 궁수 선택 시
                     Console.WriteLine("궁수를 선택하셨습니다.");
-                    player = new Archer(playerName, 1);  // 궁수 생성
+                    player = new Archer(playerName);  // 궁수 생성
                 }
             }
 

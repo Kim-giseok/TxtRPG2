@@ -93,8 +93,8 @@ namespace TxtRPG2
                 Level = player.Level,
                 Hp = player.Hp,
                 Mp = player.Mp,
-                Atk = player.Atk,
-                Def = player.Def,
+                Atk = ((Character)player).Atk,
+                Def = player.BaseDef,
                 Job = player.Job,
                 Gold = player.Gold,
 
@@ -132,10 +132,10 @@ namespace TxtRPG2
             switch (load.Job)
             {
                 case "전사":
-                    player = new Warrior(load.Name, load.Level, load.Hp, load.Mp, load.Gold);
+                    player = new Warrior(load.Name, load.Level, load.Atk, load.Def, load.Hp, load.Mp, load.Gold);
                     break;
                 case "궁수":
-                    player = new Archer(load.Name, load.Level, load.Hp, load.Mp, load.Gold);
+                    player = new Archer(load.Name, load.Level, load.Atk, load.Def, load.Hp, load.Mp, load.Gold);
                     break;
                 default:
                     throw new Exception();
