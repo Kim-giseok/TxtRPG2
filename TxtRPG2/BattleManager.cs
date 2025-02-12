@@ -277,9 +277,10 @@
                     Console.WriteLine($"던전에서 몬스터 {spawn.Length}마리를 잡았습니다.");
 
                     int beforeExp = player.Exp, beforeLv = player.Level, beforeGold = player.Gold;
+                    Dictionary<string, int> items = new Dictionary<string, int>();
                     foreach (var enemy in spawn)
                     {
-                        enemy.reward.ApplyReWard(player);
+                        enemy.reward.ApplyReWard(player, ref items);
                     }
                     Console.WriteLine();
                     Console.WriteLine("[캐릭터 정보]");
@@ -293,7 +294,11 @@
 
                     Console.WriteLine();
                     Console.WriteLine("[획득 아이템]");
-                    Console.WriteLine($"{player.Gold-beforeGold} Gold");
+                    Console.WriteLine($"{player.Gold - beforeGold} Gold");
+                    foreach (var item in items)
+                    {
+                        Console.WriteLine($"{item.Key} - {item.Value}");
+                    }
                 }
                 else
                 {
