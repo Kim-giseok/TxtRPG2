@@ -1,0 +1,58 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace TxtRPG2
+{
+    class QuestBoard
+    {
+        public static Quest[] Quests { get; private set; }
+        public Player player { get; private set; }
+
+        public QuestBoard(Player player)
+        {
+            this.player = player;
+            Quests =
+            [
+                new Quest("마을을 위협하는 미니언 처치",
+                "이봐! 마을 근처에 미니언들이 너무 많아졌다고 생각하지 않나?\n" +
+                "마을주민들의 안전을 위해서라도 저것들 수를 좀 줄여야 한다고!\n" +
+                "모험가인 자네가 좀 처치해주게!", 5)
+            ];
+        }
+
+        public void ShowInfo()
+        {
+            while (true)
+            {
+                Console.Clear();
+                ConsoleUtility.WriteLine("Quest!!", ConsoleColor.Yellow);
+                Console.WriteLine();
+                Console.WriteLine("원하시는 퀘스트를 선택해주세요.");
+                for (int i = 0; i < Quests.Length; i++)
+                {
+                    ConsoleUtility.WriteLine($"{i + 1}. {Quests[i].Name}", Quests[i].Stat == Quest.State.End ? ConsoleColor.DarkGray : Console.ForegroundColor);
+                }
+                Console.WriteLine();
+                Console.WriteLine("0. 돌아가기");
+                int input = ConsoleUtility.GetInput(0, Quests.Length);
+                switch(input)
+                {
+                    case 0:
+                        return;
+                    default:
+                        if (Quests[input-1].Stat == Quest.State.End)
+                        {
+                            Console.WriteLine("선택할 수 없는 퀘스트입니다.");
+                            Thread.Sleep(500);
+                            break;
+                        }
+                        Quests[input - 1].ShowInfo();
+                        break;
+                }
+            }
+        }
+    }
+}

@@ -87,7 +87,7 @@ namespace TxtRPG2
             }
         }
 
-        public void QuestTriger(object obj)
+        public void Triger()
         {
             if (Stat == State.Accept)
             {
