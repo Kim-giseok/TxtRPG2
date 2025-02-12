@@ -217,11 +217,7 @@
 
                 lives = lives.OrderBy(x => new Random().Next()).ToList();
                 int targetnum = lives.Count > skill.Range ? skill.Range : lives.Count;
-                Character[] targets = new Character[targetnum];
-                for (int i = 0; i < targets.Length; i++)
-                {
-                    targets[i] = lives[i];
-                }
+                Character[] targets =  lives.GetRange(0,targetnum).ToArray();
 
                 player.UseSkill(skill, targets);
                 EnemyTurn();
