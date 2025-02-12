@@ -280,7 +280,7 @@
                     Dictionary<string, int> items = new Dictionary<string, int>();
                     foreach (var enemy in spawn)
                     {
-                        enemy.reward.ApplyReWard(player, ref items);
+                        enemy.reward.ApplyReWard(player, items);
                     }
                     Console.WriteLine();
                     Console.WriteLine("[캐릭터 정보]");
