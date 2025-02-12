@@ -26,7 +26,7 @@ namespace TxtRPG2
             Items = items == null ? Array.Empty<Item>() : items;
         }
 
-        public void ApplyReWard(Player player, ref Dictionary<string, int> items)
+        public void ApplyReWard(Player player, Dictionary<string, int> items)
         {
             player.GainExp(Exp);
             player.Gold += Gold;
