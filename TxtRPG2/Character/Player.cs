@@ -23,15 +23,32 @@
 
         public void Status() //플레이어의 상태를 보여주는 메서드
         {
-            Console.WriteLine("상태 보기\n캐릭터의 정보가 표시됩니다.");
-            Console.WriteLine($"\nlv. {Level:D2}");
+            ConsoleUtility.WriteLine("상태 보기", ConsoleColor.Yellow);
+            Console.WriteLine("캐릭터의 정보가 표시됩니다.");
+            Console.WriteLine();
+            Console.WriteLine($"lv. {Level:D2}");
             Console.WriteLine($"{Name} ({Job})");
-            Console.WriteLine($"공격력 : {Atk}" + (inven.EWeapon != null ? $" (+{inven.EWeapon.Atk})" : ""));
-            Console.WriteLine($"방어력 : {Def}" + (inven.EAmor != null ? " (+{inven.EAmor.Def})" : ""));
+            Console.Write($"공격력 : {Atk}");
+            if(inven.EWeapon != null)
+            {
+                ConsoleUtility.WriteLine($" (+{inven.EWeapon.Atk})", ConsoleColor.Red);
+            }
+            else
+            {
+                Console.WriteLine();
+            }
+            Console.Write($"방어력 : {Def}");
+            if(inven.EAmor != null)
+            {
+                ConsoleUtility.WriteLine($" (+{inven.EAmor.Def})", ConsoleColor.Red);
+            }
+            else
+            {
+                Console.WriteLine();
+            }
             Console.WriteLine($"체력 : {Hp}/100");
             Console.WriteLine($"마력 : {Mp}/50");
             Console.WriteLine($"Gold : {Gold} G");
-            Console.WriteLine("\n0.나가기\n");
         }
 
         static Dictionary<int, int> LevelTable = new Dictionary<int, int>

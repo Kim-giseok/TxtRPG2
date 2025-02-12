@@ -130,7 +130,8 @@ namespace TxtRPG2
             {
                 Console.WriteLine("잘못된 타입입니다.");
             }
-
+            Console.WriteLine();
+            Console.WriteLine("0.나가기");
             ConsoleUtility.GetInput(0, 0);
         }
 
@@ -146,7 +147,9 @@ namespace TxtRPG2
 
                 Console.WriteLine();
                 Console.WriteLine("1. 상태 보기");
-                Console.WriteLine($"2. 전투 시작 (현재 진행 : {battleManager.Floor}층)");
+                Console.Write($"2. 전투 시작 (현재 진행 : ");
+                ConsoleUtility.Write($"{battleManager.Floor}", ConsoleColor.DarkRed);
+                Console.WriteLine("층)");
                 Console.WriteLine("3. 회복 아이템");
                 Console.WriteLine("0. 나가기");
                 switch (ConsoleUtility.GetInput(0, 3))
@@ -157,9 +160,11 @@ namespace TxtRPG2
                         ShowStat();
                         break;
                     case 2:
+                        ConsoleUtility.Loading();
                         battleManager.Battle();
-                        return;
+                        break;
                     case 3:
+                        ConsoleUtility.Loading();
                         player.inven.UsePotion(player);
                         break;
                 }

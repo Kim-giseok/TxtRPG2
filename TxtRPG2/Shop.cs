@@ -37,7 +37,8 @@ namespace TxtRPG2
             Console.WriteLine("필요한 아이템을 얻을 수 있는 상점입니다.");
             Console.WriteLine();
             Console.WriteLine("[보유 골드]");
-            Console.WriteLine($"{player.Gold} G");
+            Console.Write($"{player.Gold}");
+            ConsoleUtility.WriteLine(" G", ConsoleColor.DarkRed);
             Console.WriteLine();
 
             //판매일 경우 플래이어가 소유중인 아이템을 보여줍니다.
@@ -51,12 +52,17 @@ namespace TxtRPG2
             Console.WriteLine();
             for (int i = 0; i < Items.Length; i++)
             {
+                if (Items[i].IsSold)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                }
                 Console.Write("- ");
                 if (mode == ShopMode.Buy)
                 {
                     Console.Write($"{i + 1} ");
                 }
                 Items[i].ApearInfo(Item.ApearMode.Buy);
+                Console.ResetColor();
             }
         }
 
@@ -65,7 +71,7 @@ namespace TxtRPG2
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("상점");
+                ConsoleUtility.WriteLine("상점", ConsoleColor.Yellow);
                 //보유골드와 상점의 아이템들을 보여줍니다.
                 ShowItems();
 
@@ -92,7 +98,7 @@ namespace TxtRPG2
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("상점 - 아이템 구매");
+                ConsoleUtility.WriteLine("상점 - 아이템 구매", ConsoleColor.Yellow);
                 //보유골드와 상점의 아이템들을 보여줍니다.
                 ShowItems(ShopMode.Buy);
 
@@ -128,7 +134,7 @@ namespace TxtRPG2
             {
                 Console.Clear();
 
-                Console.WriteLine("상점 - 아이템 판매");
+                ConsoleUtility.WriteLine("상점 - 아이템 판매", ConsoleColor.Yellow);
                 //보유골드와 자신의 아이템들을 보여줍니다.
                 ShowItems(ShopMode.Sell);
 

@@ -58,7 +58,7 @@ static class ConsoleUtility
         Console.ResetColor();
     }
 
-    public static void WritLine(string str, ConsoleColor color = ConsoleColor.White)
+    public static void WriteLine(string str, ConsoleColor color = ConsoleColor.White)
     {
         Write(str, color);
         Console.WriteLine();

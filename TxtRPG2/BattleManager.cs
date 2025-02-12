@@ -43,14 +43,14 @@
         void ShowInfos(bool select = false)
         {
             Console.Clear();
-            Console.WriteLine("Battle!!");
+            ConsoleUtility.WriteLine("Battle!!", ConsoleColor.Yellow);
             Console.WriteLine();
             // 적들의 정보 출력
             for (int i = 0; i < spawn.Length; i++)
             {
                 if (select)
                 {
-                    Console.Write($"{i + 1} ");
+                    Console.Write($"{i + 1}. ");
                 }
                 spawn[i].AppearInfo();
             }
@@ -217,7 +217,7 @@
 
                 lives = lives.OrderBy(x => new Random().Next()).ToList();
                 int targetnum = lives.Count > skill.Range ? skill.Range : lives.Count;
-                Character[] targets =  lives.GetRange(0,targetnum).ToArray();
+                Character[] targets = lives.GetRange(0, targetnum).ToArray();
 
                 player.UseSkill(skill, targets);
                 EnemyTurn();
@@ -264,7 +264,7 @@
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("Battle!! - Result");
+                ConsoleUtility.WriteLine("Battle!! - Result", ConsoleColor.Yellow);
                 Console.WriteLine();
                 if (Victory)
                 {
@@ -280,21 +280,28 @@
                     }
                     Console.WriteLine();
                     Console.WriteLine("[캐릭터 정보]");
+                    Console.Write($"Lv.{player.Level} {player.Name}");
                     if (beforeLv != player.Level)
                     {
-                        Console.Write($"Lv.{beforeLv} ->");
+                        ConsoleUtility.WriteLine($"Level UP!!", ConsoleColor.Red);
                     }
-                    Console.WriteLine($"Lv.{player.Level} {player.Name}");
+                    else
+                    {
+                        Console.WriteLine();
+                    }
                     Console.WriteLine($"HP {EnterHp} -> {player.Hp}");
                     Console.WriteLine($"Exp {beforeExp} -> {player.Exp}");
 
                     Console.WriteLine();
                     Console.WriteLine("[획득 아이템]");
+                    Thread.Sleep(800);
                     Console.WriteLine($"{player.Gold - beforeGold} Gold");
                     foreach (var item in items)
                     {
+                        Thread.Sleep(800);
                         Console.WriteLine($"{item.Key} - {item.Value}");
                     }
+                    Thread.Sleep(800);
                 }
                 else
                 {
