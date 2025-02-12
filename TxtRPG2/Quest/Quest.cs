@@ -13,7 +13,7 @@ namespace TxtRPG2
         public int GoalCount { get; }
         public int NowCount { get; private set; }
         public virtual string Goal { get => $"목표 {GoalCount}회 달성"; }
-        public enum State { Ready, Accept, Clear };
+        public enum State { Ready, Accept, Clear, End };
         public State Stat { get; private set; }
 
         public Reward QReward { get; private set; }
@@ -68,6 +68,34 @@ namespace TxtRPG2
                     break;
             }
             Console.WriteLine("0. 돌아가기");
+            int input = ConsoleUtility.GetInput(0, Stat == State.Accept ? 0 : 1);
+            switch(input)
+            {
+                case 0:
+                    return;
+                case 1:
+                    switch(Stat)
+                    {
+                        case State.Ready:
+                            Stat = State.Accept;
+                            break;
+                        case State.Clear:
+                            Stat = State.End;
+                            break;
+                    }
+                    return;
+            }
+        }
+
+        public void QuestTriger(object obj)
+        {
+            if (Stat == State.Accept)
+            {
+                if (++NowCount == GoalCount)
+                {
+                    Stat = State.Clear;
+                }
+            }
         }
     }
 }
