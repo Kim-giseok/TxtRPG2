@@ -1,4 +1,7 @@
-﻿namespace TxtRPG2
+﻿using System.Reflection.Metadata.Ecma335;
+using System.Threading;
+
+namespace TxtRPG2
 {
     public class Character
     {
@@ -25,10 +28,17 @@
 
         public void Attack(Character target)
         {
+            // 스턴 상태인 경우 공격 불가
+            if (IsStunned())
+            {
+                Console.WriteLine($"{Name}은(는) 기절 상태라 공격할 수 없습니다!");
+                Thread.Sleep(300);
+                return;
+            }
+
             int damage = (int)(Atk * new Random().Next(90, 110) / 100f + 0.5f);
             int Hp = target.Hp;
 
-            
             target.TakeDamage(damage);
 
             while (true)
@@ -37,8 +47,8 @@
 
                 Console.WriteLine("Battle!!");
                 Console.WriteLine();
-                Console.WriteLine($"{Name}의 공격!");
                 ProcessStatusEffect();
+                Console.WriteLine($"{Name}의 공격!");
                 Console.WriteLine($"Lv.{target.Level} {target.Name}에게 {damage}의 피해를 입혔습니다. ");
                 Console.WriteLine();
                 Console.WriteLine($"Lv.{target.Level} {target.Name}");
@@ -63,9 +73,16 @@
 
         public void UseSkill(Skill skill, Character[] targets)
         {
+            // 스턴 상태인 경우 스킬 사용 불가
+            if (IsStunned())
+            {
+                Console.WriteLine($"{Name}은(는) 기절 상태라 스킬을 사용할 수 없습니다!");
+                Thread.Sleep(300);
+                return;
+            }
+
             Mp -= skill.ManaCost;
             Console.Clear();
-
             Console.WriteLine("Battle!!");
             Console.WriteLine();
             Console.WriteLine($"{Name}은(는) {skill.Name}을 사용했다!");

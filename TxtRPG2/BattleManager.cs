@@ -72,7 +72,7 @@
             for (int i = 0; i < spawn.Length; i++)
             {
                 int idx = new Random().Next(Enemys.Length);
-                spawn[i] = new Enemy(Enemys[idx].Level, Enemys[idx].Name, Enemys[idx].Hp, Enemys[idx].Mp, Enemys[idx].Atk);
+                spawn[i] = new Enemy(Enemys[idx].Level, Enemys[idx].Name, Enemys[idx].Hp, Enemys[idx].Mp, Enemys[idx].Atk, Enemys[idx].Skills);
             }
             turnCount = 1;
             while (true)
@@ -234,7 +234,7 @@
                     continue;
                 }
                 monster.ProcessStatusEffect();// 그외의 경우 호출
-                // 사용할 수 있는 스킬을 수동으로 필터링
+                
                 List<Skill> availableSkills = new List<Skill>();
                 foreach (var skill in monster.Skills)
                 {
