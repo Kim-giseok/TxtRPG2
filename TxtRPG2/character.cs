@@ -1,7 +1,4 @@
-﻿using System.Reflection.Metadata.Ecma335;
-using System.Threading;
-
-namespace TxtRPG2
+﻿namespace TxtRPG2
 {
     public class Character
     {
@@ -28,11 +25,9 @@ namespace TxtRPG2
 
         public void Attack(Character target)
         {
-            // 스턴 상태인 경우 공격 불가
-            if (IsStunned())
+            // 상태 효과 처리 후 스턴 상태인 경우 턴 스킵
+            if (ProcessStatusEffect())
             {
-                Console.WriteLine($"{Name}은(는) 기절 상태라 공격할 수 없습니다!");
-                Thread.Sleep(300);
                 return;
             }
 
@@ -47,7 +42,6 @@ namespace TxtRPG2
 
                 Console.WriteLine("Battle!!");
                 Console.WriteLine();
-                ProcessStatusEffect();
                 Console.WriteLine($"{Name}의 공격!");
                 Console.WriteLine($"Lv.{target.Level} {target.Name}에게 {damage}의 피해를 입혔습니다. ");
                 Console.WriteLine();
@@ -73,11 +67,9 @@ namespace TxtRPG2
 
         public void UseSkill(Skill skill, Character[] targets)
         {
-            // 스턴 상태인 경우 스킬 사용 불가
-            if (IsStunned())
+            // 상태 효과 처리 후 스턴 상태인 경우 턴 스킵
+            if (ProcessStatusEffect())
             {
-                Console.WriteLine($"{Name}은(는) 기절 상태라 스킬을 사용할 수 없습니다!");
-                Thread.Sleep(300);
                 return;
             }
 
@@ -87,18 +79,14 @@ namespace TxtRPG2
             Console.WriteLine();
             Console.WriteLine($"{Name}은(는) {skill.Name}을 사용했다!");
 
-
             int damage = (int)(Atk * skill.DamageMultiplier);
             int[] Hp = new int[targets.Length];
 
             for (int i = 0; i < targets.Length; i++)
             {
                 Hp[i] = targets[i].Hp;
-                ProcessStatusEffect();
                 targets[i].TakeDamage(damage);
                 Console.WriteLine($"Lv.{targets[i].Level} {targets[i].Name}에게 {damage}의 피해를 입혔다!");
-
-
             }
 
             // 상태 이상 효과가 있는 경우 적용
@@ -162,7 +150,7 @@ namespace TxtRPG2
             Console.WriteLine($"{Name}은(는) {effect}상태가 되었다! [지속{statusEffectTurn}]");
         }
 
-        public void ProcessStatusEffect() // 상태이상 적용
+        public bool ProcessStatusEffect() // 상태이상 적용
         {
             if (statusEffectTurn > 0)
             {
@@ -179,10 +167,14 @@ namespace TxtRPG2
                         break;
 
                     case StatusEffect.Stun:
-                        IsStunned();
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.WriteLine($"{Name}은(는) 기절 상태라 행동할 수 없다!");
-                        Thread.Sleep(300);
+                        if (IsStunned())
+                        {
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.WriteLine($"{Name}은(는) 기절 상태라 행동할 수 없다!");
+                            Thread.Sleep(300);
+                            Console.ForegroundColor = defaultColor;
+                            return true; // 스턴 상태인 경우 턴 스킵
+                        }
                         break;
 
                     case StatusEffect.Burn:
@@ -214,6 +206,7 @@ namespace TxtRPG2
                     CurrentStatus = StatusEffect.None;
                 }
             }
+            return false; // 스턴 상태가 아닌 경우 턴 스킵하지 않음
         }
 
         public bool IsStunned()

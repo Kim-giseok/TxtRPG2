@@ -15,7 +15,7 @@
             
             Enemys =
             [
-                    /*new Enemy(2, "미니언", 15, 10, 5, new List<Skill>
+                    new Enemy(2, "미니언", 15, 10, 5, new List<Skill>
                     {
                         new Skill("알파 스트라이크", 10, 2f, 1, SkillType.Attack, 4, StatusEffect.Poison)
 
@@ -28,7 +28,7 @@
                     new Enemy(5, "대포미니언", 25, 25, 8,new List<Skill>
                     {
                         new Skill("포격", 15, 1.5f, 2, SkillType.Attack, 2, StatusEffect.Burn)
-                    }), */
+                    }), 
                     new Enemy(10, "챔피언", 300, 40, 10,new List<Skill>
                     {
                         new Skill("강타", 15, 1.5f, 1, SkillType.Attack, 1, StatusEffect.Stun)
