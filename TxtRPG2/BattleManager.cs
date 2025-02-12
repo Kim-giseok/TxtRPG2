@@ -8,33 +8,31 @@
         public int turnCount; // 전투 턴 수
         public int EnterHp { get; private set; }
         public bool Victory { get => player.Hp != 0; }
+        private static readonly Random random = new Random();
 
         public BattleManager(Player player)
         {
             this.player = player;
-            
-            Enemys =
-            [
+
+            Enemys = new Enemy[]
+            {
                     new Enemy(2, "미니언", 15, 10, 5, new List<Skill>
                     {
                         new Skill("알파 스트라이크", 10, 2f, 1, SkillType.Attack, 4, StatusEffect.Poison)
-
-                    }), // 레벨, 이름, 체력, 마나, 공격력, 스킬(비워두면 빈 리스트 반환)
-                    new Enemy(3, "공허충", 10, 10, 9,new List<Skill>
+                    }),
+                    new Enemy(3, "공허충", 10, 10, 9, new List<Skill>
                     {
                         new Skill("보이드 어택", 7, 1.5f, 1, SkillType.Attack, 3, StatusEffect.Bleed)
                     }),
-
-                    new Enemy(5, "대포미니언", 25, 25, 8,new List<Skill>
+                    new Enemy(5, "대포미니언", 25, 25, 8, new List<Skill>
                     {
                         new Skill("포격", 15, 1.5f, 2, SkillType.Attack, 2, StatusEffect.Burn)
-                    }), 
-                    new Enemy(10, "챔피언", 300, 40, 10,new List<Skill>
+                    }),
+                    new Enemy(10, "챔피언", 300, 40, 10, new List<Skill>
                     {
                         new Skill("강타", 15, 1.5f, 1, SkillType.Attack, 1, StatusEffect.Stun)
                     })
-
-            ];
+            };
             EnterHp = player.Hp;
         }
 
@@ -67,11 +65,11 @@
             // 입장시 플레이어의 Hp저장
             EnterHp = player.Hp;
             // 1~4마리의 랜덤한 수의 적 출현
-            spawn = new Enemy[new Random().Next(1, 5)];
+            spawn = new Enemy[random.Next(1, 5)];
 
             for (int i = 0; i < spawn.Length; i++)
             {
-                int idx = new Random().Next(Enemys.Length);
+                int idx = random.Next(Enemys.Length);
                 spawn[i] = new Enemy(Enemys[idx].Level, Enemys[idx].Name, Enemys[idx].Hp, Enemys[idx].Mp, Enemys[idx].Atk, Enemys[idx].Skills);
             }
             turnCount = 1;
@@ -207,7 +205,7 @@
                     }
                 }
 
-                lives = lives.OrderBy(x => new Random().Next()).ToList();
+                lives = lives.OrderBy(x => random.Next()).ToList();
                 int targetnum = lives.Count > skill.Range ? skill.Range : lives.Count;
                 Character[] targets = new Character[targetnum];
                 for (int i = 0; i < targets.Length; i++)
@@ -222,19 +220,17 @@
 
         private void EnemyTurn()
         {
-            Random rand = new Random();
-
             foreach (var monster in spawn)
             {
                 if (monster.IsDead) continue;
                 if (monster.IsStunned())
                 {
                     monster.ProcessStatusEffect(); // 스턴상태일경우 호출
-                    Thread.Sleep(700);
+                    Thread.Sleep(500);
                     continue;
                 }
                 monster.ProcessStatusEffect();// 그외의 경우 호출
-                
+
                 List<Skill> availableSkills = new List<Skill>();
                 foreach (var skill in monster.Skills)
                 {
@@ -244,11 +240,11 @@
                     }
                 }
 
-                bool useSkill = availableSkills.Count > 0 && rand.Next(100) < 40; // 40% 확률로 스킬 사용
+                bool useSkill = availableSkills.Count > 0 && random.Next(100) < 40; // 40% 확률로 스킬 사용
 
                 if (useSkill)
                 {
-                    int randomIndex = rand.Next(availableSkills.Count); // 랜덤한 스킬 선택
+                    int randomIndex = random.Next(availableSkills.Count); // 랜덤한 스킬 선택
                     Skill selectedSkill = availableSkills[randomIndex];
 
                     monster.UseSkill(selectedSkill, new Character[] { player }); // 플레이어를 타겟으로 스킬 사용
@@ -257,7 +253,7 @@
                 {
                     monster.Attack(player);
                 }
-                Thread.Sleep(700);
+                Thread.Sleep(500);
             }
             turnCount++;
         }
