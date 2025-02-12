@@ -14,7 +14,7 @@
 
         public Inventory inven { get; set; } = new Inventory();
 
-        public Player(string name, int level, string job, int atk, int def, int hp = 100, int mp = 50, int gold = 1500) : base(level, name, hp, mp, atk)
+        public Player(string name, int level, string job, float atk, int def, int hp = 100, int mp = 50, int gold = 1500) : base(level, name, hp, mp, atk)
         {
             Job = job;
             BaseDef = def;
