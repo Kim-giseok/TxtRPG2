@@ -283,7 +283,7 @@
                     Console.Write($"Lv.{player.Level} {player.Name}");
                     if (beforeLv != player.Level)
                     {
-                        ConsoleUtility.WriteLine($"Level UP!!", ConsoleColor.Red);
+                        ConsoleUtility.WriteLine($" Level UP!!", ConsoleColor.Red);
                     }
                     else
                     {
