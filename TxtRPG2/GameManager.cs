@@ -14,11 +14,13 @@ namespace TxtRPG2
 
         Shop shop;
 
+        QuestBoard questBoard;
+
         public GameManager()
         {
             try
             {
-                SaveData.Load(out player, out shop, out battleManager);
+                SaveData.Load(out player, out shop, out battleManager, out questBoard);
             }
             catch (Exception)
             {
@@ -28,6 +30,7 @@ namespace TxtRPG2
                 player = ChooseJob();  // 직업 선택 후 player에 저장
                 shop = new Shop(player);
                 battleManager = new BattleManager(player);
+                questBoard = new QuestBoard(player);
             }
         }
         public Player ChooseJob()
@@ -86,10 +89,11 @@ namespace TxtRPG2
                 Console.WriteLine("2. 전투 시작");
                 Console.WriteLine("3. 인벤토리");
                 Console.WriteLine("4. 상점");
-                Console.WriteLine("5. 저장");
+                Console.WriteLine("5. 퀘스트");
+                Console.WriteLine("6. 저장");
                 Console.WriteLine("0. 종료");
 
-                int input = ConsoleUtility.GetInput(0, 5);
+                int input = ConsoleUtility.GetInput(0, 6);
                 switch (input)
                 {
                     case 0:
@@ -110,6 +114,10 @@ namespace TxtRPG2
                         shop.ShopEnter();
                         break;
                     case 5:
+                        ConsoleUtility.Loading();
+                        questBoard.ShowInfo();
+                        break;
+                    case 6:
                         SaveData.Save(player, shop, battleManager);
                         break;
                 }

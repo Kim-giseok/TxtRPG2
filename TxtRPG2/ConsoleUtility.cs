@@ -49,7 +49,7 @@ static class ConsoleUtility
 
     public static void Write(string str, ConsoleColor color = ConsoleColor.White)
     {
-        if (color == ConsoleColor.White)
+        if (color == Console.BackgroundColor)
         {
             color = Console.ForegroundColor;
         }

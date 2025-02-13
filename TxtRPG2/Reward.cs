@@ -17,7 +17,7 @@ namespace TxtRPG2
         };
         public int Exp { get; set; }
         public int Gold { get; set; }
-        Item[] Items { get; set; }
+        public Item[] Items { get; set; }
 
         public Reward(int exp = 1, int gold = 100, Item[] items = null)
         {

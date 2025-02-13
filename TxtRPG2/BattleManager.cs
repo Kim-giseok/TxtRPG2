@@ -140,6 +140,16 @@
                             break;
                         }
                         player.Attack(spawn[choice - 1]);
+                        if (spawn[choice - 1].IsDead)
+                        {
+                            foreach (var quest in QuestBoard.Quests)
+                            {
+                                if (quest.GetType() == typeof(KillQuest))
+                                {
+                                    ((KillQuest)quest).Triger(spawn[choice - 1]);
+                                }
+                            }
+                        }
                         EnemyTurn();
                         return;
                 }
@@ -199,6 +209,16 @@
                                 break;
                             }
                             player.UseSkill(skill, new Character[] { spawn[choice - 1] });
+                            if (spawn[choice - 1].IsDead)
+                            {
+                                foreach (var quest in QuestBoard.Quests)
+                                {
+                                    if (quest.GetType() == typeof(KillQuest))
+                                    {
+                                        ((KillQuest)quest).Triger(spawn[choice - 1]);
+                                    }
+                                }
+                            }
                             EnemyTurn();
                             return;
                     }
@@ -206,8 +226,8 @@
             }
             else
             {
-                List<Character> lives = new List<Character>();
-                foreach (Character c in spawn)
+                List<Enemy> lives = new List<Enemy>();
+                foreach (var c in spawn)
                 {
                     if (!c.IsDead)
                     {
@@ -217,9 +237,22 @@
 
                 lives = lives.OrderBy(x => new Random().Next()).ToList();
                 int targetnum = lives.Count > skill.Range ? skill.Range : lives.Count;
-                Character[] targets = lives.GetRange(0, targetnum).ToArray();
+                Enemy[] targets = lives.GetRange(0, targetnum).ToArray();
 
                 player.UseSkill(skill, targets);
+                foreach (var target in targets)
+                {
+                    if (target.IsDead)
+                    {
+                        foreach (var quest in QuestBoard.Quests)
+                        {
+                            if (quest.GetType() == typeof(KillQuest))
+                            {
+                                ((KillQuest)quest).Triger(target);
+                            }
+                        }
+                    }
+                }
                 EnemyTurn();
             }
         }
