@@ -12,7 +12,7 @@ namespace TxtRPG2
         public string Descript { get; }
         public int GoalCount { get; }
         public int NowCount { get; private set; }
-        public virtual string Goal { get => $"몬스터 {GoalCount}마리 처치"; }
+        public virtual string Goal { get => $"목표 {GoalCount}회 달성"; }
         public enum State { Ready, Accept, Clear, End };
         public State Stat { get; private set; }
 
