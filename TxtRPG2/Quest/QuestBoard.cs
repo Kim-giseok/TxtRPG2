@@ -41,7 +41,25 @@ namespace TxtRPG2
                 Console.WriteLine("원하시는 퀘스트를 선택해주세요.");
                 for (int i = 0; i < Quests.Length; i++)
                 {
-                    ConsoleUtility.WriteLine($"{i + 1}. {Quests[i].Name}", Quests[i].Stat == Quest.State.End ? ConsoleColor.DarkGray : Console.ForegroundColor);
+                    Console.Write($"{i + 1}. {Quests[i].Name}");
+                    switch (Quests[i].Stat)
+                    {
+                        case Quest.State.Ready:
+                            Console.WriteLine();
+                            break;
+                        case Quest.State.Accept:
+                            Console.SetCursorPosition(30, Console.CursorTop);
+                            Console.WriteLine("\t- 도전중 -");
+                            break;
+                        case Quest.State.Clear:
+                            Console.SetCursorPosition(30, Console.CursorTop);
+                            Console.WriteLine($"\t- 클리어!! -");
+                            break;
+                        case Quest.State.End:
+                            Console.SetCursorPosition(0, Console.CursorTop);
+                            ConsoleUtility.WriteLine($"{i + 1}. {Quests[i].Name}", ConsoleColor.DarkGray);
+                            break;
+                    }
                 }
                 Console.WriteLine();
                 Console.WriteLine("0. 돌아가기");
@@ -57,11 +75,13 @@ namespace TxtRPG2
                             Thread.Sleep(500);
                             break;
                         }
+                        ConsoleUtility.Loading();
                         Quests[input - 1].ShowInfo();
                         if (Quests[input - 1].Stat == Quest.State.End)
                         {
                             Quests[input - 1].QReward.ApplyReWard(player, new Dictionary<string, int>());
                         }
+                        ConsoleUtility.Loading();
                         break;
                 }
             }

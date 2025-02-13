@@ -35,7 +35,7 @@ namespace TxtRPG2
                 Console.Clear();
                 ConsoleUtility.WriteLine("Quest!!", ConsoleColor.Yellow);
                 Console.WriteLine();
-                Console.WriteLine(Name);
+                Console.WriteLine(Name + (Stat == State.Clear ? " - Clear!!" : ""));
                 Console.WriteLine();
                 Console.WriteLine(Descript);
 
@@ -50,11 +50,11 @@ namespace TxtRPG2
                 }
                 if (QReward.Gold != 0)
                 {
-                    Console.WriteLine($"{QReward.Gold}G");
+                    Console.WriteLine($"  {QReward.Gold}G");
                 }
                 if (QReward.Exp != 0)
                 {
-                    Console.WriteLine($"{QReward.Exp}Exp");
+                    Console.WriteLine($"  {QReward.Exp}Exp");
                 }
 
                 Console.WriteLine();
@@ -88,6 +88,8 @@ namespace TxtRPG2
                                 break;
                             case State.Clear:
                                 Stat = State.End;
+                                Console.WriteLine("퀘스트를 완료했습니다!!");
+                                Thread.Sleep(500);
                                 return;
                         }
                         break;
