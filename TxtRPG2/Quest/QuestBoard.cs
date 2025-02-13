@@ -50,6 +50,10 @@ namespace TxtRPG2
                             break;
                         }
                         Quests[input - 1].ShowInfo();
+                        if (Quests[input - 1].Stat == Quest.State.End)
+                        {
+                            Quests[input - 1].QReward.ApplyReWard(player, new Dictionary<string, int>());
+                        }
                         break;
                 }
             }
