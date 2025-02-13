@@ -11,10 +11,10 @@ namespace TxtRPG2
         public string Name { get; }
         public string Descript { get; }
         public int GoalCount { get; }
-        public int NowCount { get; private set; }
+        public virtual int NowCount { get; private set; }
         public virtual string Goal { get => $"목표 {GoalCount}회 달성"; }
         public enum State { Ready, Accept, Clear, End };
-        public State Stat { get; private set; }
+        public State Stat { get; protected set; }
 
         public Reward QReward { get; private set; }
 
@@ -28,7 +28,7 @@ namespace TxtRPG2
             QReward = Reward.rewards[reward];
         }
 
-        public void ShowInfo()
+        public virtual void ShowInfo()
         {
             while (true)
             {
@@ -80,7 +80,7 @@ namespace TxtRPG2
                         switch (Stat)
                         {
                             case State.Ready:
-                                Stat = State.Accept;
+                                Stat = NowCount >= GoalCount ? State.Clear : State.Accept;
                                 break;
                             case State.Accept:
                                 Console.WriteLine("아직 보상을 받을 수 없습니다.");
