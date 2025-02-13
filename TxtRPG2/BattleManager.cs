@@ -140,6 +140,10 @@
                             break;
                         }
                         player.Attack(spawn[choice - 1]);
+                        if (spawn[choice - 1].IsDead)
+                        {
+                            QuestBoard.Quests[0].Triger();
+                        }
                         EnemyTurn();
                         return;
                 }
@@ -199,6 +203,10 @@
                                 break;
                             }
                             player.UseSkill(skill, new Character[] { spawn[choice - 1] });
+                            if (spawn[choice - 1].IsDead)
+                            {
+                                QuestBoard.Quests[0].Triger();
+                            }
                             EnemyTurn();
                             return;
                     }
@@ -220,6 +228,13 @@
                 Character[] targets = lives.GetRange(0, targetnum).ToArray();
 
                 player.UseSkill(skill, targets);
+                foreach (var target in targets)
+                {
+                    if (target.IsDead)
+                    {
+                        QuestBoard.Quests[0].Triger();
+                    }
+                }
                 EnemyTurn();
             }
         }
