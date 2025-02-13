@@ -115,9 +115,29 @@ namespace TxtRPG2
             {
                 case Weapon:
                     EWeapon = EWeapon == Equips[idx] ? null : (Weapon)Equips[idx];
+                    if (EWeapon != null)
+                    {
+                        foreach(var quest in QuestBoard.Quests)
+                        {
+                            if (quest.GetType() == typeof(EquipQuest))
+                            {
+                                quest.Triger();
+                            }
+                        }
+                    }
                     break;
                 case Amor:
                     EAmor = EAmor == Equips[idx] ? null : (Amor)Equips[idx];
+                    if (EAmor != null)
+                    {
+                        foreach(var quest in QuestBoard.Quests)
+                        {
+                            if (quest.GetType() == typeof(EquipQuest))
+                            {
+                                quest.Triger();
+                            }
+                        }
+                    }
                     break;
             }
         }
