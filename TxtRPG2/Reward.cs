@@ -32,6 +32,7 @@ namespace TxtRPG2
             player.Gold += Gold;
             foreach (var item in Items)
             {
+                player.inven.AddItem(item);
                 if (items.ContainsKey(item.Name))
                 {
                     items[item.Name] += 1;
