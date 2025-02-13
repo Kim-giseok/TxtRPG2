@@ -15,6 +15,12 @@ namespace TxtRPG2
         {
             Target = target;
         }
+        public KillQuest(KillQuest quest, int nowCount, State stat) : base(quest, nowCount, stat)
+        {
+            Target = quest.Target;
+        }
+
+
 
         public void Triger(Enemy target)
         {

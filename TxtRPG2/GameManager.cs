@@ -20,7 +20,7 @@ namespace TxtRPG2
         {
             try
             {
-                SaveData.Load(out player, out shop, out battleManager);
+                SaveData.Load(out player, out shop, out battleManager, out questBoard);
             }
             catch (Exception)
             {
@@ -30,8 +30,8 @@ namespace TxtRPG2
                 player = ChooseJob();  // 직업 선택 후 player에 저장
                 shop = new Shop(player);
                 battleManager = new BattleManager(player);
+                questBoard = new QuestBoard(player);
             }
-            questBoard = new QuestBoard(player);
         }
         public Player ChooseJob()
         {

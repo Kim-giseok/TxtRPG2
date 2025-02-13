@@ -46,6 +46,14 @@ namespace TxtRPG2
         //던전 정보
         public int DFloor { get; set; }
 
+        //퀘스트 정보
+        public struct DQuest
+        {
+            public int nowCount { get; set; }
+            public int state { get; set; }
+        }
+        public DQuest[] Quests { get; set; }
+
         static DEquip[] SaveEquips(Inventory inven)
         {
             DEquip[] equips = new DEquip[inven.Equips.Count];
@@ -85,6 +93,17 @@ namespace TxtRPG2
             return sells;
         }
 
+        static DQuest[] SaveQuests()
+        {
+            DQuest[] quests = new DQuest[QuestBoard.Quests.Length];
+            for (int i = 0; i < quests.Length; i++)
+            {
+                quests[i].nowCount = QuestBoard.Quests[i].NowCount;
+                quests[i].state = (int)QuestBoard.Quests[i].Stat;
+            }
+            return quests;
+        }
+
         public static void Save(Player player, Shop shop, BattleManager dungeon,  string path = "save.json")
         {
             SaveData save = new SaveData()
@@ -103,7 +122,9 @@ namespace TxtRPG2
 
                 DSells = SaveSells(shop),
 
-                DFloor = dungeon.Floor
+                DFloor = dungeon.Floor,
+
+                Quests = SaveQuests()
             };
 
             var options = new JsonSerializerOptions
@@ -118,7 +139,7 @@ namespace TxtRPG2
             Thread.Sleep(500);
         }
 
-        public static void Load(out Player player, out Shop shop, out BattleManager dungeon, string path = "save.json")
+        public static void Load(out Player player, out Shop shop, out BattleManager dungeon, out QuestBoard qb, string path = "save.json")
         {
             string jString = File.ReadAllText(path);
 
@@ -140,6 +161,8 @@ namespace TxtRPG2
                 default:
                     throw new Exception();
             }
+
+            qb = new QuestBoard(player);
 
             Item[] iteml;
             for (int i = 0; i < load.Equips.Length; i++)
@@ -197,6 +220,25 @@ namespace TxtRPG2
             shop = new Shop(player, load.DSells);
 
             dungeon = new BattleManager(player, load.DFloor);
+
+            for (int i = 0; i < load.Quests.Length; i++)
+            {
+                Quest.State stat = (Quest.State)load.Quests[i].state;
+                switch(QuestBoard.Quests[i])
+                {
+                    case KillQuest:
+                        QuestBoard.Quests[i] = new KillQuest((KillQuest)QuestBoard.Quests[i], load.Quests[i].nowCount, stat);
+                        break;
+                    case EquipQuest:
+                        QuestBoard.Quests[i] = new EquipQuest((EquipQuest)QuestBoard.Quests[i], load.Quests[i].nowCount,  stat);
+                        break;
+                    case GrowQuest:
+                        QuestBoard.Quests[i] = new GrowQuest((GrowQuest)QuestBoard.Quests[i], load.Quests[i].nowCount, stat);
+                        break;
+                    default:
+                        throw new Exception();
+                }
+            }
 
             Console.WriteLine("저장데이터를 불러왔습니다.");
             Console.ReadKey();

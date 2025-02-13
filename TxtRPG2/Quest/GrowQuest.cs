@@ -16,5 +16,9 @@ namespace TxtRPG2
         {
             this.player = player;
         }
+        public GrowQuest(GrowQuest quest, int nowCount, State stat) : base(quest, nowCount, stat)
+        {
+            player = quest.player;
+        }
     }
 }

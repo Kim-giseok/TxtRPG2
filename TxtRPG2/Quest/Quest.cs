@@ -27,6 +27,15 @@ namespace TxtRPG2
             Stat = stat;
             QReward = Reward.rewards[reward];
         }
+        public Quest(Quest quest, int nowCount, State stat)
+        {
+            Name = quest.Name;
+            Descript = quest.Descript;
+            GoalCount = quest.GoalCount;
+            NowCount = nowCount;
+            Stat = stat;
+            QReward = quest.QReward;
+        }
 
         public virtual void ShowInfo()
         {
