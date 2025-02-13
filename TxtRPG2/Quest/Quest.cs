@@ -18,7 +18,7 @@ namespace TxtRPG2
 
         public Reward QReward { get; private set; }
 
-        public Quest(string name, string descript, int goalCount, int nowCount = 0, State stat = State.Ready, int reward = 0)
+        public Quest(string name, string descript, int reward, int goalCount, int nowCount = 0, State stat = State.Ready)
         {
             Name = name;
             Descript = descript;

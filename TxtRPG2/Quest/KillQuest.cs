@@ -11,7 +11,7 @@ namespace TxtRPG2
         public string Target { get; }
         public override string Goal { get => $"{Target} {GoalCount}마리 처치"; }
 
-        public KillQuest(string name, string descript, string target, int goalCount, int nowCount = 0, State stat = State.Ready, int reward = 0) : base(name, descript, goalCount, nowCount, stat, reward)
+        public KillQuest(string name, string descript, string target, int reward, int goalCount, int nowCount = 0, State stat = State.Ready) : base(name, descript, reward, goalCount, nowCount, stat)
         {
             Target = target;
         }
