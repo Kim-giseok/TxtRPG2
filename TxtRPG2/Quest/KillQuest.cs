@@ -20,8 +20,6 @@ namespace TxtRPG2
             Target = quest.Target;
         }
 
-
-
         public void Triger(Enemy target)
         {
             if (target.Name == Target)
